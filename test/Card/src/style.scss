@@ -1,0 +1,21 @@
+body,html{
+  background: #e1e1e1;
+  height:100%;
+}
+*{
+  margin:0;
+  padding: 0;
+}
+#root{
+  font-size: .3rem;
+}
+
+.card-content-box{
+  .text{
+    padding: .1rem;
+    p{
+      font-size: .28rem;
+      margin-top: .2rem;
+    }
+  }
+}

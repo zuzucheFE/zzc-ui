@@ -1,0 +1,27 @@
+.zzc-card {
+  margin: 0 .32rem;
+  padding: 0 .3rem;
+  background: #FFFFFF;
+  border-radius: .2rem;
+
+  &.full{
+    margin:0;
+  }
+
+  &-title {
+    height: 1rem;
+    line-height: 1rem;
+    border-radius: .08rem .08rem 0 0;
+    font-size: .32rem;
+
+    span {
+      font-size: .24rem;
+      color:#777;
+    }
+  }
+
+  &-content {
+    border-top: 1px solid #eeeeee;
+    padding: .03rem 0;
+  }
+}

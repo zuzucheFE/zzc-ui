@@ -1,0 +1,35 @@
+body,html{
+  height:100%;
+  width:100%;
+  background: #fff;
+}
+*{
+  margin:0;
+  padding: 0;
+
+}
+img{
+  width: auto;
+  height: auto;
+}
+#root{
+  font-size: .3rem;
+}
+
+button{
+  font-size: .3rem;
+  background: #fff;
+  border:1px solid #e1e1e1;/*no*/
+}
+
+.modal-box{
+  padding: .2rem;
+
+  .title{
+    text-align: center;
+  }
+
+  .content{
+
+  }
+}

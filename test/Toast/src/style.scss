@@ -1,0 +1,22 @@
+body,html{
+  background: #e1e1e1;
+  height:100%;
+}
+*{
+  margin:0;
+  padding: 0;
+}
+img{
+  width: auto;
+  height: auto;
+}
+#root{
+  font-size: .3rem;
+}
+
+button{
+  font-size: .32rem;
+  border:1px solid #999;
+  background: #fff;
+  padding: .2rem .5rem;
+}
