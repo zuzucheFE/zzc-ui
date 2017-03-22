@@ -14,7 +14,14 @@ class Header extends Component {
 
         return (
             <header className="zzc-section-title" onClick={this.props.onClick}>
-                <div className="zzc-section-title-content">{this.props.title}</div>
+                <div className="zzc-section-title-content">
+                    {
+                        !!this.props.thumb && (
+                            <img src={this.props.thumb}/>
+                        )
+                    }
+                    {this.props.title}
+                </div>
                 {
                     !!this.props.extra && (
                         <div className="zzc-section-title-extra">{this.props.extra}</div>
@@ -23,7 +30,7 @@ class Header extends Component {
 
                 {
                     !!this.props.arrow && (
-                        <div className="zzc-section-title-arrow"><i className="mobile-ic-right" /></div>
+                        <div className="zzc-section-title-arrow"><i className="mobile-ic-right"/></div>
                     )
                 }
             </header>
