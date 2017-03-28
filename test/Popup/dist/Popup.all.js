@@ -54,7 +54,7 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _App = __webpack_require__(38);
+	var _App = __webpack_require__(36);
 	
 	var _App2 = _interopRequireDefault(_App);
 	
@@ -1346,9 +1346,7 @@
 /* 33 */,
 /* 34 */,
 /* 35 */,
-/* 36 */,
-/* 37 */,
-/* 38 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1364,7 +1362,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(39);
+	__webpack_require__(37);
 	
 	var _index = __webpack_require__(5);
 	
@@ -1387,30 +1385,60 @@
 	
 	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 	
-	        _this.state = {};
+	        _this.state = {
+	            showPOP: false,
+	            child: _react2.default.createElement(
+	                "p",
+	                null,
+	                "\u8FD9\u662F\u4E00\u4E2A\u4E2A\u5F39\u7A97"
+	            )
+	        };
 	        return _this;
 	    }
 	
 	    _createClass(App, [{
+	        key: "show",
+	        value: function show() {
+	            _index.Popup.show(this.state.child, {
+	                direction: 'bottom',
+	                title: '这是一个title',
+	                style: {
+	                    height: '5rem'
+	                },
+	                confirm: function confirm() {
+	                    console.log('点击确认');
+	                },
+	                cancel: function cancel() {
+	                    console.log('点击取消');
+	                },
+	                afterConfirm: function afterConfirm() {
+	                    return false;
+	                }
+	            });
+	        }
+	    }, {
+	        key: "hide",
+	        value: function hide() {
+	            _index.Popup.hide();
+	        }
+	    }, {
 	        key: "render",
 	        value: function render() {
 	            return _react2.default.createElement(
 	                "div",
 	                null,
 	                _react2.default.createElement(
-	                    _index.Section,
+	                    "ul",
 	                    null,
-	                    _react2.default.createElement(_index.Section.Header, { title: "title", extra: "\u526F\u6807\u9898", onClick: function onClick() {
-	                            alert('123');
-	                        } }),
 	                    _react2.default.createElement(
-	                        _index.Section.Body,
-	                        null,
-	                        _react2.default.createElement(
-	                            "p",
-	                            null,
-	                            "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim harum illum itaque odit totam vitae voluptates. Asperiores cumque explicabo ipsam ipsum iste iure iusto, maxime quasi repudiandae similique sunt tempore."
-	                        )
+	                        "li",
+	                        { onClick: this.show.bind(this) },
+	                        "\u5411\u4E0A\u5F39\u8D77"
+	                    ),
+	                    _react2.default.createElement(
+	                        "li",
+	                        { onClick: this.hide.bind(this) },
+	                        "\u5173\u95ED"
 	                    )
 	                )
 	            );
@@ -1423,12 +1451,14 @@
 	exports.default = App;
 
 /***/ },
-/* 39 */
+/* 37 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
+/* 38 */,
+/* 39 */,
 /* 40 */,
 /* 41 */,
 /* 42 */,
@@ -1550,4 +1580,4 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=Section.all.js.map
+//# sourceMappingURL=Popup.all.js.map

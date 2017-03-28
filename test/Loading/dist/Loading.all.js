@@ -54,7 +54,7 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _App = __webpack_require__(30);
+	var _App = __webpack_require__(32);
 	
 	var _App2 = _interopRequireDefault(_App);
 	
@@ -159,6 +159,15 @@
 	  enumerable: true,
 	  get: function get() {
 	    return _interopRequireDefault(_Tabs).default;
+	  }
+	});
+	
+	var _Popup = __webpack_require__(28);
+	
+	Object.defineProperty(exports, 'Popup', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Popup).default;
 	  }
 	});
 
@@ -951,6 +960,7 @@
 	                _react2.default.createElement(
 	                    "div",
 	                    { className: "zzc-section-title-content" },
+	                    !!this.props.thumb && _react2.default.createElement("img", { src: this.props.thumb }),
 	                    this.props.title
 	                ),
 	                !!this.props.extra && _react2.default.createElement(
@@ -1156,9 +1166,183 @@
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 28 */,
-/* 29 */,
-/* 30 */
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(2);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _dialog = __webpack_require__(44);
+	
+	var _dialog2 = _interopRequireDefault(_dialog);
+	
+	__webpack_require__(29);
+	
+	__webpack_require__(46);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by lamho on 2017/3/27.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	
+	var parentDiv = null,
+	    dialog = null;
+	
+	function create(content, opt) {
+	
+	    var direction = opt.direction || 'bottom',
+	        style = opt.style || {};
+	
+	    parentDiv = document.createElement('div');
+	    document.body.appendChild(parentDiv);
+	    var component = _reactDom2.default.render(_react2.default.createElement(
+	        'div',
+	        { className: 'zzc-popup' },
+	        _react2.default.createElement('div', { className: 'popup-mark zzc-animation-fade' }),
+	        _react2.default.createElement(
+	            'div',
+	            { style: style, className: 'popup-content ' + direction + ' zzc-animation-silde silde-' + direction },
+	            _react2.default.createElement(
+	                _dialog2.default,
+	                {
+	                    title: opt.title,
+	                    close: close,
+	                    confirm: opt.confirm,
+	                    cancel: opt.cancel,
+	                    afterConfirm: opt.afterConfirm
+	                },
+	                content
+	            )
+	        )
+	    ), parentDiv);
+	
+	    checkJSXElem();
+	
+	    return component;
+	}
+	
+	function checkJSXElem() {
+	
+	    var timer = setInterval(function () {
+	        if (document.querySelector('.zzc-popup .popup-content')) {
+	            clearInterval(timer);
+	            open();
+	        }
+	    }, 12);
+	}
+	
+	function open() {
+	    var content = document.querySelector('.zzc-popup .popup-content'),
+	        mark = document.querySelector('.zzc-popup .popup-mark');
+	    content.className = content.className + ' silde-in';
+	    mark.className = mark.className + ' fade-in';
+	}
+	
+	function close() {
+	    var content = document.querySelector('.zzc-popup .popup-content'),
+	        mark = document.querySelector('.zzc-popup .popup-mark');
+	
+	    if (content && mark) {
+	        var contentClassArr = content.className.split(' '),
+	            markClassArr = mark.className.split(' '),
+	            sildeIndex = contentClassArr.indexOf('silde-in'),
+	            fadeIndex = markClassArr.indexOf('fade-in');
+	
+	        sildeIndex && contentClassArr.splice(sildeIndex, 1);
+	        fadeIndex && markClassArr.splice(fadeIndex, 1);
+	
+	        content.className = contentClassArr.join(' ');
+	        mark.className = markClassArr.join(' ');
+	
+	        setTimeout(function () {
+	            clear();
+	        }, 500);
+	    } else {
+	        return;
+	    }
+	}
+	
+	function clear() {
+	    if (parentDiv) {
+	        _reactDom2.default.unmountComponentAtNode(parentDiv);
+	        parentDiv.parentNode.removeChild(parentDiv);
+	        parentDiv = null;
+	        dialog = null;
+	    } else {
+	        return;
+	    }
+	}
+	
+	/**
+	 * @param content dialog的内容，传入jsx
+	 * @param opt.title dialog的title，不传则不初始化出来
+	 * @param opt.direction popup的弹出方向，默认为bottom
+	 * @param opt.style popup-content节点的样式
+	 * @param opt.confirm 确认按钮函数
+	 * @param opt.cancel 取消按钮函数
+	 * @param opt.afterConfirm 确认前执行的函数，返回true才会执行confirm
+	 * **/
+	
+	var Popup = function (_Component) {
+	    _inherits(Popup, _Component);
+	
+	    function Popup(props) {
+	        _classCallCheck(this, Popup);
+	
+	        return _possibleConstructorReturn(this, (Popup.__proto__ || Object.getPrototypeOf(Popup)).call(this, props));
+	    }
+	
+	    _createClass(Popup, null, [{
+	        key: 'show',
+	        value: function show(content, opt) {
+	            close();
+	            if (parentDiv != null) {
+	                return false;
+	            }
+	            dialog = create(content, opt);
+	        }
+	    }, {
+	        key: 'hide',
+	        value: function hide() {
+	            close();
+	        }
+	    }]);
+	
+	    return Popup;
+	}(_react.Component);
+	
+	exports.default = Popup;
+
+/***/ },
+/* 29 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 30 */,
+/* 31 */,
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1174,7 +1358,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(31);
+	__webpack_require__(33);
 	
 	var _index = __webpack_require__(5);
 	
@@ -1232,7 +1416,133 @@
 	exports.default = App;
 
 /***/ },
-/* 31 */
+/* 33 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(45);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by lamho on 2017/3/28.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	
+	var Dialog = function (_Component) {
+	    _inherits(Dialog, _Component);
+	
+	    function Dialog(props) {
+	        _classCallCheck(this, Dialog);
+	
+	        return _possibleConstructorReturn(this, (Dialog.__proto__ || Object.getPrototypeOf(Dialog)).call(this, props));
+	    }
+	
+	    _createClass(Dialog, [{
+	        key: 'clickConfirm',
+	        value: function clickConfirm() {
+	            var _this2 = this;
+	
+	            this.props.confirm || function () {};
+	            if (typeof this.props.afterConfirm == 'function') {
+	
+	                this.props.afterConfirm() && function () {
+	                    _this2.props.confirm();
+	                    _this2.props.close();
+	                }();
+	            } else {
+	                this.props.confirm();
+	                this.props.close();
+	            }
+	        }
+	    }, {
+	        key: 'clickCancel',
+	        value: function clickCancel() {
+	            this.props.cancel || function () {};
+	
+	            this.props.cancel();
+	            this.props.close();
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _props = this.props,
+	                child = _props.child,
+	                title = _props.title;
+	
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'zzc-dialog' },
+	                !!title && _react2.default.createElement(
+	                    'div',
+	                    { className: 'zzc-dialog-title' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { onClick: this.clickCancel.bind(this), className: 'zzc-dialog-btn' },
+	                        '\u53D6\u6D88'
+	                    ),
+	                    _react2.default.createElement(
+	                        'h5',
+	                        null,
+	                        '\u8FD9\u662F\u4E00\u4E2Atitle'
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { onClick: this.clickConfirm.bind(this), className: 'zzc-dialog-btn confirm' },
+	                        '\u786E\u5B9A'
+	                    )
+	                ),
+	                child
+	            );
+	        }
+	    }]);
+	
+	    return Dialog;
+	}(_react.Component);
+	
+	exports.default = Dialog;
+
+/***/ },
+/* 45 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 46 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

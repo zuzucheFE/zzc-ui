@@ -1,0 +1,46 @@
+.zzc-dialog{
+
+  background: #fff;
+  display: block;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+
+  .zzc-dialog-title{
+    display: -webkit-box;
+    -webkit-box-align: center;
+    -webkit-box-pack: justify;
+    padding: .2rem .2rem;
+    position: relative;
+
+    &:after{
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      display: block;
+      width: 100%;
+      border-bottom: 1px solid #D8D8D8;
+      -webkit-transform-origin: 0 0;
+      -ms-transform-origin: 0 0;
+      transform-origin: 0 0;
+      -webkit-transform: scaleY(0.5);
+      -ms-transform: scaleY(0.5);
+      transform: scaleY(0.5);
+    }
+
+    h5{
+      font-size: .32rem;
+      color: #333;
+    }
+
+    .zzc-dialog-btn{
+      font-size: .28rem;
+      color: #666;
+
+      &.confirm{
+        color:#4E7CDD;
+      }
+    }
+  }
+}

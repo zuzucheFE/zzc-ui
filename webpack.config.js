@@ -19,6 +19,7 @@ let config = {
         Modal: "./test/Modal/src/",
         Section: "./test/Section/src/",
         Tabs: "./test/Tabs/src/",
+        Popup: "./test/Popup/src/",
     },
     output: {
         path: __dirname + '/test',

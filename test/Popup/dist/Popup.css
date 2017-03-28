@@ -565,16 +565,14 @@ img {
 }
 
 button {
-  font-size: .3rem;
+  font-size: .32rem;
+  border: 0.01rem solid #999;
   background: #fff;
-  border: 1px solid #e1e1e1;
+  padding: .2rem .5rem;
 }
 
-.modal-box {
+li {
+  background: #fff;
   padding: .2rem;
 }
-
-.modal-box .title {
-  text-align: center;
-}
-/*# sourceMappingURL=Modal.css.map*/
+/*# sourceMappingURL=Popup.css.map*/
