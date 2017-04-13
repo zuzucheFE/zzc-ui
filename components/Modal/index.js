@@ -45,6 +45,7 @@ class Modal extends Component {
             <div ref="modalBox" style={{display:'none'}}>
                 <div ref="modalMask" className="modal-mask"></div>
                 <div ref="modalWrap" className="modal-wrap">
+                    <div className="modal-back" onClick={this.props.onCancel}/>
                     <div className="modal-content">
                         <div className="modal-content-box" ref="modalContent">
                             {this.props.content}
