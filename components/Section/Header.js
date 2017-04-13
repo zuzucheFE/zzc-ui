@@ -30,7 +30,7 @@ class Header extends Component {
 
                 {
                     !!this.props.arrow && (
-                        <div className="zzc-section-title-arrow"><i className="mobile-ic-right"/></div>
+                        <div className="zzc-section-title-arrow"><i className="iconfont-right"/></div>
                     )
                 }
             </header>
