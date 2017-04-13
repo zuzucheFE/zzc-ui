@@ -8,6 +8,10 @@ import "./style.scss";
 
 function info (...arg){
 
+    if (document.querySelector('.toast-box')) {
+        return false;
+    }
+
     let content = arg[0],
         duration = parseInt(arg[1] || 3000),
         onClose = arg[2] && arg[2] instanceof Function ? arg[2] : function(){},
