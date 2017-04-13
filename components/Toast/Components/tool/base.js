@@ -1,3 +1,5 @@
+import ReactDOM from "react-dom";
+
 function base(){
 
     this.elem = null;
@@ -24,6 +26,7 @@ function base(){
     }
 
     this._removeInfo = function (_this){
+        ReactDOM.unmountComponentAtNode(_this.elem);
         document.body.removeChild(_this.elem);
         _this.onClose();
     }
