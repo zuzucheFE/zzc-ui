@@ -76,7 +76,7 @@ function close() {
         mark.className = markClassArr.join(' ');
 
 
-
+        //绑事件
         setTimeout(() => {
             clear();
         },500)
