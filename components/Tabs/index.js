@@ -53,6 +53,7 @@ class Tab extends Component {
                         })}
                     </ul>
                 </nav>
+                <div className="tab-placeholder" />
                 <div className="tabs-container">
                     {React.Children.map(this.props.children, (element, index)=> {
                         return (
