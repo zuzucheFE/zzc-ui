@@ -1,6 +1,6 @@
 {
   "name": "zzc-ui",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "租租车ui框架",
   "main": "index.js",
   "scripts": {
@@ -24,6 +24,11 @@
     "url": "https://github.com/LLLLLamHo/zzc-ui"
   },
   "devDependencies": {
+    "postcss": "^5.2.16",
+    "postcss-iconfont": "^1.0.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "webpack": "^2.3.3",
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.4",
     "babel-plugin-syntax-decorators": "^6.8.0",
@@ -47,13 +52,10 @@
     "node-sass": "^4.2.0",
     "pubsub-js": "^1.5.4",
     "px2rem-loader": "^0.1.7",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
     "sass-loader": "^4.1.1",
     "underscore": "^1.8.3",
     "url-loader": "^0.5.7",
     "watch": "^0.19.1",
-    "webpack": "^1.13.1",
     "babel-preset-react": "^6.23.0",
     "css-loader": "^0.25.0",
     "gulp": "^3.9.1",
