@@ -2,8 +2,8 @@
  * Created by lamho on 2017/4/6.
  */
 import React, {Component} from 'react';
-import getWeek from '../../../tool/getWeek';
-import Event from '../../../tool/Event';
+import getWeek from '../../../../../tool/getWeek';
+import Event from '../../../../../tool/Event';
 
 export default class SelectedTime extends Component {
 

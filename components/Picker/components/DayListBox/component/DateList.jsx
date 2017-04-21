@@ -2,7 +2,7 @@
  * Created by lamho on 2017/3/30.
  */
 import React, {Component} from 'react';
-import setDayArray from '../../../tool/setDayList';
+import setDayArray from '../../../../../tool/setDayList';
 import Item from './DateListItem.jsx';
 
 export default class DateList extends Component {

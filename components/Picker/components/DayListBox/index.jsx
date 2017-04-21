@@ -9,7 +9,7 @@ import WeekList from './component/WeekList.jsx';
 import Range from './component/Range.jsx';
 import WarnSlideTip from '../WarnSlideTip';
 
-import formatTime from '../../tool/format';
+import formatTime from '../../../../tool/format';
 
 let timeType = 'pickup',
     topHeight = 0,

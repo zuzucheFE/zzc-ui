@@ -1,1 +1,1 @@
-export { default as Picker } from './src/components/Picker/index.jsx';
+export { default as Picker } from './components/Picker/index.jsx';

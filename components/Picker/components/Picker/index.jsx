@@ -5,8 +5,8 @@ import React, {Component} from 'react';
 import Popup from '../Popup/index.jsx';
 import DayListBox from '../DayListBox/index.jsx';
 import './style.scss';
-import '../../reseatStyle/reset.scss';
-import debug from '../../tool/debug';
+import '../../../../reseatStyle/reset.scss';
+import debug from '../../../../tool/debug';
 /**
  * 控制显示
  * @param visibility     控制是否显示时间框    必须传

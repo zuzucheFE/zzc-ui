@@ -3,7 +3,7 @@
  */
 import React,{Component} from 'react';
 import './style.scss';
-import Event from '../../tool/Event';
+import Event from '../../../../tool/Event';
 
 export default class WarnSlideTip extends Component{
 
