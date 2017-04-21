@@ -242,6 +242,14 @@
   opacity: 1;
 }
 
+.modal-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
 .modal-content {
   position: absolute;
   top: 1.2rem;
@@ -310,7 +318,7 @@
   display: -webkit-flex;
   display: flex;
   position: relative;
-  padding: 0.3rem 0.32rem;
+  padding: 0.3rem 0.3rem;
   background: #fff;
   vertical-align: middle;
   -webkit-box-align: center;

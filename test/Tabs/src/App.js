@@ -1,31 +1,31 @@
 /**
  * Created by lamho on 2017/3/16.
  */
-import React, {Component} from "react";
+import React, { Component } from "react";
 import './style.scss';
-import {Tabs} from "../../../index"
+import { Tabs } from "../../../index"
 
-export default class App extends Component{
+export default class App extends Component {
 
-    constructor(props) {
-        super(props)
+    constructor( props ) {
+        super( props )
         this.state = {
-            tabIndex : 0
+            tabIndex: 0
         }
     }
 
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <Tabs
                     defaultIndex={this.props.tabIndex}
-                    defaultColor='red'
-                    onChange={(index) => {
-                    this.setState({
-                        tabIndex: index
-                    });
-                }}>
+                    defaultColor='blue'
+                    onChange={( index ) => {
+                        this.setState( {
+                            tabIndex: index
+                        } );
+                    }}>
                     <span name="tab1"></span>
                     <span name="tab2"></span>
                 </Tabs>

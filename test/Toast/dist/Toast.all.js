@@ -54,7 +54,7 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _App = __webpack_require__(42);
+	var _App = __webpack_require__(45);
 	
 	var _App2 = _interopRequireDefault(_App);
 	
@@ -203,14 +203,12 @@
 	        var callback = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
 	
 	        box.className = 'zzc-alert-content';
-	        setTimeout(function () {
-	            document.querySelector('.zzc-alert-mark').className = 'zzc-alert-mark';
-	            setTimeout(function () {
-	                _reactDom2.default.unmountComponentAtNode(div);
-	                div.parentNode.removeChild(div);
 	
-	                callback();
-	            }, 100);
+	        setTimeout(function () {
+	            _reactDom2.default.unmountComponentAtNode(div);
+	            div.parentNode.removeChild(div);
+	
+	            callback();
 	        }, 100);
 	    }
 	
@@ -664,6 +662,10 @@
 	 */
 	function info() {
 	
+	    if (document.querySelector('.toast-box')) {
+	        return false;
+	    }
+	
 	    var content = arguments.length <= 0 ? undefined : arguments[0],
 	        duration = parseInt((arguments.length <= 1 ? undefined : arguments[1]) || 3000),
 	        onClose = (arguments.length <= 2 ? undefined : arguments[2]) && (arguments.length <= 2 ? undefined : arguments[2]) instanceof Function ? arguments.length <= 2 ? undefined : arguments[2] : function () {},
@@ -689,13 +691,20 @@
 
 /***/ },
 /* 18 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	
+	var _reactDom = __webpack_require__(2);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	function base() {
 	
 	    this.elem = null;
@@ -725,6 +734,7 @@
 	    };
 	
 	    this._removeInfo = function (_this) {
+	        _reactDom2.default.unmountComponentAtNode(_this.elem);
 	        document.body.removeChild(_this.elem);
 	        _this.onClose();
 	    };
@@ -825,6 +835,7 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { ref: 'modalWrap', className: 'modal-wrap' },
+	                    _react2.default.createElement('div', { className: 'modal-back', onClick: this.props.onCancel }),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'modal-content' },
@@ -971,7 +982,7 @@
 	                !!this.props.arrow && _react2.default.createElement(
 	                    "div",
 	                    { className: "zzc-section-title-arrow" },
-	                    _react2.default.createElement("i", { className: "mobile-ic-right" })
+	                    _react2.default.createElement("i", { className: "iconfont-right" })
 	                )
 	            );
 	        }
@@ -1139,6 +1150,7 @@
 	                        })
 	                    )
 	                ),
+	                _react2.default.createElement('div', { className: 'tab-placeholder' }),
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'tabs-container' },
@@ -1186,13 +1198,13 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _dialog = __webpack_require__(44);
+	var _dialog = __webpack_require__(29);
 	
 	var _dialog2 = _interopRequireDefault(_dialog);
 	
-	__webpack_require__(29);
+	__webpack_require__(31);
 	
-	__webpack_require__(46);
+	__webpack_require__(32);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -1274,6 +1286,7 @@
 	        content.className = contentClassArr.join(' ');
 	        mark.className = markClassArr.join(' ');
 	
+	        //绑事件
 	        setTimeout(function () {
 	            clear();
 	        }, 500);
@@ -1335,113 +1348,6 @@
 
 /***/ },
 /* 29 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	__webpack_require__(43);
-	
-	var _index = __webpack_require__(5);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by lamho on 2017/3/16.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-	
-	
-	var App = function (_Component) {
-	    _inherits(App, _Component);
-	
-	    function App(props) {
-	        _classCallCheck(this, App);
-	
-	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
-	
-	        _this.state = {
-	            isShow: false
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(App, [{
-	        key: "show",
-	        value: function show() {
-	            _index.Toast.info('订单确认之前无法打印提车单<br>请耐心等待订单确认');
-	        }
-	    }, {
-	        key: "show2",
-	        value: function show2() {
-	            _index.Toast.info('订单确认之前无法打印提车单<br>请耐心等待订单确认', 1000);
-	        }
-	    }, {
-	        key: "render",
-	        value: function render() {
-	            return _react2.default.createElement(
-	                "div",
-	                null,
-	                _react2.default.createElement(
-	                    "button",
-	                    { onClick: this.show.bind(this) },
-	                    "\u70B9\u51FB\u6211\uFF08\u9ED8\u8BA43\u79D2\uFF09"
-	                ),
-	                _react2.default.createElement("hr", null),
-	                _react2.default.createElement("br", null),
-	                _react2.default.createElement(
-	                    "button",
-	                    { onClick: this.show2.bind(this) },
-	                    "\u70B9\u51FB\u6211\uFF081\u79D2\uFF09"
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return App;
-	}(_react.Component);
-	
-	exports.default = App;
-
-/***/ },
-/* 43 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1457,7 +1363,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(45);
+	__webpack_require__(30);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -1545,10 +1451,117 @@
 	exports.default = Dialog;
 
 /***/ },
-/* 45 */
+/* 30 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 31 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 32 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(46);
+	
+	var _index = __webpack_require__(5);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by lamho on 2017/3/16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	
+	var App = function (_Component) {
+	    _inherits(App, _Component);
+	
+	    function App(props) {
+	        _classCallCheck(this, App);
+	
+	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+	
+	        _this.state = {
+	            isShow: false
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(App, [{
+	        key: "show",
+	        value: function show() {
+	            _index.Toast.info('订单确认之前无法打印提车单<br>请耐心等待订单确认');
+	        }
+	    }, {
+	        key: "show2",
+	        value: function show2() {
+	            _index.Toast.info('订单确认之前无法打印提车单<br>请耐心等待订单确认', 1000);
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                "div",
+	                null,
+	                _react2.default.createElement(
+	                    "button",
+	                    { onClick: this.show.bind(this) },
+	                    "\u70B9\u51FB\u6211\uFF08\u9ED8\u8BA43\u79D2\uFF09"
+	                ),
+	                _react2.default.createElement("hr", null),
+	                _react2.default.createElement("br", null),
+	                _react2.default.createElement(
+	                    "button",
+	                    { onClick: this.show2.bind(this) },
+	                    "\u70B9\u51FB\u6211\uFF081\u79D2\uFF09"
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return App;
+	}(_react.Component);
+	
+	exports.default = App;
 
 /***/ },
 /* 46 */

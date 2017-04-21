@@ -54,7 +54,7 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _App = __webpack_require__(34);
+	var _App = __webpack_require__(37);
 	
 	var _App2 = _interopRequireDefault(_App);
 	
@@ -203,14 +203,12 @@
 	        var callback = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
 	
 	        box.className = 'zzc-alert-content';
-	        setTimeout(function () {
-	            document.querySelector('.zzc-alert-mark').className = 'zzc-alert-mark';
-	            setTimeout(function () {
-	                _reactDom2.default.unmountComponentAtNode(div);
-	                div.parentNode.removeChild(div);
 	
-	                callback();
-	            }, 100);
+	        setTimeout(function () {
+	            _reactDom2.default.unmountComponentAtNode(div);
+	            div.parentNode.removeChild(div);
+	
+	            callback();
 	        }, 100);
 	    }
 	
@@ -664,6 +662,10 @@
 	 */
 	function info() {
 	
+	    if (document.querySelector('.toast-box')) {
+	        return false;
+	    }
+	
 	    var content = arguments.length <= 0 ? undefined : arguments[0],
 	        duration = parseInt((arguments.length <= 1 ? undefined : arguments[1]) || 3000),
 	        onClose = (arguments.length <= 2 ? undefined : arguments[2]) && (arguments.length <= 2 ? undefined : arguments[2]) instanceof Function ? arguments.length <= 2 ? undefined : arguments[2] : function () {},
@@ -689,13 +691,20 @@
 
 /***/ },
 /* 18 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	
+	var _reactDom = __webpack_require__(2);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	function base() {
 	
 	    this.elem = null;
@@ -725,6 +734,7 @@
 	    };
 	
 	    this._removeInfo = function (_this) {
+	        _reactDom2.default.unmountComponentAtNode(_this.elem);
 	        document.body.removeChild(_this.elem);
 	        _this.onClose();
 	    };
@@ -825,6 +835,7 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { ref: 'modalWrap', className: 'modal-wrap' },
+	                    _react2.default.createElement('div', { className: 'modal-back', onClick: this.props.onCancel }),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'modal-content' },
@@ -971,7 +982,7 @@
 	                !!this.props.arrow && _react2.default.createElement(
 	                    "div",
 	                    { className: "zzc-section-title-arrow" },
-	                    _react2.default.createElement("i", { className: "mobile-ic-right" })
+	                    _react2.default.createElement("i", { className: "iconfont-right" })
 	                )
 	            );
 	        }
@@ -1139,6 +1150,7 @@
 	                        })
 	                    )
 	                ),
+	                _react2.default.createElement('div', { className: 'tab-placeholder' }),
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'tabs-container' },
@@ -1186,13 +1198,13 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _dialog = __webpack_require__(44);
+	var _dialog = __webpack_require__(29);
 	
 	var _dialog2 = _interopRequireDefault(_dialog);
 	
-	__webpack_require__(29);
+	__webpack_require__(31);
 	
-	__webpack_require__(46);
+	__webpack_require__(32);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -1274,6 +1286,7 @@
 	        content.className = contentClassArr.join(' ');
 	        mark.className = markClassArr.join(' ');
 	
+	        //绑事件
 	        setTimeout(function () {
 	            clear();
 	        }, 500);
@@ -1335,16 +1348,132 @@
 
 /***/ },
 /* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(30);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by lamho on 2017/3/28.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	
+	var Dialog = function (_Component) {
+	    _inherits(Dialog, _Component);
+	
+	    function Dialog(props) {
+	        _classCallCheck(this, Dialog);
+	
+	        return _possibleConstructorReturn(this, (Dialog.__proto__ || Object.getPrototypeOf(Dialog)).call(this, props));
+	    }
+	
+	    _createClass(Dialog, [{
+	        key: 'clickConfirm',
+	        value: function clickConfirm() {
+	            var _this2 = this;
+	
+	            this.props.confirm || function () {};
+	            if (typeof this.props.afterConfirm == 'function') {
+	
+	                this.props.afterConfirm() && function () {
+	                    _this2.props.confirm();
+	                    _this2.props.close();
+	                }();
+	            } else {
+	                this.props.confirm();
+	                this.props.close();
+	            }
+	        }
+	    }, {
+	        key: 'clickCancel',
+	        value: function clickCancel() {
+	            this.props.cancel || function () {};
+	
+	            this.props.cancel();
+	            this.props.close();
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _props = this.props,
+	                child = _props.child,
+	                title = _props.title;
+	
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'zzc-dialog' },
+	                !!title && _react2.default.createElement(
+	                    'div',
+	                    { className: 'zzc-dialog-title' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { onClick: this.clickCancel.bind(this), className: 'zzc-dialog-btn' },
+	                        '\u53D6\u6D88'
+	                    ),
+	                    _react2.default.createElement(
+	                        'h5',
+	                        null,
+	                        '\u8FD9\u662F\u4E00\u4E2Atitle'
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { onClick: this.clickConfirm.bind(this), className: 'zzc-dialog-btn confirm' },
+	                        '\u786E\u5B9A'
+	                    )
+	                ),
+	                child
+	            );
+	        }
+	    }]);
+	
+	    return Dialog;
+	}(_react.Component);
+	
+	exports.default = Dialog;
+
+/***/ },
+/* 30 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 30 */,
-/* 31 */,
-/* 32 */,
+/* 31 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 32 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
 /* 33 */,
-/* 34 */
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1360,7 +1489,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(35);
+	__webpack_require__(38);
 	
 	var _index = __webpack_require__(5);
 	
@@ -1452,131 +1581,7 @@
 	exports.default = App;
 
 /***/ },
-/* 35 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	__webpack_require__(45);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by lamho on 2017/3/28.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-	
-	
-	var Dialog = function (_Component) {
-	    _inherits(Dialog, _Component);
-	
-	    function Dialog(props) {
-	        _classCallCheck(this, Dialog);
-	
-	        return _possibleConstructorReturn(this, (Dialog.__proto__ || Object.getPrototypeOf(Dialog)).call(this, props));
-	    }
-	
-	    _createClass(Dialog, [{
-	        key: 'clickConfirm',
-	        value: function clickConfirm() {
-	            var _this2 = this;
-	
-	            this.props.confirm || function () {};
-	            if (typeof this.props.afterConfirm == 'function') {
-	
-	                this.props.afterConfirm() && function () {
-	                    _this2.props.confirm();
-	                    _this2.props.close();
-	                }();
-	            } else {
-	                this.props.confirm();
-	                this.props.close();
-	            }
-	        }
-	    }, {
-	        key: 'clickCancel',
-	        value: function clickCancel() {
-	            this.props.cancel || function () {};
-	
-	            this.props.cancel();
-	            this.props.close();
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _props = this.props,
-	                child = _props.child,
-	                title = _props.title;
-	
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'zzc-dialog' },
-	                !!title && _react2.default.createElement(
-	                    'div',
-	                    { className: 'zzc-dialog-title' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { onClick: this.clickCancel.bind(this), className: 'zzc-dialog-btn' },
-	                        '\u53D6\u6D88'
-	                    ),
-	                    _react2.default.createElement(
-	                        'h5',
-	                        null,
-	                        '\u8FD9\u662F\u4E00\u4E2Atitle'
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { onClick: this.clickConfirm.bind(this), className: 'zzc-dialog-btn confirm' },
-	                        '\u786E\u5B9A'
-	                    )
-	                ),
-	                child
-	            );
-	        }
-	    }]);
-	
-	    return Dialog;
-	}(_react.Component);
-	
-	exports.default = Dialog;
-
-/***/ },
-/* 45 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 46 */
+/* 38 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

@@ -11,12 +11,12 @@
  * **/
 
 
-import React, {Component} from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import "./style.scss";
 
 
-export default function (...args) {
+export default function ( ...args ) {
     const title = args[0] || '';
     const content = args[1];
     const actions = args[2] || [{ text: '确定' }];
@@ -24,66 +24,64 @@ export default function (...args) {
 
     let box;
 
-    if(!content || content == ''){
-        console.error('请输入内容!');
+    if ( !content || content == '' ) {
+        console.error( '请输入内容!' );
         return;
     }
 
 
-    let div = document.createElement('div');
-    parentElem == 'body' ? document.body.appendChild(div) : document.querySelector(parentElem).appendChild(div);
+    let div = document.createElement( 'div' );
+    parentElem == 'body' ? document.body.appendChild( div ) : document.querySelector( parentElem ).appendChild( div );
 
-    function close(callback = () => {}) {
+    function close( callback = () => { } ) {
         box.className = 'zzc-alert-content'
-        setTimeout(() => {
-            document.querySelector('.zzc-alert-mark').className = 'zzc-alert-mark';
-            setTimeout(() => {
-                ReactDOM.unmountComponentAtNode(div);
-                div.parentNode.removeChild(div);
 
-                callback();
-            }, 100);
-        }, 100)
+        setTimeout(() => {
+            ReactDOM.unmountComponentAtNode( div );
+            div.parentNode.removeChild( div );
+
+            callback();
+        }, 100 );
 
     }
 
     function show() {
-        document.querySelector('.zzc-alert-mark').className = 'zzc-alert-mark show';
-        box = document.querySelector('.zzc-alert-content');
+        document.querySelector( '.zzc-alert-mark' ).className = 'zzc-alert-mark show';
+        box = document.querySelector( '.zzc-alert-content' );
         box.className = 'zzc-alert-content show'
     }
 
-    function _setButton(actions){
+    function _setButton( actions ) {
 
         let elemArr = [];
 
-        if(actions.length == 1){
+        if ( actions.length == 1 ) {
 
             let button = actions[0];
-            const orginPress = button.onPress || function() {};
+            const orginPress = button.onPress || function () { };
 
-            elemArr.push(<button
+            elemArr.push( <button
                 className='singles'
                 style={button.style ? button.style : {}}
                 onClick={() => {
                     close();
                     orginPress();
                 }}
-            >{button.text}</button>)
-        }else{
-            elemArr = actions.map((button,i) => {
+            >{button.text}</button> )
+        } else {
+            elemArr = actions.map(( button, i ) => {
 
-                const orginPress = button.onPress || function() {};
+                const orginPress = button.onPress || function () { };
 
-                return (<button
+                return ( <button
                     key={`${i}-${new Date().getTime()}`}
                     style={button.style ? button.style : {}}
                     onClick={() => {
                         close();
                         orginPress();
                     }}
-                >{button.text}</button>)
-            })
+                >{button.text}</button> )
+            } )
         }
 
         return elemArr;
@@ -102,20 +100,20 @@ export default function (...args) {
                     <div className="zzc-alert-footer">
                         <div className="zzc-alert-buttonGroup">
                             {
-                                _setButton(actions)
+                                _setButton( actions )
                             }
                         </div>
                     </div>
                 </div>
             </div>
-        </div>, div);
+        </div>, div );
 
 
     setTimeout(() => {
         show();
-    },100);
+    }, 100 );
 
     return {
-        close : close
+        close: close
     };
 }

@@ -323,14 +323,12 @@
 	        var callback = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
 	
 	        box.className = 'zzc-alert-content';
-	        setTimeout(function () {
-	            document.querySelector('.zzc-alert-mark').className = 'zzc-alert-mark';
-	            setTimeout(function () {
-	                _reactDom2.default.unmountComponentAtNode(div);
-	                div.parentNode.removeChild(div);
 	
-	                callback();
-	            }, 100);
+	        setTimeout(function () {
+	            _reactDom2.default.unmountComponentAtNode(div);
+	            div.parentNode.removeChild(div);
+	
+	            callback();
 	        }, 100);
 	    }
 	
@@ -784,6 +782,10 @@
 	 */
 	function info() {
 	
+	    if (document.querySelector('.toast-box')) {
+	        return false;
+	    }
+	
 	    var content = arguments.length <= 0 ? undefined : arguments[0],
 	        duration = parseInt((arguments.length <= 1 ? undefined : arguments[1]) || 3000),
 	        onClose = (arguments.length <= 2 ? undefined : arguments[2]) && (arguments.length <= 2 ? undefined : arguments[2]) instanceof Function ? arguments.length <= 2 ? undefined : arguments[2] : function () {},
@@ -809,13 +811,20 @@
 
 /***/ },
 /* 18 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	
+	var _reactDom = __webpack_require__(2);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	function base() {
 	
 	    this.elem = null;
@@ -845,6 +854,7 @@
 	    };
 	
 	    this._removeInfo = function (_this) {
+	        _reactDom2.default.unmountComponentAtNode(_this.elem);
 	        document.body.removeChild(_this.elem);
 	        _this.onClose();
 	    };
@@ -945,6 +955,7 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { ref: 'modalWrap', className: 'modal-wrap' },
+	                    _react2.default.createElement('div', { className: 'modal-back', onClick: this.props.onCancel }),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'modal-content' },
@@ -1091,7 +1102,7 @@
 	                !!this.props.arrow && _react2.default.createElement(
 	                    "div",
 	                    { className: "zzc-section-title-arrow" },
-	                    _react2.default.createElement("i", { className: "mobile-ic-right" })
+	                    _react2.default.createElement("i", { className: "iconfont-right" })
 	                )
 	            );
 	        }
@@ -1259,6 +1270,7 @@
 	                        })
 	                    )
 	                ),
+	                _react2.default.createElement('div', { className: 'tab-placeholder' }),
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'tabs-container' },
@@ -1306,13 +1318,13 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _dialog = __webpack_require__(44);
+	var _dialog = __webpack_require__(29);
 	
 	var _dialog2 = _interopRequireDefault(_dialog);
 	
-	__webpack_require__(29);
+	__webpack_require__(31);
 	
-	__webpack_require__(46);
+	__webpack_require__(32);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -1394,6 +1406,7 @@
 	        content.className = contentClassArr.join(' ');
 	        mark.className = markClassArr.join(' ');
 	
+	        //绑事件
 	        setTimeout(function () {
 	            clear();
 	        }, 500);
@@ -1455,26 +1468,6 @@
 
 /***/ },
 /* 29 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1490,7 +1483,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(45);
+	__webpack_require__(30);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -1578,13 +1571,19 @@
 	exports.default = Dialog;
 
 /***/ },
-/* 45 */
+/* 30 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 46 */
+/* 31 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 32 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
