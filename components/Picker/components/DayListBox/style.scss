@@ -172,7 +172,7 @@
     }
 
     .day-list-box {
-      overflow-y: auto;
+      overflow: auto;
       -webkit-overflow-scrolling: touch;
 
       .day-item {

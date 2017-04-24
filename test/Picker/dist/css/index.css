@@ -846,7 +846,7 @@ p {
 }
 
 .t-box .t-box-content .day-list-box {
-  overflow-y: auto;
+  overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
 
