@@ -52,7 +52,7 @@ export default class DateListItem extends Component{
     //设置取还车tips
     setTips(isStart,isEnd) {
         if(isStart && isEnd){
-            return (<i style={{fontSize:'.22rem'}}>当天取还</i>);
+            return (<i>取还车</i>);
         }else if(isStart){
             return (<i>取车</i>);
         }else if(isEnd){

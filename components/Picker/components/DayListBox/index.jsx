@@ -26,6 +26,32 @@ function isOpenSynchronization(pickupTime, returnTime) {
     }else{
         return false;
     }
+
+}
+
+//初始化全局属性
+function initGlobalData(pickupDay, returnDay) {
+
+    //重置是否同日取还车
+    if(pickupDay && returnDay){
+        let pickupInfo = formatTime(pickupDay),
+            returnInfo = formatTime(returnDay);
+        pickupInfo.year == returnInfo.year && pickupInfo.month == returnInfo.month && pickupInfo.day == returnInfo.day ? hasTodayPickupAndReturn = true : hasTodayPickupAndReturn = false;
+    }else{
+        hasTodayPickupAndReturn = false;
+    }
+
+    //重置warn组件的定时器
+    if(warnTimer){
+        clearTimeout(warnTimer);
+        warnTimer = null;
+    }else{
+        warnTimer = null;
+    }
+
+    //打开默认为pickup选项
+    timeType = 'pickup';
+
 }
 
 export default class Time extends Component {
@@ -73,7 +99,7 @@ export default class Time extends Component {
             isSynchronization: isOpenSynchronization(pickupTime, returnTime)
         };
 
-        // isOpenSynchronization(pickupTime, returnTime);
+        initGlobalData(this.state.pickupDay, this.state.returnDay);
     }
 
     componentDidMount() {
