@@ -238,6 +238,39 @@ p {
   font-size: 28px;
   color: #fff;
 }
+.toast-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  display: -webkit-box;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  transition: opacity .3s;
+  -webkit-transition: opacity .3s;
+  opacity: 0;
+}
+
+.toast-box.show {
+  opacity: 1;
+}
+
+.toast-box .toast-content {
+  background: rgba(0, 0, 0, 0.6);
+  text-align: center;
+  padding: .24rem .24rem;
+  box-sizing: border-box;
+  border-radius: .1rem;
+  width: 5.92rem;
+}
+
+.toast-box .toast-content p {
+  font-size: .28rem;
+  color: #fff;
+  background: transparent;
+}
 .modal-mask {
   position: fixed;
   top: 0;

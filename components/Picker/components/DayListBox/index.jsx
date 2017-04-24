@@ -8,6 +8,7 @@ import SelectedTime from './component/SelectedTime.jsx';
 import WeekList from './component/WeekList.jsx';
 import Range from './component/Range.jsx';
 import WarnSlideTip from '../WarnSlideTip';
+import TextToast from '../../../TextToast';
 
 import formatTime from '../../../../tool/format';
 
@@ -51,7 +52,6 @@ function initGlobalData(pickupDay, returnDay) {
 
     //打开默认为pickup选项
     timeType = 'pickup';
-
 }
 
 export default class Time extends Component {
@@ -250,15 +250,65 @@ export default class Time extends Component {
         return Math.ceil(diff/1000/60/60/24);
     }
 
+    //验证时间选择
+    verifyDate(pickupDay, returnDay) {
+
+        if(!pickupDay){
+            this.showTextToast('请选择取车时间');
+            return false;
+        }
+
+        if(!returnDay){
+            this.showTextToast('请选择还车时间');
+            return false;
+        }
+
+        let pickupInfo = formatTime(pickupDay),
+            returnInfo = formatTime(returnDay),
+            pTime = parseFloat(`${pickupInfo.hours}${pickupInfo.minutes == '30' ? '.5' : ''}`),
+            rTime = parseFloat(`${returnInfo.hours}${returnInfo.minutes == '30' ? '.5' : ''}`);
+
+        //当天去还车
+        if(pickupInfo.year == returnInfo.year && pickupInfo.month == returnInfo.month && pickupInfo.day == returnInfo.day){
+            //同一时间取还车
+            if(pTime == rTime || rTime < pTime){
+                this.showTextToast('当日取还，还车时间需晚于取车时间');
+                return false;
+            }else{
+                return true;
+            }
+        }
+
+        return true
+    }
+
+    //显示TextToast弹窗
+    showTextToast(content, callback) {
+        TextToast.show({
+            content : content,
+            duration : 2000,
+            callBack : callback instanceof Function ? callback : null,
+            zIndex : 9999,
+            targetParent : document.querySelector('.zzc-popup')
+        });
+    }
+
     //确认时间
     confirm() {
-        let {confirmEvent, closeEvent} = this.props;
-        confirmEvent instanceof Function && confirmEvent({
-            pickupTime : formatTime(this.state.pickupDay),
-            returnTime : formatTime(this.state.returnDay),
-            dayCount : this.state.dayCount
-        });
-        closeEvent instanceof Function && closeEvent();
+
+        if(this.verifyDate(this.state.pickupDay, this.state.returnDay)){
+
+            let pickupInfo = this.state.pickupDay ? formatTime(this.state.pickupDay) : null,
+                returnInfo = this.state.returnDay ? formatTime(this.state.returnDay) : null,
+                {confirmEvent, closeEvent} = this.props;
+
+            confirmEvent instanceof Function && confirmEvent({
+                pickupTime : pickupInfo,
+                returnTime : returnInfo,
+                dayCount : this.state.dayCount
+            });
+            closeEvent instanceof Function && closeEvent();
+        }
 
     }
 
@@ -433,9 +483,9 @@ export default class Time extends Component {
                             }}
                         />
                         <div className="confirm-box">
-                        <span onClick={() => {
-                            this.confirm();
-                        }}>确认</span>
+                            <span onClick={() => {
+                                this.confirm();
+                            }}>确认</span>
                         </div>
                     </div>
                     <WarnSlideTip
