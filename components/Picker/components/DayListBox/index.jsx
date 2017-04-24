@@ -118,7 +118,7 @@ export default class Time extends Component {
         dayListBox = _this.refs.dayListBox;
 
         dayListBox.style.height = (windowHeight - (tHeaderHeight + weekListHeight + dialogTitleHeight + bottomHeight)) + 'px';
-
+        dayListBox.style.overflow = 'auto';
         topHeight = tHeaderHeight + weekListHeight + dialogTitleHeight;
     }
 
@@ -279,7 +279,7 @@ export default class Time extends Component {
             }
         }
 
-        return true
+        return true;
     }
 
     //显示TextToast弹窗
@@ -429,7 +429,7 @@ export default class Time extends Component {
                         <WeekList/>
                     </div>
 
-                    <div className="day-list-box" ref="dayListBox">
+                    <div className="day-list-box overflow" ref="dayListBox">
                         <DateList
                             startTime={startTime}
                             endTime={endTime}

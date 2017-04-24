@@ -846,7 +846,7 @@ p {
 }
 
 .t-box .t-box-content .day-list-box {
-  overflow: auto;
+  overflow: hidden;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -866,7 +866,7 @@ p {
 }
 
 .t-box .t-box-content .day-list-box .day-item ul:not(:first-child) {
-  margin-top: .3rem;
+  padding-top: .3rem;
 }
 
 .t-box .t-box-content .day-list-box .day-item ul li {

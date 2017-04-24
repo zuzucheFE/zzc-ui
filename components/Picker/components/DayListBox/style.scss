@@ -172,7 +172,7 @@
     }
 
     .day-list-box {
-      overflow: auto;
+      overflow: hidden;
       -webkit-overflow-scrolling: touch;
 
       .day-item {
@@ -192,7 +192,7 @@
           color: #333;
 
           &:not(:first-child){
-            margin-top:.3rem;
+            padding-top: .3rem;
           }
 
           li {

@@ -57,11 +57,11 @@ export default class DateList extends Component {
 
     componentDidMount() {
         let startElem = document.querySelector('.day-list-box .start');
-        if(startElem){
+        if (startElem) {
             let startOffsetTop = startElem.offsetTop;
             setTimeout(() => {
                 document.querySelector('.day-list-box').scrollTop = (startOffsetTop - this.props.topHeight);
-            },100);
+            }, 100);
         }
     }
 
