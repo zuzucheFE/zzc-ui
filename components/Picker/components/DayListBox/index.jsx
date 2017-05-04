@@ -11,10 +11,14 @@ import WarnSlideTip from '../WarnSlideTip';
 import TextToast from '../../../TextToast';
 
 import formatTime from '../../../../tool/format';
+import {setDayCount} from '../../tool/dateTool';
+
 
 let timeType = 'pickup',
     topHeight = 0,
     warnTimer = null,
+    warnID = null,
+    timer2 = null,//因为取还车时间setState的速度不一样，可能导致问题，需要等待100毫秒去确定是否真的还车时间小于取车时间
     hasTodayPickupAndReturn = false;//是否同日取还车
 
 //判断是否开启同步时间选择模式
@@ -50,6 +54,14 @@ function initGlobalData(pickupDay, returnDay) {
         warnTimer = null;
     }
 
+    if (timer2) {
+        clearTimeout(timer2);
+        timer2 = null;
+    } else {
+        timer2 = null;
+    }
+
+    warnID = null;
     //打开默认为pickup选项
     timeType = 'pickup';
 }
@@ -59,50 +71,26 @@ export default class Time extends Component {
     constructor(props) {
         super(props);
 
-        let pickupTime,returnTime;
-
-        if(!!props.pickupTime && props.pickupTime !== ''){
-            pickupTime = {
-                h: new Date(props.pickupTime).getHours(),
-                m: new Date(props.pickupTime).getMinutes() < 10 ? `0${new Date(props.pickupTime).getMinutes()}` : new Date(props.pickupTime).getMinutes()
-            };
-        }else{
-            //默认为10点
-            pickupTime = !!this.props.defaultTime ? this.props.defaultTime : {
-                h: '10',
-                m: '00'
-            };
-        }
-
-        if(!!props.returnTime && props.returnTime !== ''){
-            returnTime = {
-                h: new Date(props.returnTime).getHours(),
-                m: new Date(props.returnTime).getMinutes() < 10 ? `0${new Date(props.returnTime).getMinutes()}` : new Date(props.returnTime).getMinutes()
-            };
-        }else{
-            //默认为10点
-            returnTime = !!this.props.defaultTime ? this.props.defaultTime : {
-                h: '10',
-                m: '00'
-            };
-        }
-
         //日期和时间必须分开
         this.state = {
-            pickupDay: !!props.pickupTime && props.pickupTime !== '' ? new Date(props.pickupTime) : null,
-            returnDay: !!props.returnTime && props.returnTime !== '' ? new Date(props.returnTime) : null,
-            pickupTime: pickupTime,
-            returnTime: returnTime,
-            dayCount: null,
+            pickupDay: props.pickupDay,
+            returnDay: props.returnDay,
+            pickupTime: props.pickupTime,
+            returnTime: props.returnTime,
             isShowWarn: false,
             warnText: '',
-            isSynchronization: isOpenSynchronization(pickupTime, returnTime)
+            dayCount: props.dayCount,
+            isSynchronization: isOpenSynchronization(props.pickupTime, props.returnTime),
+            //开始日期和结束日期的id
+            pickupID: this.props.pickupID,
+            returnID: this.props.returnID
         };
 
         initGlobalData(this.state.pickupDay, this.state.returnDay);
     }
 
     componentDidMount() {
+
         let _this = this,
             windowHeight = document.body.clientHeight,
             tHeaderHeight = null,
@@ -117,16 +105,22 @@ export default class Time extends Component {
         bottomHeight = parseFloat(window.getComputedStyle(_this.refs.bottom).height);
         dayListBox = _this.refs.dayListBox;
 
-        dayListBox.style.height = (windowHeight - (tHeaderHeight + weekListHeight + dialogTitleHeight + bottomHeight)) + 'px';
-        dayListBox.style.overflow = 'auto';
+        dayListBox.style.height = (windowHeight - (tHeaderHeight + weekListHeight + dialogTitleHeight)) + 'px';
         topHeight = tHeaderHeight + weekListHeight + dialogTitleHeight;
+
+        //延迟加载日期列表
+        // setTimeout(() => {
+        //     this.setState({
+        //         asynCreatDayList : true
+        //     });
+        // },14);
+
+
     }
 
     //获取点击的时间
     selectDay(selectDay) {
-
         this.inspectDay(timeType, selectDay);
-
     }
 
     //获取选择的时间段
@@ -145,12 +139,17 @@ export default class Time extends Component {
                 this.setWarnInfo(type);
             });
         }else{
+
+            let returnDay = this.state.returnDay ? this.combinationOfTime('return',this.state.returnDay,{h:timeInfo[0],m:timeInfo[1]}) : null,
+                dayCount = this.state.pickupDay && returnDay ? setDayCount(this.state.pickupDay, returnDay) : null;
+
             this.setState({
                 returnTime : {
                     h:timeInfo[0],
                     m:timeInfo[1]
                 },
-                returnDay : this.state.returnDay ? this.combinationOfTime('return',this.state.returnDay,{h:timeInfo[0],m:timeInfo[1]}) : null
+                dayCount: dayCount,
+                returnDay : returnDay
             },() => {
                 this.setWarnInfo(type);
             });
@@ -181,48 +180,186 @@ export default class Time extends Component {
     //检测选择时间时候符合逻辑
     inspectDay(type,selectDay) {
 
+        let selectDayInfo = formatTime(selectDay),
+            id = `t-${selectDayInfo.year}-${selectDayInfo.month >= 10 ? selectDayInfo.month : `0${selectDayInfo.month}`}-${selectDayInfo.day}`;
+
         //当前选择的还车时间
         if(type == 'return'){
 
             let returnTime = this.combinationOfTime('return', selectDay),
                 //判断是否同日取还车
                 pickupInfo = formatTime(this.state.pickupDay),
-                returnInfo = formatTime(selectDay);
+                returnInfo = selectDayInfo;
 
             pickupInfo.year == returnInfo.year && pickupInfo.month == returnInfo.month && pickupInfo.day == returnInfo.day ? hasTodayPickupAndReturn = true : hasTodayPickupAndReturn = false;
 
 
             //还车时间小于取车时间，将还车时间赋值到取车时间，还车时间为null，如果为同日取还车跳过if
             if(!hasTodayPickupAndReturn && this.state.pickupDay != null && returnTime.getTime() < this.state.pickupDay.getTime()){
+
+                this.changeListDayState('pickup', id);
+
                 timeType = 'return';
                 this.setState({
                     pickupDay: this.combinationOfTime('pickup', selectDay),
                     returnDay: null,
-                    dayCount: null
+                    dayCount: null,
+                    pickupID: id,
+                    returnID: null
                 },() => {
                     this.setWarnInfo(timeType);
                 });
             //正常设置还车时间
             }else{
 
+                this.changeListDayState('return', id);
+
                 timeType = 'pickup';
                 this.setState({
                     returnDay: this.combinationOfTime('return', selectDay),
-                    dayCount: this.setDayCount(returnTime, this.state.pickupDay)
+                    dayCount: this.setDayCount(returnTime, this.state.pickupDay),
+                    returnID: id
                 },() => {
                     this.setWarnInfo(timeType);
                 });
             }
 
+
+
         }else{
+            this.changeListDayState('pickup', id);
+
             timeType = 'return';
             this.setState({
                 pickupDay: this.combinationOfTime('pickup', selectDay),
                 returnDay: null,
-                dayCount: null
+                dayCount: null,
+                pickupID: id,
+                returnID: null
             },() => {
                 this.setWarnInfo(timeType);
             });
+        }
+
+    }
+
+    //更改列表日期的显示状态
+    changeListDayState(currType, id) {
+
+        let i = document.createElement('i');
+
+        //当前选择的是pickup
+        if (currType == 'pickup') {
+
+            //如果已经选中需要清空选中状态
+            if(this.state.pickupID != null || this.state.returnID != null){
+
+                let pickupElem = document.querySelector('#' + this.state.pickupID + ''),
+                    returnElem = document.querySelector('#' + this.state.returnID + '');
+
+                //如果已经有取还车，需要将full状态的ul清空状态
+                if(this.state.pickupID != null && this.state.returnID != null){
+
+                    //更改日历范围可能导致储存的id找不到元素，如果没有该元素，跳过清除状态
+                    if (pickupElem && returnElem) {
+                        let returnRow = returnElem.parentNode.getAttribute('data-row'),
+                            pickupRow = pickupElem.parentNode.getAttribute('data-row');
+
+                        let currRow = parseInt(pickupRow);
+                        while (currRow <= returnRow) {
+                            document.querySelector('.day-item ul[data-row="' + currRow + '"]').className = '';
+                            currRow++;
+                        }
+                    }
+
+                }
+
+                //清除取还车的i提示
+                if(this.state.pickupID == this.state.returnID){
+                    let i = document.getElementById('start-end-tips');
+                    i.parentNode.removeChild(i);
+                }else{
+                    let startI = document.getElementById('start-tips'),
+                        endI = document.getElementById('end-tips');
+
+                    startI && startI.parentNode.removeChild(startI);
+                    endI && endI.parentNode.removeChild(endI);
+                }
+
+                //清除取还车日期选中的class
+                if(pickupElem){
+                    pickupElem.className = '';
+                }
+
+                if(returnElem){
+                    returnElem.className = '';
+                }
+
+
+            }
+
+            let elem = document.querySelector('#' + id + '');
+
+            i.innerHTML = '取车';
+            i.id = 'start-tips';
+            elem.className = 'start';
+            elem.childNodes[0].appendChild(i);
+
+            return;
+        }
+
+        //当前选择的是return
+        if (currType == 'return'){
+
+            let returnElem = document.querySelector('#' + id + '');
+
+            //取还车同日
+            if(this.state.pickupID == id){
+                let i = document.querySelector('#' + id + ' span i');
+                i.innerHTML = '取还车';
+                i.id = 'start-end-tips';
+                returnElem.className = 'end start';
+
+            }else{
+                let returnCol = returnElem.getAttribute('data-colume'),
+                    returnRow = returnElem.parentNode.getAttribute('data-row'),
+                    pickupElem = document.querySelector('#' + this.state.pickupID + ''),
+                    pickupCol = pickupElem.getAttribute('data-colume'),
+                    pickupRow = pickupElem.parentNode.getAttribute('data-row');
+
+                i.innerHTML = '还车';
+                i.id = 'end-tips';
+
+                //如果取还车是同一行需要特殊处理
+                if(returnRow == pickupRow){
+
+                    let diff = returnCol - pickupCol - 1,
+                        currElem = pickupElem,
+                        className = '';
+                    for(let k = 0;k < diff;k++){
+                        className += ` row-${currElem.nextSibling.getAttribute('data-colume')}`;
+                        currElem = currElem.nextSibling;
+                    }
+                    returnElem.parentNode.className = className;
+
+                }else{
+                    pickupElem.parentNode.className = `s-row-${7 - pickupCol}`;
+                    returnElem.parentNode.className = `e-row-${returnCol - 1}`;
+
+                    //找到取还中间相隔多少行
+                    let currRow = parseInt(pickupRow) + 1;
+                    while(currRow < returnRow){
+                        document.querySelector('.day-item ul[data-row="'+ currRow +'"]').className = 'full';
+                        currRow++;
+                    }
+                }
+                returnElem.className = 'end before';
+                pickupElem.className = 'start before';
+
+                returnElem.childNodes[0].appendChild(i);
+
+            }
+
         }
 
     }
@@ -325,21 +462,21 @@ export default class Time extends Component {
             pickupTime = parseFloat(`${pickupDay.hours}${pickupDay.minutes == '30' ? '.5' : ''}`),
             returnTime = parseFloat(`${returnDay.hours}${returnDay.minutes == '30' ? '.5' : ''}`);
 
-        if(hasTodayPickupAndReturn){
-            //不作重复显示
-            if(this.state.warnText == '当日取还，还车时间需晚于取车时间'){
-                return false;
+        if (hasTodayPickupAndReturn && pickupTime >= returnTime) {
+            if (warnID != 1) {
+                this.hideWarn();
             }
+            warnID = 1;
             this.showWarn('当日取还，还车时间需晚于取车时间');
             return false;
         }
 
         //还车时间小于取车时间，例如：10：00取车  还车是9：00
         if(pickupTime > returnTime){
-            //不作重复显示
-            if(this.state.warnText == '不满24小时按1天算'){
-                return false;
+            if (warnID != 2) {
+                this.hideWarn();
             }
+            warnID = 2;
             this.showWarn('不满24小时按1天算');
             return false;
         }
@@ -355,16 +492,22 @@ export default class Time extends Component {
         if(warnTimer != null){
             this.warnShowedEvent();
         }else{
-            this.setState({
-                isShowWarn: true,
-                warnText: text
-            });
+            timer2 = setTimeout(() => {
+                this.setState({
+                    isShowWarn: true,
+                    warnText: text
+                });
+            }, 100);
         }
     }
 
     //隐藏警告框
     hideWarn() {
+        clearTimeout(timer2);
+        timer2 = null;
         if(warnTimer != null){
+            clearTimeout(warnTimer);
+            warnTimer = null;
             this.setState({
                 isShowWarn: false,
             });
@@ -394,8 +537,7 @@ export default class Time extends Component {
     }
 
     render() {
-        let {startTime, endTime,timeRange} = this.props;
-
+        let {startTime, endTime, timeRange, dayList} = this.props;
         return (
             <div className="t-box">
                 <div className="t-box-content">
@@ -429,10 +571,11 @@ export default class Time extends Component {
                         <WeekList/>
                     </div>
 
-                    <div className="day-list-box overflow" ref="dayListBox">
+                    <div className="day-list-box" ref="dayListBox">
                         <DateList
                             startTime={startTime}
                             endTime={endTime}
+                            dayList={JSON.parse(JSON.stringify(dayList))}//断开引用
                             selectDay={(selectTime) => {
                                 this.selectDay(selectTime);
                             }}
@@ -449,8 +592,8 @@ export default class Time extends Component {
                             synchronizationReturnTimeStart={(data) => {
                                 this.synchronizationReturnTimeStart(data);
                             }}
-                            synchronizationReturnTimeMove={(data,nextX) => {
-                                this.synchronizationReturnTimeMove(data,nextX);
+                            synchronizationReturnTimeMove={(data, nextX) => {
+                                this.synchronizationReturnTimeMove(data, nextX);
                             }}
                             synchronizationReturnTimeEnd={(data) => {
                                 this.synchronizationReturnTimeEnd(data);
@@ -462,8 +605,8 @@ export default class Time extends Component {
                             timeRange={timeRange}
                             time={this.state.pickupTime}
                             day={this.state.pickupDay}
-                            selectTime={(time,type) => {
-                                this.selectTime(time,type);
+                            selectTime={(time, type) => {
+                                this.selectTime(time, type);
                             }}
                         />
                         <Range
@@ -475,8 +618,8 @@ export default class Time extends Component {
                             isSynchronization={this.state.isSynchronization}
                             time={this.state.returnTime}
                             day={this.state.returnDay}
-                            selectTime={(time,type) => {
-                                this.selectTime(time,type);
+                            selectTime={(time, type) => {
+                                this.selectTime(time, type);
                             }}
                             changeSynchronization={(isSynchronization) => {
                                 this.changeSynchronization(isSynchronization);

@@ -3,12 +3,13 @@
  */
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import Dialog from '../Dialog/index.jsx';
-import combine from '../../tool/combine';
+import Dialog from '../../../Dialog/index.jsx';
+import combine from '../../../../tool/combine';
 import Event from '../../../../tool/Event';
 import hasClass from '../../../../tool/hasClass';
 import './index.scss';
-import "../Animation/style.scss";
+import "../../../Animation/style.scss";
+
 
 let parentDiv = null,
     dialog = null,
@@ -20,18 +21,18 @@ function create(content, opt) {
         style = opt.style || {},
         defaultTitleBtn = {
             left: {
-                name : '取消',
-                isShow : true
+                name: '取消',
+                isShow: true
             },
             right: {
-                name : '确定',
-                isShow : true
+                name: '确定',
+                isShow: true
             },
         };
 
     //set dialog title btn
-    if(!!opt.titleBtn){
-        defaultTitleBtn = combine(defaultTitleBtn,opt.titleBtn);
+    if (!!opt.titleBtn) {
+        defaultTitleBtn = combine(defaultTitleBtn, opt.titleBtn);
     }
 
     parentDiv = document.createElement('div');
@@ -54,21 +55,8 @@ function create(content, opt) {
         parentDiv
     );
 
-    checkJSXElem();
-
+    openPopup();
     return component;
-}
-
-function checkJSXElem() {
-
-    let timer = setInterval(() => {
-        if (document.querySelector('.zzc-popup .popup-content')) {
-
-            clearInterval(timer);
-            openPopup();
-        }
-    }, 12);
-
 }
 
 //绑定popup-content事件
@@ -77,11 +65,13 @@ function addPopupEvent() {
     //绑定事件
     Event.addEndEventListener(popupNode, function () {
         //关闭后的操作
-        if(!hasClass(popupNode.className,'slide-in')){
-            Event.removeEndEventListener(popupNode,() => {});
+        if (!hasClass(popupNode.className, 'slide-in')) {
+            Event.removeEndEventListener(popupNode, () => {
+            });
             clear();
         }
     });
+
 }
 
 //打开popup
@@ -110,7 +100,6 @@ function closePopup() {
 
         content.className = contentClassArr.join(' ');
         mark.className = markClassArr.join(' ');
-
 
     } else {
         return;
@@ -157,6 +146,9 @@ export default class Popup extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            dialog: null
+        };
     }
 
     static show(content, opt) {

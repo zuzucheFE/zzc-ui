@@ -2,7 +2,6 @@
  * Created by lamho on 2017/3/30.
  */
 import React, {Component} from 'react';
-import setDayArray from '../../../../../tool/setDayList';
 import Item from './DateListItem.jsx';
 
 export default class DateList extends Component {
@@ -13,25 +12,25 @@ export default class DateList extends Component {
     //只有取还车日期不一样时才会去执行组件的计算
     shouldComponentUpdate(nextProps, nextState) {
 
-        let newPickupY = nextProps.pickupDay ? nextProps.pickupDay.getFullYear() : null,
-            newPickupM = nextProps.pickupDay ? nextProps.pickupDay.getMonth() : null,
-            newPickupD = nextProps.pickupDay ? nextProps.pickupDay.getDate() : null,
-            oldPickupY = this.props.pickupDay ? this.props.pickupDay.getFullYear() : null,
-            oldPickupM = this.props.pickupDay ? this.props.pickupDay.getMonth() : null,
-            oldPickupD = this.props.pickupDay ? this.props.pickupDay.getDate() : null;
+        let newY = nextProps.pickupDay ? nextProps.pickupDay.getFullYear() : null,
+            newM = nextProps.pickupDay ? nextProps.pickupDay.getMonth() : null,
+            newD = nextProps.pickupDay ? nextProps.pickupDay.getDate() : null,
+            oldY = this.props.pickupDay ? this.props.pickupDay.getFullYear() : null,
+            oldM = this.props.pickupDay ? this.props.pickupDay.getMonth() : null,
+            oldD = this.props.pickupDay ? this.props.pickupDay.getDate() : null;
 
-        if(newPickupY != oldPickupY || newPickupM != oldPickupM || newPickupD != oldPickupD){
+        if (newY != oldY || newM != oldM || newD != oldD) {
             return true;
         }
 
-        let newReturnY = nextProps.returnDay ? nextProps.returnDay.getFullYear() : null,
-            newReturnM = nextProps.returnDay ? nextProps.returnDay.getMonth() : null,
-            newReturnD = nextProps.returnDay ? nextProps.returnDay.getDate() : null,
-            oldReturnY = this.props.returnDay ? this.props.returnDay.getFullYear() : null,
-            oldReturnM = this.props.returnDay ? this.props.returnDay.getMonth() : null,
-            oldReturnD = this.props.returnDay ? this.props.returnDay.getDate() : null;
+        newY = nextProps.returnDay ? nextProps.returnDay.getFullYear() : null;
+        newM = nextProps.returnDay ? nextProps.returnDay.getMonth() : null;
+        newD = nextProps.returnDay ? nextProps.returnDay.getDate() : null;
+        oldY = this.props.returnDay ? this.props.returnDay.getFullYear() : null;
+        oldM = this.props.returnDay ? this.props.returnDay.getMonth() : null;
+        oldD = this.props.returnDay ? this.props.returnDay.getDate() : null;
 
-        if(newReturnY != oldReturnY || newReturnM != oldReturnM || newReturnD != oldReturnD){
+        if (newY != oldY || newM != oldM || newD != oldD) {
             return true;
         }
 
@@ -65,19 +64,21 @@ export default class DateList extends Component {
         }
     }
 
+    componentDidUpdate() {
+        let {startTime, endTime, pickupDay, returnDay, dayList} = this.props;
+    }
+
+
+
     render() {
-
-        let {startTime, endTime, pickupDay, returnDay} = this.props;
-
-        let dayList = setDayArray(startTime, endTime, pickupDay, returnDay);
-
+        let {dayList} = this.props;
         return (
             <div onClick={() => {
                 this.clickDay(event.target);
             }}>
                 {
-                    dayList.map((e,i) => {
-                        return <Item data={e} key={`date-${i}`} />;
+                    dayList.map((e, i) => {
+                        return <Item data={e} key={`date-${i}`}/>;
                     })
                 }
             </div>

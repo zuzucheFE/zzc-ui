@@ -157,10 +157,10 @@ function getMonthDayArray(time, dayCount, pickupDay, returnDay) {
 //创建日期数组
 function createDayArr(starTime, endTime, pickupDay, returnDay) {
 
-    let starYear = starTime.getFullYear(),
-        starMonth = starTime.getMonth(),
-        endYear = endTime.getFullYear(),
-        endMonth = endTime.getMonth(),
+    let starYear = parseInt(starTime.getFullYear()),
+        starMonth = parseInt(starTime.getMonth()),
+        endYear = parseInt(endTime.getFullYear()),
+        endMonth = parseInt(endTime.getMonth()),
         dateArray = [],
         diffMonth = (endYear - starYear) * 12 + (endMonth - starMonth) + 1,
         currYear = starYear,

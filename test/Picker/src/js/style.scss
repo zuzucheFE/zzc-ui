@@ -12,6 +12,11 @@ img{
 }
 #root{
   font-size: .3rem;
+
+  div{
+    padding: .2rem;
+    background: #fff;
+  }
 }
 
 button{
@@ -24,4 +29,5 @@ button{
 p{
   background: #fff;
   padding: .2rem;
+  font-size: .28rem;
 }

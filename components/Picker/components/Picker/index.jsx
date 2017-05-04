@@ -6,7 +6,13 @@ import Popup from '../Popup/index.jsx';
 import DayListBox from '../DayListBox/index.jsx';
 import './style.scss';
 import '../../../../reseatStyle/reset.scss';
-import debug from '../../../../tool/debug';
+import debug from '../../tool/debug';
+import setDayArray from '../../tool/setDayList';
+import {startArrayToDate, endArrayToDate} from '../../tool/arrayToDate';
+import formatTime from '../../../../tool/format';
+import {compareDay} from '../../tool/compare';
+import {setTime, setDay, setDayCount} from '../../tool/dateTool';
+
 /**
  * 控制显示
  * @param visibility     控制是否显示时间框    必须传
@@ -30,18 +36,128 @@ import debug from '../../../../tool/debug';
  *      @param end       结束  默认为 24
  * **/
 export default class Picker extends Component{
+
     constructor(props){
         super(props);
+        let {startTime, endTime} = this.props;
+
+        //如果没有传开始和结束日期，默认是今天到明年今天
+        let initStartTime = startArrayToDate(startTime),
+            initEndTime = endArrayToDate(endTime, initStartTime),
+            pickupTime = setTime(props.pickupTime,this.props.defaultTime),
+            pickupDay = setDay(props.pickupTime),
+            returnTime = setTime(props.returnTime,this.props.defaultTime),
+            returnDay = setDay(props.returnTime),
+            dayList = setDayArray(initStartTime, initEndTime, pickupDay, returnDay),
+            pickupInfo = setDay(props.pickupTime) ? formatTime(props.pickupTime) : null,
+            returnInfo = setDay(props.returnTime) ? formatTime(props.returnTime) : null,
+            dayCount = pickupDay && returnDay ? setDayCount(pickupDay,returnDay) : null;
+
+        //在初始化不渲染的时候，就将dayList数组做出来，存在picker里面，之后的dayList用的都是这个初始化出来的数组。
+        //当开始和结束日期改变的时候，会触发setState去更改这个数组，不用在显示选择框的时候再去做这个dayList数组
+        this.state = {
+            dayList: dayList,
+            startTime: initStartTime,
+            endTime: initEndTime,
+            pickupTime: pickupTime,
+            returnTime: returnTime,
+            pickupDay: pickupDay,
+            returnDay: returnDay,
+            pickupID: pickupInfo ? `t-${pickupInfo.year}-0${pickupInfo.month}-${pickupInfo.day}` : null,
+            returnID: returnInfo ? `t-${returnInfo.year}-0${returnInfo.month}-${returnInfo.day}` : null,
+            dayCount: dayCount
+        };
+
+    }
+
+    componentDidMount() {
+        if (debug(this.props)) {
+            return false;
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if(nextProps.visibility != this.props.visibility){
+
+        //改变visibility代表需要更改显示
+        if (nextProps.visibility != this.props.visibility) {
             this.startComponent(nextProps.visibility);
-            return true;
-        }else{
-            return false;
+
+            // 在关闭时，获取到选择的时间，然后先计算对应的dayList的状态
+            if (!nextProps.visibility) {
+
+                let newPickupTime = nextProps.pickupTime ? formatTime(nextProps.pickupTime) : null,
+                    oldPickupTime = this.props.pickupTime ? formatTime(this.props.pickupTime) : null,
+                    newReturnTime = nextProps.returnTime ? formatTime(nextProps.returnTime) : null,
+                    oldReturnTime = this.props.returnTime ? formatTime(this.props.returnTime) : null,
+                    pickupTime = setTime(nextProps.pickupTime,nextProps.defaultTime),
+                    pickupDay = setDay(nextProps.pickupTime),
+                    returnTime = setTime(nextProps.returnTime,nextProps.defaultTime),
+                    returnDay = setDay(nextProps.returnTime),
+                    dayList = setDayArray(this.state.startTime, this.state.endTime, pickupDay, returnDay);
+
+                //如果选择的时间和之前的不一样，在时间框关闭后则需要重新组装。
+                if (!compareDay(newPickupTime, oldPickupTime) || !compareDay(newReturnTime, oldReturnTime)) {
+
+                    let pickupInfo = pickupDay ? formatTime(pickupDay) : null,
+                        returnInfo = returnDay ? formatTime(returnDay) : null;
+
+                    this.setState({
+                        dayList: dayList,
+                        pickupTime: pickupTime,
+                        returnTime: returnTime,
+                        pickupDay: pickupDay,
+                        returnDay: returnDay,
+                        dayCount: pickupDay && returnDay ? setDayCount(pickupDay,returnDay) : null,
+                        pickupID: pickupInfo ? `t-${pickupInfo.year}-0${pickupInfo.month}-${pickupInfo.day}` : null,
+                        returnID: returnInfo ? `t-${returnInfo.year}-0${returnInfo.month}-${returnInfo.day}` : null
+                    });
+
+                }
+
+                //日期没有变，时间可能会变
+                this.setState({
+                    dayList: dayList,
+                    pickupTime: pickupTime,
+                    returnTime: returnTime,
+                    dayCount: pickupDay && returnDay ? setDayCount(pickupDay,returnDay) : null,
+                });
+
+            }
         }
 
+        return false;
+
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        //改变日历范围
+        if (nextProps.startTime && nextProps.endTime) {
+            let newStart = startArrayToDate(nextProps.startTime).getTime(),
+                newEnd = endArrayToDate(nextProps.endTime, nextProps.startTime).getTime(),
+                oldStart = this.state.startTime.getTime(),
+                oldEnd = this.state.endTime.getTime();
+
+            //改变时间范围
+            if (newStart != oldStart || newEnd != oldEnd) {
+                let initStartTime = startArrayToDate(nextProps.startTime),
+                    initEndTime = endArrayToDate(nextProps.endTime, nextProps.startTime);
+
+                this.setState({
+                    pickupTime: setTime(null, this.props.defaultTime),
+                    returnTime: setTime(null, this.props.defaultTime),
+                    pickupDay: null,
+                    returnDay: null,
+                    pickupID: null,
+                    returnID: null,
+                    dayCount: null,
+                    startTime: initStartTime,
+                    endTime: initEndTime,
+                    dayList: setDayArray(initStartTime, initEndTime, null, null)
+                });
+
+            }
+        }
     }
 
     startComponent(isShow) {
@@ -53,24 +169,20 @@ export default class Picker extends Component{
     }
 
     show() {
-
-        let {startTime,endTime,pickupTime,returnTime,confirmEvent,closeEvent,defaultTime,timeRange} = this.props;
-
-        //如果没有传开始和结束日期，默认是今天到明年今天
-        let initStartTime = startTime ? new Date(startTime[0],startTime[1] - 1,startTime[2]) : new Date(),
-            initEndTime = endTime ? new Date(endTime[0],endTime[1] - 1,endTime[2]) : new Date(new Date(initStartTime).setFullYear(new Date(initStartTime).getFullYear() + 1));
-
-        if(debug(this.props)){
-            return false;
-        }
-
+        let {confirmEvent, closeEvent, defaultTime, timeRange} = this.props;
         Popup.show(<DayListBox
-            startTime={initStartTime}
-            endTime={initEndTime}
-            pickupTime={pickupTime}
-            returnTime={returnTime}
+            startTime={this.state.startTime}
+            endTime={this.state.endTime}
+            dayList={this.state.dayList}
+            pickupTime={this.state.pickupTime}
+            returnTime={this.state.returnTime}
+            pickupDay={this.state.pickupDay}
+            returnDay={this.state.returnDay}
+            dayCount={this.state.dayCount}
             defaultTime={defaultTime}
             timeRange={timeRange}
+            pickupID={this.state.pickupID}
+            returnID={this.state.returnID}
             confirmEvent={(opt) => {
                 confirmEvent(opt);
             }}
@@ -92,12 +204,12 @@ export default class Picker extends Component{
                 height: '100%'
             },
             confirm: () => {
-                if(confirmEvent){
+                if (confirmEvent) {
                     confirmEvent();
                 }
             },
             close: () => {
-                if(closeEvent){
+                if (closeEvent) {
                     closeEvent();
                 }
             },

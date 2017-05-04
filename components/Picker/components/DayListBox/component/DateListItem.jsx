@@ -1,12 +1,85 @@
 import React, {Component} from 'react';
 
+let rowNo = 1;
+
 export default class DateListItem extends Component{
 
     constructor(props){
         super(props);
     }
 
-    setClass(isGone, isBefore, isStart, isEnd, isActive) {
+    componentWillUnmount() {
+        if(rowNo != 1){
+            rowNo = 1;
+        }
+    }
+
+    shouldComponentUpdate() {
+        return false;
+    }
+
+    setUlClass(currRow) {
+        let isActive = false,
+            isStart = false,
+            isEnd = false,
+            startNo = null,
+            endNo = null;
+
+        for(let i = 7;i;i--){
+            if(currRow[i-1].isActive){
+                isActive = true;
+            }
+            if(currRow[i-1].isStart){
+                isActive = true;
+                isStart = true;
+                startNo = i;
+            }
+            if(currRow[i-1].isEnd){
+                isActive = true;
+                isEnd = true;
+                endNo = i;
+            }
+        }
+
+        if(!isActive){
+            return '';
+        }
+
+        //取还车同一行并且不是同一天取还车
+        if(isStart && isEnd && startNo != endNo){
+            let diff = endNo - startNo - 1,
+                className = '',
+                currNo = startNo + 1;
+            for(let k = 0;k < diff;k++){
+                className += ` row-${currNo}`;
+                currNo++;
+            }
+            return className;
+        }
+
+        //取还车同一天
+        if (isStart && isEnd && startNo == endNo) {
+            return '';
+        }
+
+        //取车日期的行
+        if(isStart && isActive){
+            return `s-row-${7 - startNo}`;
+        }
+
+        //还车日期的行
+        if(isEnd && isActive){
+            return `e-row-${endNo - 1}`;
+        }
+
+        //整行active
+        if(isActive){
+            return 'full';
+        }
+
+    }
+
+    setLiClass(isGone, isBefore, isStart, isEnd, isActive) {
         let className = '';
 
         if(isGone){
@@ -21,10 +94,6 @@ export default class DateListItem extends Component{
             className += isBefore ? ' end before ' : ' end ';
         }
 
-        if(isActive){
-            className += 'active';
-        }
-
         //如果是当天去还车就特殊处理重定className的值
         if(isStart && isEnd){
             className = 'start end';
@@ -34,9 +103,12 @@ export default class DateListItem extends Component{
     }
 
     //设置li所有的属性
-    setLiAttribute(data, currData) {
+    setLiAttribute(data, currData, colume) {
         return (
-            <li className={this.setClass(currData.isGone, currData.isBefore, currData.isStart, currData.isEnd, currData.isActive)}>
+            <li id={currData.date != '' ? `t-${data.year}-${data.month}-${currData.date}` : ''}
+                className={this.setLiClass(currData.isGone, currData.isBefore, currData.isStart, currData.isEnd, currData.isActive)}
+                data-colume={colume}
+            >
                 <span data-gone={currData.isGone ? '1' : '0'}
                       data-year={data.year}
                       data-month={data.month}
@@ -52,11 +124,11 @@ export default class DateListItem extends Component{
     //设置取还车tips
     setTips(isStart,isEnd) {
         if(isStart && isEnd){
-            return (<i>取还车</i>);
+            return (<i id="start-end-tips">取还车</i>);
         }else if(isStart){
-            return (<i>取车</i>);
+            return (<i id="start-tips">取车</i>);
         }else if(isEnd){
-            return (<i>还车</i>);
+            return (<i id="end-tips">还车</i>);
         }
     }
 
@@ -64,20 +136,22 @@ export default class DateListItem extends Component{
         let list = data.dayList,
             row = list.length / 7,
             itemListJSXElement = [];
+
         for(let i = 0;i < row;i++){
             let currRow = list.splice(0,7),
                 currRowJSXElement = (
-                    <ul>
-                        {this.setLiAttribute(data,currRow[0])}
-                        {this.setLiAttribute(data,currRow[1])}
-                        {this.setLiAttribute(data,currRow[2])}
-                        {this.setLiAttribute(data,currRow[3])}
-                        {this.setLiAttribute(data,currRow[4])}
-                        {this.setLiAttribute(data,currRow[5])}
-                        {this.setLiAttribute(data,currRow[6])}
+                    <ul data-row={rowNo} className={this.setUlClass(currRow)}>
+                        {this.setLiAttribute(data,currRow[0],1)}
+                        {this.setLiAttribute(data,currRow[1],2)}
+                        {this.setLiAttribute(data,currRow[2],3)}
+                        {this.setLiAttribute(data,currRow[3],4)}
+                        {this.setLiAttribute(data,currRow[4],5)}
+                        {this.setLiAttribute(data,currRow[5],6)}
+                        {this.setLiAttribute(data,currRow[6],7)}
                     </ul>
                 );
             itemListJSXElement.push(currRowJSXElement);
+            rowNo++;
         }
 
         return itemListJSXElement;

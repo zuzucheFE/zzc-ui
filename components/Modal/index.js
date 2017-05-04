@@ -22,9 +22,9 @@ class Modal extends Component {
                     this.refs.modalWrap.className = 'modal-wrap show';
                     setTimeout(() => {
                         this.refs.modalContent.className = 'modal-content-box show';
-                    },350)
+                    },350);
                 },100);
-            },14)
+            },14);
         }else{
             this.refs.modalBox.className = 'hide-modal';
             this.refs.modalWrap.className = 'modal-wrap';
@@ -33,8 +33,8 @@ class Modal extends Component {
                 setTimeout(() => {
                     this.refs.modalContent.className = 'modal-content-box';
                     this.refs.modalBox.style.display = 'none';
-                },100)
-            },300)
+                },100);
+            },300);
         }
 
     }

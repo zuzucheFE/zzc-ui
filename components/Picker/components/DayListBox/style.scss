@@ -1,3 +1,6 @@
+@import "./li-status-style";
+
+
 .t-box {
   position: relative;
   height: 100%;
@@ -36,18 +39,29 @@
       .t-pickup-time,
       .t-return-time {
         color: #fff;
-        height: 100%;
+        height: 1.6rem;
         width: 2.7rem;
-        overflow: hidden;
         box-sizing: border-box;
 
         .t-animate-box {
-          height: 100%;
+          height: 3.2rem;
           width: 100%;
+
+          &.zzc-animation-up-slide{
+            transform: translateY(0%);
+            -webkit-transform: translateY(0%);
+            transition: transform .5s;
+            -webkit-transition: transform .5s;
+
+            &.in{
+              transform: translateY(-1.6rem);
+              -webkit-transform: translateY(-1.6rem);
+            }
+          }
 
           .t-time-box {
             position: relative;
-            height: 100%;
+            height: 1.6rem;
             width: 2.7rem;
 
             .t-time-info {
@@ -172,8 +186,14 @@
     }
 
     .day-list-box {
-      overflow: hidden;
+      overflow-y: auto;
       -webkit-overflow-scrolling: touch;
+      transform: translate3d(0, 0, 0);
+      -webkit-transform: translate3d(0, 0, 0);
+
+      & > div {
+        padding-bottom: 3.04rem;
+      }
 
       .day-item {
 
@@ -190,6 +210,7 @@
           -webkit-box-pack: justify;
           -webkit-box-align: center;
           color: #333;
+          font-weight: 400;
 
           &:not(:first-child){
             padding-top: .3rem;
@@ -203,11 +224,13 @@
             text-align: center;
             height: .94rem;
             position: relative;
-            font-weight: 200;
             position: relative;
 
             &.gone {
-              color: #999;
+              span{
+                color: #999!important;
+                font-weight: 200!important;
+              }
             }
 
             &.start,

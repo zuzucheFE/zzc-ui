@@ -22,6 +22,7 @@ export default class Range extends Component{
             touchMoveEvent : null,
             touchEndEvent : null
         };
+
     }
 
     shouldComponentUpdate(nextProps, nextState) {

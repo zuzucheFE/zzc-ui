@@ -2,7 +2,7 @@
  * Created by lamho on 2017/4/6.
  */
 import React, {Component} from 'react';
-import getWeek from '../../../../../tool/getWeek';
+import getWeek from '../../../tool/getWeek';
 import Event from '../../../../../tool/Event';
 
 export default class SelectedTime extends Component {
@@ -32,20 +32,30 @@ export default class SelectedTime extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        let fn = this.animateBoxAnimateCallBack.bind(this);
 
         //需要重新去计算最新的时间和日期的时间对象，否则会出现bug
         this.setState({
             nextDay: nextProps.day ? new Date(new Date(new Date(nextProps.day).setHours(nextProps.time.h)).setMinutes(nextProps.time.m)) : null,
             nextTime: nextProps.time,
+        });
+    }
+
+    componentDidMount() {
+        let fn = this.animateBoxAnimateCallBack.bind(this);
+        this.setState({
             animateEvent: fn
+        },() => {
+            Event.addEndEventListener(this.refs.timeAnimateBox,this.state.animateEvent);
         });
     }
 
     componentDidUpdate() {
         let animateBox = this.refs.timeAnimateBox;
         animateBox.className = 't-animate-box zzc-animation-up-slide in';
-        Event.addEndEventListener(animateBox,this.state.animateEvent);
+    }
+
+    componentWillUnmount(){
+        Event.removeEndEventListener(this.refs.timeAnimateBox,this.state.animateEvent);
     }
 
     animateBoxAnimateCallBack() {
@@ -56,7 +66,6 @@ export default class SelectedTime extends Component {
             currTime : this.state.nextTime
         },() => {
             animateBox.className = 't-animate-box';
-            Event.removeEndEventListener(animateBox,this.state.animateEvent);
         });
 
     }

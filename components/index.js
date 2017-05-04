@@ -9,4 +9,5 @@ export { default as TextToast } from './TextToast';
 export { default as Modal } from './Modal';
 export { default as Section } from './Section';
 export { default as Tabs } from './Tabs';
+export { default as Dialog } from './Dialog';
 export { Picker } from './Picker';

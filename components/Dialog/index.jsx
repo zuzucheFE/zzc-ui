@@ -17,12 +17,10 @@ export default class Dialog extends Component {
 
             this.props.afterConfirm() && (() => {
                 _this.props.confirm();
-                _this.props.close();
             })();
 
         } else {
             _this.props.confirm();
-            _this.props.close();
         }
     }
 
@@ -33,7 +31,17 @@ export default class Dialog extends Component {
 
     render() {
 
-        let {title, defaultTitleBtn} = this.props;
+        let {title, defaultTitleBtn} = this.props,
+            btnOpt = defaultTitleBtn ? defaultTitleBtn : {
+                    left: {
+                        name: '取消',
+                        isShow: true
+                    },
+                    right: {
+                        name: '确定',
+                        isShow: true
+                    },
+                };
 
         return (
             <div className='zzc-dialog'>
@@ -41,11 +49,19 @@ export default class Dialog extends Component {
                     !!title && <div className="zzc-dialog-title-box">
                         <div className="zzc-dialog-title">
                             {
-                                defaultTitleBtn.left.isShow && <div onClick={this.clickCancel.bind(this)} className="zzc-dialog-btn">{defaultTitleBtn.left.name}</div>
+                                btnOpt.left.isShow &&
+                                <div
+                                    onClick={this.clickCancel.bind(this)}
+                                    style={btnOpt.left.style && btnOpt.left.style}
+                                    className="zzc-dialog-btn">{btnOpt.left.name}</div>
                             }
                             <h5>{title}</h5>
                             {
-                                defaultTitleBtn.right.isShow && <div onClick={this.clickConfirm.bind(this)} className="zzc-dialog-btn confirm">{defaultTitleBtn.right.name}</div>
+                                btnOpt.right.isShow &&
+                                <div
+                                    onClick={this.clickConfirm.bind(this)}
+                                    style={btnOpt.right.style && btnOpt.right.style}
+                                    className="zzc-dialog-btn confirm">{btnOpt.right.name}</div>
                             }
                         </div>
                         <div className="zzc-dialog-title-perch"></div>
