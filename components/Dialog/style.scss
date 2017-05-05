@@ -55,7 +55,7 @@
         font-size: .28rem;
         color: #666;
         height: 100%;
-        width: .5rem;
+        min-width: .5rem;
 
         &.confirm {
           color: #4E7CDD;
