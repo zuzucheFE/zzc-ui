@@ -1,5 +1,5 @@
 {
-  "name": "zzc-ui-test",
+  "name": "zzc-ui",
   "version": "1.0.11",
   "description": "租租车ui框架",
   "main": "./lib/index.js",
