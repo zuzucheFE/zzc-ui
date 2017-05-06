@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import getWeek from '../../../tool/getWeek';
-import Event from '../../../../../tool/Event';
+import Event from '../../../../tool/Event';
 
 export default class SelectedTime extends Component {
 

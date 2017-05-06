@@ -1,0 +1,10 @@
+/node_modules/
+*/node_modules/
+.idea/
+.vscode/
+.DS_Store/
+*/.DS_Store/
+/demo/
+/log/
+gulpfile.js
+webpack.config.js

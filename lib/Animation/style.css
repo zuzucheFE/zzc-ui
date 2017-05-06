@@ -1,0 +1,16 @@
+.zzc-animation-fade {
+  transition: opacity .3s;
+  -webkkit-transition: opacity .3s;
+  opacity: 0; }
+  .zzc-animation-fade.fade-in {
+    opacity: 1; }
+
+.zzc-animation-slide {
+  transition: transform .5s;
+  -webkkit-transition: transform .5s; }
+  .zzc-animation-slide.slide-bottom {
+    transform: translateY(100%);
+    -webkit-transform: translateY(100%); }
+    .zzc-animation-slide.slide-bottom.slide-in {
+      transform: translateY(0);
+      -webkit-transform: translateY(0); }

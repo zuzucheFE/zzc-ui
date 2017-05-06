@@ -10,7 +10,7 @@ import Range from './component/Range.jsx';
 import WarnSlideTip from '../WarnSlideTip';
 import TextToast from '../../../TextToast';
 
-import formatTime from '../../../../tool/format';
+import formatTime from '../../../tool/format';
 import {setDayCount} from '../../tool/dateTool';
 
 

@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import Event from '../../../../tool/Event';
+import Event from '../../../tool/Event';
 
 function base(){
 

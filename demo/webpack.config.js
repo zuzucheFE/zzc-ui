@@ -1,4 +1,4 @@
-var path = require('path');
+var path = require( 'path' );
 
 module.exports = {
     entry: {
@@ -15,24 +15,24 @@ module.exports = {
     output: {
         publicPath: '../',
     },
-    module: {
-        rules: [
-            {
-                test: /\.(jsx|js)$/,
-                loader: "babel-loader",
-
-                options: {
-                    presets: ["es2015","react","stage-2"]
-                },
-            },
-        ]
-    },
+    // module: {
+    //     rules: [
+    //         {
+    //             test: /\.(jsx|js)$/,
+    //             loader: "babel-loader",
+    //
+    //             options: {
+    //                 presets: ["es2015","react","stage-2"]
+    //             },
+    //         },
+    //     ]
+    // },
     //控制使用demo的node_modules的包还是开发中的包
     resolve: {
         alias: {
             "zzc-ui": path.resolve(
                 __dirname,
-                "../index.js"
+                "../lib/index.js"
             )
         }
     },

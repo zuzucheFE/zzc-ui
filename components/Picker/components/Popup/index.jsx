@@ -4,9 +4,9 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import Dialog from '../../../Dialog/index.jsx';
-import combine from '../../../../tool/combine';
-import Event from '../../../../tool/Event';
-import hasClass from '../../../../tool/hasClass';
+import combine from '../../../tool/combine';
+import Event from '../../../tool/Event';
+import hasClass from '../../../tool/hasClass';
 import './index.scss';
 import "../../../Animation/style.scss";
 

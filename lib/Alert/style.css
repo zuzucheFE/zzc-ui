@@ -1,0 +1,77 @@
+.zzc-alert .zzc-alert-mark {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 9999;
+  transition: all .2s;
+  -webkit-transition: all .2s;
+  opacity: 0;
+  -webkit-opacity: 0; }
+  .zzc-alert .zzc-alert-mark.show {
+    opacity: 1;
+    -webkit-opacity: 1; }
+
+.zzc-alert .zzc-alert-box {
+  box-sizing: border-box;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  height: 100%;
+  z-index: 10000;
+  display: flex;
+  display: -webkit-box;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  overflow: auto;
+  outline: 0px; }
+  .zzc-alert .zzc-alert-box .zzc-alert-content {
+    background: #fff;
+    width: 5.4rem;
+    border-radius: .16rem;
+    transform: scale(0.2, 0.2);
+    -webkit-transform: scale(0.2, 0.2);
+    transition: all .1s;
+    -webkit-transition: all .1s;
+    opacity: 0;
+    -webkit-opacity: 0;
+    padding-top: 0.3rem;
+    overflow: hidden; }
+    .zzc-alert .zzc-alert-box .zzc-alert-content.show {
+      transform: scale(1, 1);
+      -webkit-transform: scale(1, 1);
+      opacity: 1;
+      -webkit-opacity: 1; }
+    .zzc-alert .zzc-alert-box .zzc-alert-content .zzc-alert-header {
+      text-align: center;
+      font-size: .4rem;
+      padding: 0.06rem .15rem;
+      margin: 0; }
+    .zzc-alert .zzc-alert-box .zzc-alert-content .zzc-alert-body {
+      text-align: center;
+      font-size: 0.32rem;
+      margin-top: 0.2rem;
+      padding: 0 0.3rem 0.15rem; }
+    .zzc-alert .zzc-alert-box .zzc-alert-content .zzc-alert-buttonGroup {
+      margin-top: .2rem;
+      display: -webkit-box;
+      border-top: .01rem solid #ddd; }
+      .zzc-alert .zzc-alert-box .zzc-alert-content .zzc-alert-buttonGroup button {
+        -webkit-box-flex: 1;
+        display: block;
+        text-align: center;
+        height: 1rem;
+        font-size: .32rem; }
+        .zzc-alert .zzc-alert-box .zzc-alert-content .zzc-alert-buttonGroup button:active {
+          background: #f4f4f4; }
+        .zzc-alert .zzc-alert-box .zzc-alert-content .zzc-alert-buttonGroup button:first-child {
+          color: #000;
+          border-right: .01rem solid #ddd; }
+        .zzc-alert .zzc-alert-box .zzc-alert-content .zzc-alert-buttonGroup button.singles {
+          border: none; }

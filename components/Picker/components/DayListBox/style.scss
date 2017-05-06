@@ -140,7 +140,15 @@
 
         i{
           vertical-align: middle;
-          font-size: .36rem;
+          width: .36rem;
+          height: .36rem;
+          display: block;
+
+          &.iconfont-arrows {
+            background-image: url('../../icons/arrows.svg');
+            background-repeat: no-repeat;
+            background-position: 50%;
+          }
         }
 
       }
