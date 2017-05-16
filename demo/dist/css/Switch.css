@@ -1541,37 +1541,13 @@ button {
   -webkit-transition: all .2s;
   border: .02rem solid #d5d5d5;
 }
-body, html {
-  background: #e1e1e1;
-  height: 100%;
-  width: 100%;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-}
-
-img {
-  width: auto;
-  height: auto;
-}
-
-#root {
-  font-size: .3rem;
-}
-
 button {
   font-size: .3rem;
+  border: .01rem solid #e1e1e1;
+  padding: .1rem;
   background: #fff;
-  border: 1px solid #e1e1e1;
-  /*no*/
 }
 
-.modal-box {
-  padding: .2rem;
-}
-
-.modal-box .title {
-  text-align: center;
+p {
+  font-size: .32rem;
 }

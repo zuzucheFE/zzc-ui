@@ -11,3 +11,4 @@ export { default as Section } from './Section/index.jsx';
 export { default as Tabs } from './Tabs/index.jsx';
 export { default as Dialog } from './Dialog/index.jsx';
 export { default as Picker } from './Picker/index.jsx';
+export { default as Switch } from './Switch/index.jsx';

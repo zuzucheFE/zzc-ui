@@ -1,4 +1,4 @@
-var path = require( 'path' );
+var path = require('path');
 
 module.exports = {
     entry: {
@@ -11,6 +11,7 @@ module.exports = {
         Tabs: "./src/Tabs/js/index.jsx",
         Toast: "./src/Toast/js/index.jsx",
         Picker: "./src/Picker/js/index.jsx",
+        Switch: "./src/Switch/js/index.jsx"
     },
     output: {
         publicPath: '../',
@@ -32,7 +33,7 @@ module.exports = {
         alias: {
             "zzc-ui": path.resolve(
                 __dirname,
-                "../lib/index.js"
+                "../components/index.js"
             )
         }
     },
