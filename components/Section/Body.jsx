@@ -11,8 +11,10 @@ class Body extends Component {
 
     render() {
 
+        let { className = '' } = this.props;
+
         return (
-            <div className="zzc-section-content clear">{this.props.children}</div>
+            <div className={`zzc-section-content clear ${className}`}>{this.props.children}</div>
         )
     }
 }

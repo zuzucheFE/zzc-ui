@@ -12,8 +12,10 @@ class Header extends Component {
 
     render() {
 
+        let { className = '' } = this.props;
+
         return (
-            <header className="zzc-section-title" onClick={this.props.onClick}>
+            <header className={`zzc-section-title ${className}`} onClick={this.props.onClick}>
                 <div className="zzc-section-title-content">
                     {
                         !!this.props.thumb && (

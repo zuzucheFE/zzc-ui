@@ -11,10 +11,11 @@ import {Section} from "zzc-ui";
     <Section.Header 
         title='title' 
         extra='副标题' 
+        className="abc"
         onClick={() => {
             alert('123')
         }}/>
-        <Section.Body>
+        <Section.Body className="abc">
             <p>text</p>
         </Section.Body>
 </Section>
@@ -31,6 +32,7 @@ Section组件是一个实例化组件，里面有两个私有组件
 1. title -> 头部的文案
 2. extra -> 头部的副文案
 3. onClick -> 头部的点击事件
+4. className -> 给head和body一个className，方便更改样式
 
 ### Section.Body ######
 
