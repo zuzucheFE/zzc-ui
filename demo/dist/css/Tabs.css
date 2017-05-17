@@ -1537,7 +1537,6 @@ button {
   -webkit-border-radius: 50%;
   transition: all .2s;
   -webkit-transition: all .2s;
-  border: .02rem solid #d5d5d5;
 }
 body, html {
   height: 100%;
