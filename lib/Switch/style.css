@@ -16,7 +16,6 @@
     border: 1px solid #254FCB;
     /*no*/ }
     .switch-box.open .round {
-      border-color: #254FCB;
       transform: translate3d(0.4rem, 0, 0);
       -webkit-transform: translate3d(0.4rem, 0, 0); }
   .switch-box.close {
@@ -24,9 +23,8 @@
     background: #E7E7E7;
     border: 1px solid #d8d8d8; }
     .switch-box.close .round {
-      border-color: #d5d5d5;
-      transform: translate3d(-0.03rem, 0, 0);
-      -webkit-transform: translate3d(-0.03rem, 0, 0); }
+      transform: translate3d(0.03rem, 0, 0);
+      -webkit-transform: translate3d(0.03rem, 0, 0); }
   .switch-box .round {
     background: #fff;
     display: block;

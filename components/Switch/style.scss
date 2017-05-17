@@ -19,7 +19,6 @@
         border:1px solid #254FCB;
         /*no*/
         .round {
-            border-color:#254FCB;
             transform: translate3d(.4rem, 0, 0);
             -webkit-transform: translate3d(.4rem, 0, 0);
         }
@@ -29,9 +28,8 @@
         background: #E7E7E7;
         border:1px solid #d8d8d8;
         .round {
-            border-color:#d5d5d5;
-            transform: translate3d(-.03rem, 0, 0);
-            -webkit-transform: translate3d(-.03rem, 0, 0);
+            transform: translate3d(.03rem, 0, 0);
+            -webkit-transform: translate3d(.03rem, 0, 0);
         }
     }
 

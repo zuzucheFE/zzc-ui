@@ -1513,7 +1513,6 @@ button {
 }
 
 .switch-box.open .round {
-  border-color: #254FCB;
   transform: translate3d(0.4rem, 0, 0);
   -webkit-transform: translate3d(0.4rem, 0, 0);
 }
@@ -1525,9 +1524,8 @@ button {
 }
 
 .switch-box.close .round {
-  border-color: #d5d5d5;
-  transform: translate3d(-0.03rem, 0, 0);
-  -webkit-transform: translate3d(-0.03rem, 0, 0);
+  transform: translate3d(0.03rem, 0, 0);
+  -webkit-transform: translate3d(0.03rem, 0, 0);
 }
 
 .switch-box .round {
