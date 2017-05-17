@@ -1500,8 +1500,8 @@ button {
   outline: 0;
 }
 .switch-box {
-  width: 1rem;
-  height: .6rem;
+  width: .9rem;
+  height: .54rem;
   border-radius: 1rem;
   -webkit-border-radius: 1rem;
   transform: translate3d(0, 0, 0);
@@ -1524,8 +1524,8 @@ button {
 
 .switch-box.open .round {
   border-color: #254FCB;
-  transform: translate3d(0.4rem, -0.03rem, 0);
-  -webkit-transform: translate3d(0.4rem, -0.03rem, 0);
+  transform: translate3d(0.4rem, 0, 0);
+  -webkit-transform: translate3d(0.4rem, 0, 0);
 }
 
 .switch-box.close {
@@ -1536,15 +1536,15 @@ button {
 
 .switch-box.close .round {
   border-color: #d5d5d5;
-  transform: translate3d(-0.03rem, -0.03rem, 0);
-  -webkit-transform: translate3d(-0.03rem, -0.03rem, 0);
+  transform: translate3d(-0.03rem, 0, 0);
+  -webkit-transform: translate3d(-0.03rem, 0, 0);
 }
 
 .switch-box .round {
   background: #fff;
   display: block;
-  width: .62rem;
-  height: .62rem;
+  width: .48rem;
+  height: .48rem;
   border-radius: 50%;
   -webkit-border-radius: 50%;
   transition: all .2s;
