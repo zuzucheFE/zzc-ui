@@ -16,10 +16,10 @@
   .toast-box .toast-content {
     background: rgba(0, 0, 0, 0.8);
     text-align: center;
-    padding: 10px 20px;
+    padding: .1rem .2rem;
     box-sizing: border-box;
-    border-radius: 10px;
+    border-radius: .1rem;
     max-width: 80%; }
     .toast-box .toast-content p {
-      font-size: 28px;
+      font-size: .28rem;
       color: #fff; }
