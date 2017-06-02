@@ -7,6 +7,19 @@ Loading组件
 
 import {Dialog} from "zzc-ui";
 
+let defaultTitleBtn = {
+    left: {
+        name: <i className="iconfont-goback"></i>,
+        isShow: true,
+        style: {
+            color:'red'
+        }
+    },
+    right: {
+        isShow: false
+    }
+}
+
 <Dialog
     title='hello world'
     close={() => {
@@ -15,20 +28,9 @@ import {Dialog} from "zzc-ui";
     confirm={() => {
         console.log('确定');
     }}
-    defaultTitleBtn={{
-        left: {
-            name: <i className="iconfont-goback"></i>,
-            isShow: true,
-            style: {
-                color:'red'
-            }
-        },
-        right: {
-            isShow: false
-        },
-    }}
+    defaultTitleBtn={defaultTitleBtn}
 >
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi at consequatur cumque dolorum enim iste magnam suscipit vero! Ad aperiam consectetur, debitis deserunt doloremque neque porro quidem repellendus rerum sit.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
 </Dialog>
 ```
 
