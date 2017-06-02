@@ -23,7 +23,8 @@ export default class App extends Component {
                         </div>
                     </Card.Body>
                 </Card>
-                <hr />
+                <br/>
+                <br/>
                 <p>满宽度Card</p>
                 <Card full>
                     <Card.Header title='title' extra={<span>（租租车提供）</span>}></Card.Header>
@@ -33,7 +34,8 @@ export default class App extends Component {
                         </div>
                     </Card.Body>
                 </Card>
-                <hr />
+                <br/>
+                <br/>
                 <p>没有头部Card</p>
                 <Card full>
                     <Card.Body>

@@ -26,7 +26,7 @@ export default class App extends Component{
         return(
             <div>
                 <button onClick={this.show.bind(this)}>点击我（默认3秒）</button>
-                <hr/>
+                <br/>
                 <br/>
                 <button onClick={this.show2.bind(this)}>点击我（1秒）</button>
             </div>

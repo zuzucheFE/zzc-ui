@@ -3,7 +3,7 @@
  */
 import React, {Component} from "react";
 import './style.scss';
-import {Dialog} from "zzc-ui";
+import { Dialog } from "zzc-ui";
 
 export default class App extends Component{
 
@@ -18,30 +18,29 @@ export default class App extends Component{
                 <Dialog
                     title='hello world'
                     close={() => {
-                        console.log('取消');
+                        alert('取消');
                     }}
                     confirm={() => {
-                        console.log('确定');
+                        alert('确定');
                     }}
                 >
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi at consequatur cumque dolorum enim iste magnam suscipit vero! Ad aperiam consectetur, debitis deserunt doloremque neque porro quidem repellendus rerum sit.</p>
                 </Dialog>
                 <br/>
-                <hr/>
-
+                <br/>
                 <h3>没有title的Dialog</h3>
                 <Dialog
                     close={() => {
-                        console.log('取消');
+                        alert('取消');
                     }}
                     confirm={() => {
-                        console.log('确定');
+                        alert('确定');
                     }}
                 >
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi at consequatur cumque dolorum enim iste magnam suscipit vero! Ad aperiam consectetur, debitis deserunt doloremque neque porro quidem repellendus rerum sit.</p>
                 </Dialog>
                 <br/>
-                <hr/>
+                <br/>
 
                 <h3>自定义按钮</h3>
                 <Dialog
@@ -57,16 +56,16 @@ export default class App extends Component{
                         },
                     }}
                     close={() => {
-                        console.log('取消');
+                        alert('取消');
                     }}
                     confirm={() => {
-                        console.log('确定');
+                        alert('确定');
                     }}
                 >
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi at consequatur cumque dolorum enim iste magnam suscipit vero! Ad aperiam consectetur, debitis deserunt doloremque neque porro quidem repellendus rerum sit.</p>
                 </Dialog>
                 <br/>
-                <hr/>
+                <br/>
                 <Dialog
                     title='hello world'
                     defaultTitleBtn={{
@@ -82,10 +81,10 @@ export default class App extends Component{
                         },
                     }}
                     close={() => {
-                        console.log('取消');
+                        alert('取消');
                     }}
                     confirm={() => {
-                        console.log('确定');
+                        alert('确定');
                     }}
                 >
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi at consequatur cumque dolorum enim iste magnam suscipit vero! Ad aperiam consectetur, debitis deserunt doloremque neque porro quidem repellendus rerum sit.</p>

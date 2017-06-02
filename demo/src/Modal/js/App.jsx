@@ -36,8 +36,6 @@ export default class App extends Component{
         return(
             <div>
                 <button onClick={this.showModal.bind(this)}>点击我</button>
-                <hr/>
-                <br/>
 
                 <Modal ref="modal"
                        visible={this.state.visible}
