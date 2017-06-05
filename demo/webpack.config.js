@@ -34,7 +34,7 @@ module.exports = {
         alias: {
             "zzc-ui": path.resolve(
                 __dirname,
-                "../components/index.js"
+                "../lib/index.js"
             )
         }
     },
