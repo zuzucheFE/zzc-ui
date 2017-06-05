@@ -1,6 +1,6 @@
 {
   "name": "zzc-ui",
-  "version": "1.0.20",
+  "version": "1.0.22",
   "description": "租租车ui框架",
   "main": "./lib/index.js",
   "scripts": {
@@ -17,15 +17,20 @@
     "react",
     "conponent"
   ],
-  "maintainers": [ {
-    "name": "LamHo",
-    "email": "linhao.4zhong@163.com"
-  } ],
+  "maintainers": [
+    {
+      "name": "LamHo",
+      "email": "linhao.4zhong@163.com"
+    }
+  ],
   "bugs": {
     "url": "https://github.com/LLLLLamHo/zzc-ui/issues"
   },
   "respositories": {
     "url": "https://github.com/LLLLLamHo/zzc-ui"
+  },
+  "dependencies": {
+    "swiper": "^3.4.2"
   },
   "devDependencies": {
     "babel-core": "^6.10.4",
@@ -67,6 +72,7 @@
     "react-lazyload": "^2.2.0",
     "sass-loader": "^4.1.1",
     "style-loader": "^0.13.1",
+    "swiper": "^3.4.2",
     "through2": "^2.0.3",
     "underscore": "^1.8.3",
     "url-loader": "^0.5.7",

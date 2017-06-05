@@ -33,4 +33,4 @@ import Tabs from "zzc-ui/conponents/Tabs" // --- 单独引入Tabs的组件
 
 ### 提示
 
-具体的使用方式可以看demo的源码。 
+具体的使用方式可以看demo的源码。
