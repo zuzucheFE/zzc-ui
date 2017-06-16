@@ -3,7 +3,7 @@
  */
 import React, { Component } from "react";
 import './style.scss';
-import { ImageViewer } from "zzc-ui/lib/ImageViewer";
+import { ImageViewer } from "zzc-ui";
 
 export default class App extends Component {
 

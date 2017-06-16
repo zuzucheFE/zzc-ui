@@ -47,8 +47,11 @@ class Modal extends Component {
                 <div ref="modalWrap" className="modal-wrap">
                     <div className="modal-back" onClick={this.props.onCancel}/>
                     <div className="modal-content">
-                        <div className="modal-content-box" ref="modalContent">
-                            {this.props.content}
+                        <div
+                            className="modal-content-box"
+                            ref="modalContent"
+                            dangerouslySetInnerHTML={{__html: this.props.content}}
+                        >
                         </div>
                     </div>
                     <div className="modal-close" onClick={this.props.onCancel}></div>
