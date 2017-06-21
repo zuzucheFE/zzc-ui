@@ -1154,20 +1154,20 @@ button {
     border: 1px solid #254FCB;
     /*no*/ }
     .switch-box.open .round {
-      transform: translate3d(0.4rem, 0, 0);
-      -webkit-transform: translate3d(0.4rem, 0, 0); }
+      transform: translate3d(0.39rem, 0, 0);
+      -webkit-transform: translate3d(0.39rem, 0, 0); }
   .switch-box.close {
     /*no*/
     background: #E7E7E7;
     border: 1px solid #d8d8d8; }
     .switch-box.close .round {
-      transform: translate3d(0.03rem, 0, 0);
-      -webkit-transform: translate3d(0.03rem, 0, 0); }
+      transform: translate3d(0.04rem, 0, 0);
+      -webkit-transform: translate3d(0.04rem, 0, 0); }
   .switch-box .round {
     background: #fff;
     display: block;
-    width: .48rem;
-    height: .48rem;
+    width: .47rem;
+    height: .47rem;
     border-radius: 50%;
     -webkit-border-radius: 50%;
     transition: all .2s;
