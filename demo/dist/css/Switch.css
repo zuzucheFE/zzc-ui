@@ -71,7 +71,8 @@
         display: block;
         text-align: center;
         height: 1rem;
-        font-size: .32rem; }
+        font-size: .32rem;
+        width: 50%; }
         .zzc-alert .zzc-alert-box .zzc-alert-content .zzc-alert-buttonGroup button:active {
           background: #f4f4f4; }
         .zzc-alert .zzc-alert-box .zzc-alert-content .zzc-alert-buttonGroup button:first-child {
