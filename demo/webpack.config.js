@@ -15,7 +15,7 @@ module.exports = {
         ImageViewer: "./src/ImageViewer/js/index.jsx"
     },
     output: {
-        publicPath: '../',
+        publicPath: '../'
     },
     // module: {
     //     rules: [

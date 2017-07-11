@@ -1,6 +1,6 @@
 {
   "name": "zzc-ui",
-  "version": "1.0.28",
+  "version": "1.0.29",
   "description": "租租车ui框架",
   "main": "./lib/index.js",
   "scripts": {
