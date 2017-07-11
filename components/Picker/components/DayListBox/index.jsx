@@ -92,7 +92,7 @@ export default class Time extends Component {
     componentDidMount() {
 
         let _this = this,
-            windowHeight = document.body.clientHeight,
+            windowHeight = window.screen.height,
             tHeaderHeight = null,
             weekListHeight = null,
             dialogTitleHeight = null,

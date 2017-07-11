@@ -103,16 +103,17 @@ export default class DateListItem extends Component{
     }
 
     //设置li所有的属性
-    setLiAttribute(data, currData, colume) {
+    setLiAttribute( data, currData,rowNo, colume ) {
         return (
-            <li key={`t-${data.year}-${data.month}-${currData.date}`} id={currData.date != '' ? `t-${data.year}-${data.month}-${currData.date}` : ''}
+            <li key={`${data.year}-${data.month}-${colume}-${rowNo}`} id={currData.date != '' ? `t-${data.year}-${data.month}-${currData.date}` : ''}
                 className={this.setLiClass(currData.isGone, currData.isBefore, currData.isStart, currData.isEnd, currData.isActive)}
                 data-colume={colume}
             >
                 <span data-gone={currData.isGone ? '1' : '0'}
-                      data-year={data.year}
-                      data-month={data.month}
-                      data-date={currData.date}
+                    data-year={data.year}
+                    data-month={data.month}
+                    data-date={currData.date}
+                    onClick={() => { !currData.isGone && this.props.clickDay( data.year, data.month, currData.date ) } }
                 >
                     {currData.content}
                     {this.setTips(currData.isStart, currData.isEnd)}
@@ -140,14 +141,14 @@ export default class DateListItem extends Component{
         for(let i = 0;i < row;i++){
             let currRow = list.splice(0,7),
                 currRowJSXElement = (
-                    <ul data-row={rowNo} className={this.setUlClass(currRow)}>
-                        {this.setLiAttribute(data,currRow[0],1)}
-                        {this.setLiAttribute(data,currRow[1],2)}
-                        {this.setLiAttribute(data,currRow[2],3)}
-                        {this.setLiAttribute(data,currRow[3],4)}
-                        {this.setLiAttribute(data,currRow[4],5)}
-                        {this.setLiAttribute(data,currRow[5],6)}
-                        {this.setLiAttribute(data,currRow[6],7)}
+                    <ul key={`${data.year}-${data.month}-${rowNo}-ul`} data-row={rowNo} className={this.setUlClass(currRow)}>
+                        {this.setLiAttribute(data,currRow[0],rowNo,1)}
+                        {this.setLiAttribute(data,currRow[1],rowNo,2)}
+                        {this.setLiAttribute(data,currRow[2],rowNo,3)}
+                        {this.setLiAttribute(data,currRow[3],rowNo,4)}
+                        {this.setLiAttribute(data,currRow[4],rowNo,5)}
+                        {this.setLiAttribute(data,currRow[5],rowNo,6)}
+                        {this.setLiAttribute(data,currRow[6],rowNo,7)}
                     </ul>
                 );
             itemListJSXElement.push(currRowJSXElement);

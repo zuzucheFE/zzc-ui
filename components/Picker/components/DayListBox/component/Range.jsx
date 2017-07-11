@@ -150,7 +150,7 @@ export default class Range extends Component {
         event.preventDefault();
 
         let currX = event.changedTouches[0].clientX - this.state.startX,
-            currBtnTransform = parseFloat( this.refs.btnBox.style.webkitTransform.split( '(' )[1].split( ')' )[0] ),
+            currBtnTransform = parseFloat( this.refs.btnBox.style.WebkitTransform.split( '(' )[1].split( ')' )[0] ),
             nextX = currBtnTransform + currX;
 
         //当注定更改还车时间选择的时候，将不再同步
@@ -209,7 +209,7 @@ export default class Range extends Component {
         event.preventDefault();
 
         let currX = event.pageX - this.state.startX,
-            currBtnTransform = parseFloat( this.refs.btnBox.style.webkitTransform.split( '(' )[1].split( ')' )[0] ),
+            currBtnTransform = parseFloat( this.refs.btnBox.style.WebkitTransform.split( '(' )[1].split( ')' )[0] ),
             nextX = currBtnTransform + currX;
 
         //当注定更改还车时间选择的时候，将不再同步
@@ -412,7 +412,7 @@ export default class Range extends Component {
                     <div className="range-content-bg"></div>
                     <div className="range-btn-box" style={{
                         transform: `translateX(${this.state.currSlideWidth}px)`,
-                        webkitTransform: `translateX(${this.state.currSlideWidth}px)`
+                        WebkitTransform: `translateX(${this.state.currSlideWidth}px)`
                     }} ref="btnBox">
                         <div className={this.state.btnClass} ref="btn">
                             {this.state.currTime}

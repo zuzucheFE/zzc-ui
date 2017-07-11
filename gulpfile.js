@@ -51,4 +51,8 @@ gulp.task('compile', function () {
     gulp.src('./components/**/*.svg', {base: './components'})
         .pipe(gulp.dest('lib'));
 
-});
+} );
+
+gulp.task( 'watch', function () {
+    gulp.watch( ['./components/**/*.jsx','./components/**/*.js'],['compile'] );
+} );
