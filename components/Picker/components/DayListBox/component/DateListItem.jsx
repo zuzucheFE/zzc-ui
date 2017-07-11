@@ -105,7 +105,7 @@ export default class DateListItem extends Component{
     //设置li所有的属性
     setLiAttribute(data, currData, colume) {
         return (
-            <li id={currData.date != '' ? `t-${data.year}-${data.month}-${currData.date}` : ''}
+            <li key={`t-${data.year}-${data.month}-${currData.date}`} id={currData.date != '' ? `t-${data.year}-${data.month}-${currData.date}` : ''}
                 className={this.setLiClass(currData.isGone, currData.isBefore, currData.isStart, currData.isEnd, currData.isActive)}
                 data-colume={colume}
             >
