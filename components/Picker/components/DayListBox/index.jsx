@@ -105,7 +105,7 @@ export default class Time extends Component {
         bottomHeight = parseFloat(window.getComputedStyle(_this.refs.bottom).height);
         dayListBox = _this.refs.dayListBox;
 
-        dayListBox.style.height = (windowHeight - (tHeaderHeight + weekListHeight + dialogTitleHeight)) + 'px';
+        dayListBox.style.height = (windowHeight - (tHeaderHeight + weekListHeight + dialogTitleHeight + bottomHeight)) + 'px';
         topHeight = tHeaderHeight + weekListHeight + dialogTitleHeight;
 
         //延迟加载日期列表

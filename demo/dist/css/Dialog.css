@@ -833,8 +833,6 @@
       -webkit-overflow-scrolling: touch;
       transform: translate3d(0, 0, 0);
       -webkit-transform: translate3d(0, 0, 0); }
-      .t-box .t-box-content .day-list-box > div {
-        padding-bottom: 3.04rem; }
       .t-box .t-box-content .day-list-box .day-item .day-item-title {
         font-size: .32rem;
         color: #333;
