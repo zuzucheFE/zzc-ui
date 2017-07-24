@@ -12,7 +12,8 @@ import { startArrayToDate, endArrayToDate } from './tool/arrayToDate';
 import formatTime from '../tool/format';
 import { compareDay } from './tool/compare';
 import { setTime, setDay, setDayCount } from './tool/dateTool';
-import DateList from './components/DayListBox/component/DateList.jsx';
+import createList from './tool/createElem.js';
+
 /**
  * 控制显示
  * @param visibility     控制是否显示时间框    必须传
@@ -66,8 +67,10 @@ export default class Picker extends Component {
             pickupID: pickupInfo ? `t-${pickupInfo.year}-0${pickupInfo.month}-${pickupInfo.day}` : null,
             returnID: returnInfo ? `t-${returnInfo.year}-0${returnInfo.month}-${returnInfo.day}` : null,
             dayCount: dayCount,
+            JSXElem: createList(JSON.parse(JSON.stringify(dayList)))
         };
 
+        
     }
 
     componentDidMount() {
@@ -216,6 +219,7 @@ export default class Picker extends Component {
             timeRange={timeRange}
             pickupID={this.state.pickupID}
             returnID={this.state.returnID}
+            JSXElem={this.state.JSXElem}
             confirmEvent={( opt ) => {
                 confirmEvent( opt );
             }}
