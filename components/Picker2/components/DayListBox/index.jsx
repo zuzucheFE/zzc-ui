@@ -107,6 +107,7 @@ export default class Time extends Component {
         dayListBox.style.height = (windowHeight - (tHeaderHeight + weekListHeight + dialogTitleHeight + bottomHeight)) + 'px';
         topHeight = tHeaderHeight + weekListHeight + dialogTitleHeight;
 
+        //如果有选中的日期，就将选中日期置顶
         let startElem = document.querySelector( '.day-list-box .start' );
         if ( startElem ) { 
             document.querySelector( '.day-list-box' ).scrollTop = startElem.offsetTop;
