@@ -635,6 +635,7 @@
 }
 
 .t-box .t-box-content .day-list-box {
+  position: relative;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   transform: translate3d(0, 0, 0);
