@@ -107,14 +107,10 @@ export default class Time extends Component {
         dayListBox.style.height = (windowHeight - (tHeaderHeight + weekListHeight + dialogTitleHeight + bottomHeight)) + 'px';
         topHeight = tHeaderHeight + weekListHeight + dialogTitleHeight;
 
-        //延迟加载日期列表
-        // setTimeout(() => {
-        //     this.setState({
-        //         asynCreatDayList : true
-        //     });
-        // },14);
-
-
+        let startElem = document.querySelector( '.day-list-box .start' );
+        if ( startElem ) { 
+            document.querySelector( '.day-list-box' ).scrollTop = startElem.offsetTop;
+        }
     }
 
     //获取点击的时间

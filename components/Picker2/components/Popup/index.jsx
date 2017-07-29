@@ -64,6 +64,7 @@ function addPopupEvent() {
     let popupNode = document.querySelector( '.zzc-popup .popup-content' );
     //绑定事件
     Event.addEndEventListener( popupNode, function () {
+        
         requestAnimationFrame(() => {
             //显示剩余月份
             let dayItems = document.querySelectorAll( '.day-item' );
