@@ -570,7 +570,7 @@ export default class Time extends Component {
                         <WeekList/>
                     </div>
 
-                    <div dangerouslySetInnerHTML={{ __html: null }} className="day-list-box" ref="dayListBox"/>
+                    <div dangerouslySetInnerHTML={{ __html: JSXElem }} className="day-list-box" ref="dayListBox"/>
                     
                 </div>
                 <div ref="bottom" className="bottom-controller">

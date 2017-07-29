@@ -3,15 +3,15 @@
  */
 import React, { Component } from "react";
 import './style.scss';
-import { Picker2 } from "zzc-ui";
+import Picker2 from "../../../../components/Picker2";
 import formatTime from '../../../tool/format';
 
 export default class App extends Component {
 
     constructor( props ) {
 
-        let pickup2 = new Date( new Date().setMonth( new Date().getMonth() + 1 ) ),
-            return2 = new Date( new Date().setMonth( new Date().getMonth() + 2 ) );
+        let pickup2 = new Date( new Date().setMonth( new Date().getMonth() + 2 ) ),
+            return2 = new Date( new Date().setMonth( new Date().getMonth() + 3 ) );
 
         super( props );
         this.state = {
@@ -99,39 +99,6 @@ export default class App extends Component {
     render() {
         return (
             <div>
-                <h3>未选择时间</h3>
-                <Picker2
-                    visibility={this.state.showPOP}
-                    pickupTime={this.state.pickupTime}
-                    returnTime={this.state.returnTime}
-                    startTime={this.state.startTime}
-                    endTime={this.state.endTime}
-                    confirmEvent={( opt ) => {
-                        this.confirm( opt );
-                    }}
-                    closeEvent={() => {
-                        this.hide();
-                    }}
-                >
-                    <p onClick={this.show.bind( this )}>打开时间框</p>
-                </Picker2>
-
-                <div>
-                    <p>取车时间：{this.state.pickupInfo ?
-                        `${this.state.pickupInfo.year}年${this.state.pickupInfo.month}月${this.state.pickupInfo.day}日-${this.state.pickupInfo.hours}:${this.state.pickupInfo.minutes}`
-                        : '请选择'}
-                    </p>
-                    <p>取车时间：{this.state.returnInfo ?
-                        `${this.state.returnInfo.year}年${this.state.returnInfo.month}月${this.state.returnInfo.day}日-${this.state.returnInfo.hours}:${this.state.returnInfo.minutes}`
-                        : '请选择'}
-                    </p>
-                    <p>共：{this.state.dayCount}</p>
-                </div>
-
-                <hr />
-                <br />
-                <br />
-
                 <h3>已选择时间</h3>
                 <Picker2
                     visibility={this.state.showPOP2}
@@ -166,4 +133,35 @@ export default class App extends Component {
 
 }
 
+// <h3>未选择时间</h3>
+// <Picker2
+//     visibility={this.state.showPOP}
+//     pickupTime={this.state.pickupTime}
+//     returnTime={this.state.returnTime}
+//     startTime={this.state.startTime}
+//     endTime={this.state.endTime}
+//     confirmEvent={( opt ) => {
+//         this.confirm( opt );
+//     }}
+//     closeEvent={() => {
+//         this.hide();
+//     }}
+// >
+//     <p onClick={this.show.bind( this )}>打开时间框</p>
+// </Picker2>
 
+//     <div>
+//         <p>取车时间：{this.state.pickupInfo ?
+//             `${this.state.pickupInfo.year}年${this.state.pickupInfo.month}月${this.state.pickupInfo.day}日-${this.state.pickupInfo.hours}:${this.state.pickupInfo.minutes}`
+//             : '请选择'}
+//         </p>
+//         <p>取车时间：{this.state.returnInfo ?
+//             `${this.state.returnInfo.year}年${this.state.returnInfo.month}月${this.state.returnInfo.day}日-${this.state.returnInfo.hours}:${this.state.returnInfo.minutes}`
+//             : '请选择'}
+//         </p>
+//         <p>共：{this.state.dayCount}</p>
+//     </div>
+
+//     <hr />
+//     <br />
+//     <br />

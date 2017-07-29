@@ -107,7 +107,6 @@ function getMonthDayArray(time, dayCount, pickupDay, returnDay) {
     function _setDateInfo(){
         let currDay = new Date(year, month, cont + 1),
             week = currDay.getDay();
-
         let currDayInfo = setDayInfo(currDay, pickupDay, returnDay);
 
 
@@ -167,13 +166,15 @@ function createDayArr(starTime, endTime, pickupDay, returnDay) {
         currMonth = starMonth;
 
     for (let i = 1; i <= diffMonth; i++) {
-        let currDate = new Date(currYear, currMonth, 1),//当前月份
-            currDayCount = getMonthTotalDay(currDate);
+        let currDate = new Date( currYear, currMonth, 1 ),//当前月份
+            currDayCount = getMonthTotalDay( currDate ),
+            dayList = getMonthDayArray( currDate, currDayCount, pickupDay, returnDay );
 
         dateArray.push({
             year: currDate.getFullYear().toString(),
             month: currDate.getMonth() + 1 < 10 ? `0${currDate.getMonth() + 1}` : (currDate.getMonth() + 1).toString(),
-            dayList: getMonthDayArray(currDate, currDayCount, pickupDay, returnDay)
+            dayList: dayList,
+            isShow: _isShowMonth(dayList)//在渲染时时候显示出来，
         });
 
         //如果月份到12月，就加1年，月份为1
@@ -188,6 +189,16 @@ function createDayArr(starTime, endTime, pickupDay, returnDay) {
 
     return dateArray;
 
+}
+
+//查看每个月份的日期中是否有选中的日期，如果有那么该月份在渲染时要显示
+function _isShowMonth( dayList ) { 
+    for ( let i = 0; i < dayList.length; i++ ) { 
+        if ( dayList[i].isStart ) {
+            return true;
+        }
+    }
+    return false;
 }
 
 export default function (starTime, endTime, pickupDay, returnDay) {

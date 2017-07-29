@@ -1,21 +1,46 @@
 export default function ( calendarList ) {
     let elem = '';
-
     for ( let i = 0; i < calendarList.length; i++ ) {
-        elem += `<div class="day-item">
-                <div class="day-item-title">
-                    <span>${calendarList[i].year}年</span>
-                    <span>${calendarList[i].month}月</span>
-                </div>
-                <div class="day-item-content">
-                    ${setCalendarDay( calendarList[i] )}
-                </div>
-            </div>`;
+        let row = calendarList[i].dayList.length / 7,
+            height = row + 1 + ( ( row - 1 ) * .1 );
+        elem += `<div class="day-item-box" style="height:${height}rem">
+                    <div class="${setMonthShow(calendarList,i)}">
+                        <div class="day-item-title">
+                            <span>${calendarList[i].year}年</span>
+                            <span>${calendarList[i].month}月</span>
+                        </div>
+                        <div class="day-item-content">
+                            ${setCalendarDay( calendarList[i] )}
+                        </div>
+                    </div>
+                </div>`;
     }
-
     return elem;
 }
 
+//设置内个月份是否在第一次显示
+//每个月份儿的isShow==true的前一个月和下一个月在第一次渲染时会显示出来
+function setMonthShow( calendarList, i ) {
+    
+    //当前月份不是选中的月份，那么就判断下一个月份是否显示
+    if ( !calendarList[i].isShow && calendarList[i + 1] && calendarList[i + 1].isShow) { 
+        return "day-item";
+    }
+
+    //判断当前月份的上一个月份是否显示
+    if ( !calendarList[i].isShow && calendarList[i - 1] && calendarList[i - 1].isShow) { 
+        return "day-item";
+    }
+
+    //当前的月份是需要显示的，为取车时间
+    if ( calendarList[i].isShow) { 
+        return "day-item";
+    }
+
+    return 'day-item hidden-item';
+}
+
+//设置每个月份的每一行
 function setCalendarDay( data ) {
 
     let list = data.dayList,
@@ -42,6 +67,7 @@ function setCalendarDay( data ) {
 
 }
 
+//设置没行的样式
 function setUlClass( currRow ) {
     let isActive = false,
         isStart = false,
@@ -104,6 +130,7 @@ function setUlClass( currRow ) {
 
 }
 
+//设置每个日期状态对应的样式
 function setLiClass( isGone, isBefore, isStart, isEnd, isActive ) {
     let className = '';
 
@@ -127,23 +154,11 @@ function setLiClass( isGone, isBefore, isStart, isEnd, isActive ) {
     return className;
 }
 
-//设置取还车tips
-function setTips( isStart, isEnd ) {
-    if ( isStart && isEnd ) {
-        return ( <i id="start-end-tips">取还车</i> );
-    } else if ( isStart ) {
-        return ( <i id="start-tips">取车</i> );
-    } else if ( isEnd ) {
-        return ( <i id="end-tips">还车</i> );
-    } else { 
-        return ''
-    }
-}
-
+//设置每个日期的内容
 function setLiAttribute( data, currData, rowNo, colume ) {
-    
+
     return `<li id=${currData.date != '' ? `t-${data.year}-${data.month}-${currData.date}` : ''}
-            class=${setLiClass( currData.isGone, currData.isBefore, currData.isStart, currData.isEnd, currData.isActive )}
+            class="${setLiClass( currData.isGone, currData.isBefore, currData.isStart, currData.isEnd, currData.isActive )}"
             data-colume="${colume}"
         >
             <span data-gone=${currData.isGone ? '1' : '0'}
@@ -152,7 +167,6 @@ function setLiAttribute( data, currData, rowNo, colume ) {
                 data-date=${currData.date}
             >
                 ${currData.content}
-                ${setTips( currData.isStart, currData.isEnd )}
             </span>
         </li>`;
 }
