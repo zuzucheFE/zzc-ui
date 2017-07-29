@@ -1,10 +1,20 @@
 export default function ( calendarList ) {
     let elem = '';
+
+    //判断日期数组中是否有选中的日期
+    let isStartData = false;
+    for ( let k = 0; k < calendarList.length; k++ ) {
+        if ( calendarList[k].isShow == true ) {
+            isStartData = true;
+            break;
+        }
+    }
+
     for ( let i = 0; i < calendarList.length; i++ ) {
         let row = calendarList[i].dayList.length / 7,
             height = row + 1 + ( ( row - 1 ) * .1 );
         elem += `<div class="day-item-box" style="height:${height}rem">
-                    <div class="${setMonthShow(calendarList,i)}">
+                    <div class="${setMonthShow( calendarList, i, isStartData )}">
                         <div class="day-item-title">
                             <span>${calendarList[i].year}年</span>
                             <span>${calendarList[i].month}月</span>
@@ -20,24 +30,33 @@ export default function ( calendarList ) {
 
 //设置内个月份是否在第一次显示
 //每个月份儿的isShow==true的前一个月和下一个月在第一次渲染时会显示出来
-function setMonthShow( calendarList, i ) {
-    
-    //当前月份不是选中的月份，那么就判断下一个月份是否显示
-    if ( !calendarList[i].isShow && calendarList[i + 1] && calendarList[i + 1].isShow) { 
-        return "day-item";
-    }
+function setMonthShow( calendarList, i, isStartData ) {
 
-    //判断当前月份的上一个月份是否显示
-    if ( !calendarList[i].isShow && calendarList[i - 1] && calendarList[i - 1].isShow) { 
-        return "day-item";
-    }
+    if ( !isStartData ) {
+        //只显示第一和第二个月
+        if ( i == 0 || i == 1 ) {
+            return "day-item";
+        } else { 
+            return 'day-item hidden-item';
+        }
+    } else {
+        //当前月份不是选中的月份，那么就判断下一个月份是否显示
+        if ( !calendarList[i].isShow && calendarList[i + 1] && calendarList[i + 1].isShow ) {
+            return "day-item";
+        }
 
-    //当前的月份是需要显示的，为取车时间
-    if ( calendarList[i].isShow) { 
-        return "day-item";
-    }
+        //判断当前月份的上一个月份是否显示
+        if ( !calendarList[i].isShow && calendarList[i - 1] && calendarList[i - 1].isShow ) {
+            return "day-item";
+        }
 
-    return 'day-item hidden-item';
+        //当前的月份是需要显示的，为取车时间
+        if ( calendarList[i].isShow ) {
+            return "day-item";
+        }
+
+        return 'day-item hidden-item';
+    }
 }
 
 //设置每个月份的每一行

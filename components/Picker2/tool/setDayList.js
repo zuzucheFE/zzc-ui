@@ -201,7 +201,7 @@ function _isShowMonth( dayList ) {
     return false;
 }
 
-export default function (starTime, endTime, pickupDay, returnDay) {
+export default function ( starTime, endTime, pickupDay, returnDay ) {
     let dayArr = createDayArr(starTime, endTime, pickupDay, returnDay);
     return dayArr;
 }
