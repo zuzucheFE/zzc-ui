@@ -15,7 +15,6 @@ import {setDayCount} from '../../tool/dateTool';
 
 
 let timeType = 'pickup',
-    topHeight = 0,
     warnTimer = null,
     warnID = null,
     timer2 = null,//因为取还车时间setState的速度不一样，可能导致问题，需要等待100毫秒去确定是否真的还车时间小于取车时间
@@ -91,22 +90,23 @@ export default class Time extends Component {
 
     componentDidMount() {
 
+        //计算中间日历滑动的框的高度
         let _this = this,
-            windowHeight = window.screen.height,
+            contentHeight = null,
             tHeaderHeight = null,
             weekListHeight = null,
             dialogTitleHeight = null,
             bottomHeight = null,
             dayListBox = null;
 
+        contentHeight = parseFloat( window.getComputedStyle( document.querySelector('.zzc-dialog') ).height );
         tHeaderHeight = parseFloat(window.getComputedStyle(_this.refs.tHeader).height);
         weekListHeight = parseFloat(window.getComputedStyle(_this.refs.weekList).height);
         dialogTitleHeight = parseFloat(window.getComputedStyle(document.querySelector('.zzc-dialog-title-box')).height);
         bottomHeight = parseFloat(window.getComputedStyle(_this.refs.bottom).height);
         dayListBox = _this.refs.dayListBox;
-        dayListBox.style.height = (windowHeight - (tHeaderHeight + weekListHeight + dialogTitleHeight + bottomHeight)) + 'px';
-        topHeight = tHeaderHeight + weekListHeight + dialogTitleHeight;
-
+        dayListBox.style.height = (contentHeight - (tHeaderHeight + weekListHeight + dialogTitleHeight + bottomHeight)) + 'px';
+        
         //如果有选中的日期，就将选中日期置顶
         let startElem = document.querySelector( '.day-list-box .start' );
         if ( startElem ) { 
