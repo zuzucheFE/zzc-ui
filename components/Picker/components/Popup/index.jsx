@@ -48,7 +48,6 @@ function create(content, opt) {
                     confirm={opt.confirm}
                     afterConfirm={opt.afterConfirm}
                 >
-                    {content}
                 </Dialog>
             </div>
         </div>,
