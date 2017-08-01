@@ -114,6 +114,11 @@ export default class Time extends Component {
         }
     }
 
+    clickDay(e) { 
+        console.log(e.target);
+        
+    }
+
     //获取点击的时间
     selectDay(selectDay) {
         this.inspectDay(timeType, selectDay);
@@ -567,7 +572,12 @@ export default class Time extends Component {
                         <WeekList/>
                     </div>
 
-                    <div dangerouslySetInnerHTML={{ __html: JSXElem }} className="day-list-box" ref="dayListBox"/>
+                    <div
+                        dangerouslySetInnerHTML={{ __html: JSXElem }}
+                        className="day-list-box"
+                        ref="dayListBox"
+                        onClick={(e) => { this.clickDay(e) }}
+                    />
                     
                 </div>
                 <div ref="bottom" className="bottom-controller">
