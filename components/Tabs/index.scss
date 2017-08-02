@@ -23,12 +23,15 @@
   ul {
     display: block;
     display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
     li {
       display: block;
       height: 100%;
       box-flex: 1;
       -webkit-box-flex: 1;
       -moz-box-flex: 1;
+      flex: 1;
       text-align: center;
 
       .nav-item {
@@ -36,7 +39,7 @@
         display: block;
         width: 100%;
         font-size: .28rem;
-        color: #999;
+        color: #666;
         &.active{
           color: #4E7CDD;
 

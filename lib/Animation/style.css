@@ -6,8 +6,8 @@
     opacity: 1; }
 
 .zzc-animation-slide {
-  transition: transform .5s;
-  -webkkit-transition: transform .5s; }
+  transition: transform .2s;
+  -webkkit-transition: transform .2s; }
   .zzc-animation-slide.slide-bottom {
     transform: translateY(100%);
     -webkit-transform: translateY(100%); }
