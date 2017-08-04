@@ -151,7 +151,7 @@ function setUlClass( currRow ) {
 
 //设置每个日期状态对应的样式
 function setLiClass( isGone, isBefore, isStart, isEnd, isActive ) {
-    let className = '';
+    let className = 'J-day-info-parent';
 
     if ( isGone ) {
         className += ' gone ';
@@ -167,7 +167,7 @@ function setLiClass( isGone, isBefore, isStart, isEnd, isActive ) {
 
     //如果是当天去还车就特殊处理重定className的值
     if ( isStart && isEnd ) {
-        className = 'start end';
+        className = 'start end J-day-info-parent';
     }
 
     return className;
@@ -180,7 +180,7 @@ function setLiAttribute( data, currData, rowNo, colume ) {
             class="${setLiClass( currData.isGone, currData.isBefore, currData.isStart, currData.isEnd, currData.isActive )}"
             data-colume="${colume}"
         >
-            <span data-gone=${currData.isGone ? '1' : '0'}
+            <span class="J-day-info" data-gone=${currData.isGone ? '1' : '0'}
                 data-year=${data.year}
                 data-month=${data.month}
                 data-date=${currData.date}

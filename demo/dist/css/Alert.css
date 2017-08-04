@@ -464,6 +464,8 @@ p {
 .tab-nav ul {
   display: block;
   display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .tab-nav ul li {
@@ -471,7 +473,8 @@ p {
   height: 100%;
   box-flex: 1;
   -webkit-box-flex: 1;
-  -moz-box-flex: 1;
+  -ms-flex: 1;
+      flex: 1;
   text-align: center;
 }
 
@@ -480,7 +483,7 @@ p {
   display: block;
   width: 100%;
   font-size: .28rem;
-  color: #999;
+  color: #666;
 }
 
 .tab-nav ul li .nav-item.active {
