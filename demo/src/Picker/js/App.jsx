@@ -1,19 +1,19 @@
 /**
  * Created by lamho on 2017/3/16.
  */
-import React, {Component} from "react";
+import React, { Component } from "react";
 import './style.scss';
 import {Picker} from "zzc-ui";
 import formatTime from '../../../tool/format';
 
 export default class App extends Component {
 
-    constructor(props) {
+    constructor( props ) {
 
-        let pickup2 = new Date(new Date().setMonth(new Date().getMonth() + 1)),
-            return2 = new Date(new Date().setMonth(new Date().getMonth() + 2));
+        let pickup2 = new Date( new Date().setMonth( new Date().getMonth() + 2 ) ),
+            return2 = new Date( new Date().setMonth( new Date().getMonth() + 3 ) );
 
-        super(props);
+        super( props );
         this.state = {
             showPOP: false,
             returnTime: null,
@@ -27,41 +27,41 @@ export default class App extends Component {
             showPOP2: false,
             returnTime2: return2,
             pickupTime2: pickup2,
-            pickupInfo2: formatTime(pickup2),
-            returnInfo2: formatTime(return2),
-            dayCount2: ((pickupDay, returnDay) => {
+            pickupInfo2: formatTime( pickup2 ),
+            returnInfo2: formatTime( return2 ),
+            dayCount2: ( ( pickupDay, returnDay ) => {
                 let returnTime = returnDay.getTime(),
                     pickupTime = pickupDay.getTime(),
                     diff = returnTime - pickupTime;
 
-                return Math.ceil(diff / 1000 / 60 / 60 / 24);
-            })(pickup2, return2),
+                return Math.ceil( diff / 1000 / 60 / 60 / 24 );
+            } )( pickup2, return2 ),
             endTime2: null
         };
     }
 
     show() {
-        this.setState({
+        this.setState( {
             showPOP: true
-        });
+        } );
     }
 
     hide() {
-        this.setState({
+        this.setState( {
             showPOP: false
-        });
+        } );
     }
 
     show2() {
-        this.setState({
+        this.setState( {
             showPOP2: true
-        });
+        } );
     }
 
     hide2() {
-        this.setState({
+        this.setState( {
             showPOP2: false
-        });
+        } );
     }
 
     componentDidMount() {
@@ -74,26 +74,26 @@ export default class App extends Component {
         // },5000);
     }
 
-    confirm(opt) {
-        this.setState({
+    confirm( opt ) {
+        this.setState( {
             returnTime: opt.returnTime.time,
             pickupTime: opt.pickupTime.time,
             pickupInfo: opt.pickupTime,
             returnInfo: opt.returnTime,
             dayCount: opt.dayCount,
             showPOP: false
-        });
+        } );
     }
 
-    confirm2(opt) {
-        this.setState({
+    confirm2( opt ) {
+        this.setState( {
             returnTime2: opt.returnTime.time,
             pickupTime2: opt.pickupTime.time,
             pickupInfo2: opt.pickupTime,
             returnInfo2: opt.returnTime,
             dayCount2: opt.dayCount,
             showPOP2: false
-        });
+        } );
     }
 
     render() {
@@ -106,14 +106,14 @@ export default class App extends Component {
                     returnTime={this.state.returnTime}
                     startTime={this.state.startTime}
                     endTime={this.state.endTime}
-                    confirmEvent={(opt) => {
-                        this.confirm(opt);
+                    confirmEvent={( opt ) => {
+                        this.confirm( opt );
                     }}
                     closeEvent={() => {
                         this.hide();
                     }}
                 >
-                    <p onClick={this.show.bind(this)}>打开时间框</p>
+                    <p onClick={this.show.bind( this )}>打开时间框</p>
                 </Picker>
 
                 <div>
@@ -128,10 +128,9 @@ export default class App extends Component {
                     <p>共：{this.state.dayCount}</p>
                 </div>
 
-                <hr/>
-                <br/>
-                <br/>
-
+                <hr />
+                <br />
+                <br />
                 <h3>已选择时间</h3>
                 <Picker
                     visibility={this.state.showPOP2}
@@ -139,14 +138,14 @@ export default class App extends Component {
                     returnTime={this.state.returnTime2}
                     startTime={this.state.startTime2}
                     endTime={this.state.endTime2}
-                    confirmEvent={(opt) => {
-                        this.confirm2(opt);
+                    confirmEvent={( opt ) => {
+                        this.confirm2( opt );
                     }}
                     closeEvent={() => {
                         this.hide2();
                     }}
                 >
-                    <p onClick={this.show2.bind(this)}>打开时间框</p>
+                    <p onClick={this.show2.bind( this )}>打开时间框</p>
                 </Picker>
 
                 <div>
@@ -160,9 +159,9 @@ export default class App extends Component {
                     </p>
                     <p>共：{this.state.dayCount2}</p>
                 </div>
-
             </div>
         );
     }
 
 }
+

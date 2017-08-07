@@ -10,8 +10,8 @@ module.exports = {
         Section: "./src/Section/js/index.jsx",
         Tabs: "./src/Tabs/js/index.jsx",
         Toast: "./src/Toast/js/index.jsx",
+        old_Picker: "./src/old_Picker/js/index.jsx",
         Picker: "./src/Picker/js/index.jsx",
-        Picker2: "./src/Picker2/js/index.jsx",
         Switch: "./src/Switch/js/index.jsx",
         ImageViewer: "./src/ImageViewer/js/index.jsx"
     },

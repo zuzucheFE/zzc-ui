@@ -1,7 +1,7 @@
 /**
  * Created by lamho on 2017/3/27.
  */
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Dialog from '../../../Dialog/index.jsx';
 import combine from '../../../tool/combine';
@@ -15,7 +15,7 @@ let parentDiv = null,
     dialog = null,
     createOpt = null;
 
-function create(content, opt) {
+function create( content, opt ) {
 
     let direction = opt.direction || 'bottom',
         style = opt.style || {},
@@ -31,12 +31,12 @@ function create(content, opt) {
         };
 
     //set dialog title btn
-    if (!!opt.titleBtn) {
-        defaultTitleBtn = combine(defaultTitleBtn, opt.titleBtn);
+    if ( !!opt.titleBtn ) {
+        defaultTitleBtn = combine( defaultTitleBtn, opt.titleBtn );
     }
 
-    parentDiv = document.createElement('div');
-    document.body.appendChild(parentDiv);
+    parentDiv = document.createElement( 'div' );
+    document.body.appendChild( parentDiv );
     let component = ReactDOM.render(
         <div className="zzc-popup">
             <div className="popup-mark zzc-animation-fade"></div>
@@ -54,52 +54,65 @@ function create(content, opt) {
         </div>,
         parentDiv
     );
-
+    addPopupEvent();
     openPopup();
     return component;
 }
 
 //绑定popup-content事件
 function addPopupEvent() {
-    let popupNode = document.querySelector('.zzc-popup .popup-content');
+    let popupNode = document.querySelector( '.zzc-popup .popup-content' );
     //绑定事件
-    Event.addEndEventListener(popupNode, function () {
+    Event.addEndEventListener( popupNode, function () {
+        
+        requestAnimationFrame(() => {
+            //显示剩余月份
+            let dayItems = document.querySelectorAll( '.day-item' );
+            for ( let i = 0; i < dayItems.length; i++ ) {
+                dayItems[i].className = "day-item";
+            }
+        } );
         //关闭后的操作
-        if (!hasClass(popupNode.className, 'slide-in')) {
-            Event.removeEndEventListener(popupNode, () => {
-            });
+        if ( !hasClass( popupNode.className, 'slide-in' ) ) {
+            Event.removeEndEventListener( popupNode, () => {
+            } );
             clear();
         }
-    });
+    } );
 
 }
 
 //打开popup
 function openPopup() {
-    let content = document.querySelector('.zzc-popup .popup-content'),
-        mark = document.querySelector('.zzc-popup .popup-mark');
+    let content = document.querySelector( '.zzc-popup .popup-content' ),
+        mark = document.querySelector( '.zzc-popup .popup-mark' );
     content.className = content.className + ' slide-in';
     mark.className = mark.className + ' fade-in';
 
-    addPopupEvent();
 }
 
 //关闭popup
 function closePopup() {
-    let content = document.querySelector('.zzc-popup .popup-content'),
-        mark = document.querySelector('.zzc-popup .popup-mark');
+    let content = document.querySelector( '.zzc-popup .popup-content' ),
+        mark = document.querySelector( '.zzc-popup .popup-mark' ),
+        dayItems = document.querySelectorAll( '.day-item' );
+    
+    //隐藏所日月份
+    for ( let i = 0; i < dayItems.length; i++ ) {
+        dayItems[i].className = "day-item hidden-item";
+    }
+    
+    if ( content && mark ) {
+        let contentClassArr = content.className.split( ' ' ),
+            markClassArr = mark.className.split( ' ' ),
+            slideIndex = contentClassArr.indexOf( 'slide-in' ),
+            fadeIndex = markClassArr.indexOf( 'fade-in' );
 
-    if (content && mark) {
-        let contentClassArr = content.className.split(' '),
-            markClassArr = mark.className.split(' '),
-            slideIndex = contentClassArr.indexOf('slide-in'),
-            fadeIndex = markClassArr.indexOf('fade-in');
+        slideIndex && contentClassArr.splice( slideIndex, 1 );
+        fadeIndex && markClassArr.splice( fadeIndex, 1 );
 
-        slideIndex && contentClassArr.splice(slideIndex, 1);
-        fadeIndex && markClassArr.splice(fadeIndex, 1);
-
-        content.className = contentClassArr.join(' ');
-        mark.className = markClassArr.join(' ');
+        content.className = contentClassArr.join( ' ' );
+        mark.className = markClassArr.join( ' ' );
 
     } else {
         return;
@@ -108,11 +121,11 @@ function closePopup() {
 }
 
 function clear() {
-    if (parentDiv) {
+    if ( parentDiv ) {
         //保证动画结束后才执行cancel回调
         createOpt.close();
-        ReactDOM.unmountComponentAtNode(parentDiv);
-        parentDiv.parentNode.removeChild(parentDiv);
+        ReactDOM.unmountComponentAtNode( parentDiv );
+        parentDiv.parentNode.removeChild( parentDiv );
         parentDiv = null;
         dialog = null;
     } else {
@@ -144,20 +157,20 @@ function clear() {
 
 export default class Popup extends Component {
 
-    constructor(props) {
-        super(props);
+    constructor( props ) {
+        super( props );
         this.state = {
             dialog: null
         };
     }
 
-    static show(content, opt) {
+    static show( content, opt ) {
         closePopup();
-        if (parentDiv != null) {
+        if ( parentDiv != null ) {
             return false;
         }
         createOpt = opt;
-        dialog = create(content, opt);
+        dialog = create( content, opt );
     }
 
     static hide() {

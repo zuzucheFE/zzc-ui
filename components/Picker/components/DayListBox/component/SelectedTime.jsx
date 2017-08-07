@@ -101,10 +101,6 @@ export default class SelectedTime extends Component {
                     { !!this.state.currDay ?
                         <div className="t-time-info">
                             <div>
-                                <span className="t-title">{title}</span>
-                                <span className="t-week">周{getWeek(currWeek)}</span>
-                            </div>
-                            <div>
                                 <span className="t-day">{currMonth}月{currDate}日</span>
                                 <span className="t-time">{`${this.state.currTime.h}:${this.state.currTime.m}`}</span>
                             </div>
@@ -119,10 +115,6 @@ export default class SelectedTime extends Component {
                 <div className="t-time-box" ref="nextBox">
                     { !!this.state.nextDay ?
                         <div className="t-time-info">
-                            <div>
-                                <span className="t-title">{title}</span>
-                                <span className="t-week">周{getWeek(nextWeek)}</span>
-                            </div>
                             <div>
                                 <span className="t-day">{nextMonth}月{nextDate}日</span>
                                 <span className="t-time">{`${this.state.nextTime.h}:${this.state.nextTime.m}`}</span>

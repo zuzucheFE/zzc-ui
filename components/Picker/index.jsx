@@ -12,6 +12,7 @@ import { startArrayToDate, endArrayToDate } from './tool/arrayToDate';
 import formatTime from '../tool/format';
 import { compareDay } from './tool/compare';
 import { setTime, setDay, setDayCount } from './tool/dateTool';
+import createList from './tool/createElem.js';
 
 /**
  * 控制显示
@@ -63,11 +64,11 @@ export default class Picker extends Component {
             returnTime: returnTime,
             pickupDay: pickupDay,
             returnDay: returnDay,
-            pickupID: pickupInfo ? `t-${pickupInfo.year}-0${pickupInfo.month}-${pickupInfo.day}` : null,
-            returnID: returnInfo ? `t-${returnInfo.year}-0${returnInfo.month}-${returnInfo.day}` : null,
-            dayCount: dayCount
+            pickupID: pickupInfo ? `t-${pickupInfo.year}-${pickupInfo.month}-${pickupInfo.day}` : null,
+            returnID: returnInfo ? `t-${returnInfo.year}-${returnInfo.month}-${returnInfo.day}` : null,
+            dayCount: dayCount,
+            JSXElem: createList(JSON.parse(JSON.stringify(dayList)))
         };
-
     }
 
     componentDidMount() {
@@ -110,7 +111,6 @@ export default class Picker extends Component {
 
             // 在关闭时，获取到选择的时间，然后先计算对应的dayList的状态
             if ( !nextProps.visibility ) {
-
                 this.resetAllData( nextProps );
 
             }
@@ -133,7 +133,8 @@ export default class Picker extends Component {
             //改变时间范围
             if ( newStart != oldStart || newEnd != oldEnd ) {
                 let initStartTime = startArrayToDate( nextProps.startTime ),
-                    initEndTime = endArrayToDate( nextProps.endTime, nextProps.startTime );
+                    initEndTime = endArrayToDate( nextProps.endTime, nextProps.startTime ),
+                    dayList = setDayArray( initStartTime, initEndTime, null, null );
 
                 this.setState( {
                     pickupTime: setTime( null, this.props.defaultTime ),
@@ -145,7 +146,8 @@ export default class Picker extends Component {
                     dayCount: null,
                     startTime: initStartTime,
                     endTime: initEndTime,
-                    dayList: setDayArray( initStartTime, initEndTime, null, null )
+                    dayList: dayList,
+                    JSXElem: createList(JSON.parse(JSON.stringify(dayList)))
                 } );
 
             }
@@ -163,7 +165,6 @@ export default class Picker extends Component {
             returnTime = setTime( nextProps.returnTime, nextProps.defaultTime ),
             returnDay = setDay( nextProps.returnTime ),
             dayList = setDayArray( this.state.startTime, this.state.endTime, pickupDay, returnDay );
-
         //如果选择的时间和之前的不一样，在时间框关闭后则需要重新组装。
         if ( !compareDay( newPickupTime, oldPickupTime ) || !compareDay( newReturnTime, oldReturnTime ) ) {
 
@@ -172,13 +173,14 @@ export default class Picker extends Component {
 
             this.setState( {
                 dayList: dayList,
+                JSXElem: createList(JSON.parse(JSON.stringify(dayList))),
                 pickupTime: pickupTime,
                 returnTime: returnTime,
                 pickupDay: pickupDay,
                 returnDay: returnDay,
                 dayCount: pickupDay && returnDay ? setDayCount( pickupDay, returnDay ) : null,
-                pickupID: pickupInfo ? `t-${pickupInfo.year}-0${pickupInfo.month}-${pickupInfo.day}` : null,
-                returnID: returnInfo ? `t-${returnInfo.year}-0${returnInfo.month}-${returnInfo.day}` : null
+                pickupID: pickupInfo ? `t-${pickupInfo.year}-${pickupInfo.month}-${pickupInfo.day}` : null,
+                returnID: returnInfo ? `t-${returnInfo.year}-${returnInfo.month}-${returnInfo.day}` : null
             } );
 
         }
@@ -186,6 +188,7 @@ export default class Picker extends Component {
         //日期没有变，时间可能会变
         this.setState( {
             dayList: dayList,
+            JSXElem: createList(JSON.parse(JSON.stringify(dayList))),
             pickupTime: pickupTime,
             returnTime: returnTime,
             dayCount: pickupDay && returnDay ? setDayCount( pickupDay, returnDay ) : null,
@@ -216,6 +219,7 @@ export default class Picker extends Component {
             timeRange={timeRange}
             pickupID={this.state.pickupID}
             returnID={this.state.returnID}
+            JSXElem={this.state.JSXElem}
             confirmEvent={( opt ) => {
                 confirmEvent( opt );
             }}
