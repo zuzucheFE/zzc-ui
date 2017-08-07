@@ -27,11 +27,11 @@ function setDayInfo( currDay, pickupDay, returnDay ) {
     //是否今天
     if ( todayTime.getTime() == currDay.getTime() ) {
         dateInfo.isToday = true;
-        dateInfo.content = '今天';
+        dateInfo.content = '今';
         //是否明天
     } else if ( new Date( todayTime.setDate( todayTime.getDate() + 1 ) ).getTime() == currDay.getTime() ) {
         dateInfo.isTomorrow = true;
-        dateInfo.content = '明天';
+        dateInfo.content = '明';
         //是否是今天之前的日期
     } else if ( todayTime.getTime() > currDay.getTime() ) {
         dateInfo.isGone = true;

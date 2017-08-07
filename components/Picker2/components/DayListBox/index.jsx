@@ -122,11 +122,7 @@ export default class Time extends Component {
             let year = e.target.getAttribute( 'data-year' ),
                 month = e.target.getAttribute( 'data-month' ) - 1,
                 date = e.target.getAttribute( 'data-date' );
-             this.selectDay( new Date( year, month, date ) );
-        }
-        //点击日期父元素
-        else if ( hasClass( e.target, 'J-day-info' ) ) {
-
+            this.selectDay( new Date( year, month, date ) );
         } else {
             return false;
         }
@@ -210,7 +206,7 @@ export default class Time extends Component {
 
             //还车时间小于取车时间，将还车时间赋值到取车时间，还车时间为null，如果为同日取还车跳过if
             if ( !hasTodayPickupAndReturn && this.state.pickupDay != null && returnTime.getTime() < this.state.pickupDay.getTime() ) {
-                
+
                 this.changeListDayState( 'pickup', id );
 
                 timeType = 'return';
@@ -260,27 +256,26 @@ export default class Time extends Component {
     //更改列表日期的显示状态
     changeListDayState( currType, id ) {
 
-        let i = document.createElement( 'i' );
         //当前选择的是pickup
         if ( currType == 'pickup' ) {
-            
+
             //如果已经选中需要清空选中状态
             if ( this.state.pickupID != null || this.state.returnID != null ) {
 
                 let pickupElem = document.querySelector( '#' + this.state.pickupID + '' ),
                     returnElem = document.querySelector( '#' + this.state.returnID + '' );
-                
+
                 //如果已经有取还车，需要将full状态的ul清空状态
                 if ( this.state.pickupID != null && this.state.returnID != null ) {
 
                     //更改日历范围可能导致储存的id找不到元素，如果没有该元素，跳过清除状态
                     let fullUl = document.querySelectorAll( '.day-item-content .full' );
-                    if ( fullUl.length != 0 ) { 
-                        for ( let i = 0; i < fullUl.length; i++ ) { 
+                    if ( fullUl.length != 0 ) {
+                        for ( let i = 0; i < fullUl.length; i++ ) {
                             fullUl[i].className = '';
                         }
                     }
-                    
+
                 }
 
                 //清除取还车日期选中的class
@@ -310,25 +305,28 @@ export default class Time extends Component {
             if ( this.state.pickupID == id ) {
                 returnElem.className = 'end start';
             } else {
-                let returnCol = returnElem.getAttribute( 'data-colume' ),
+                let pickupElem = document.querySelector( '#' + this.state.pickupID + '' ),
+                    returnCol = returnElem.getAttribute( 'data-colume' ),
                     returnRow = returnElem.parentNode.getAttribute( 'data-row' ),
-                    pickupElem = document.querySelector( '#' + this.state.pickupID + '' ),
+                    returnMonth = returnElem.parentNode.parentNode.getAttribute( 'data-month' ),
+                    returnYear = returnElem.parentNode.parentNode.getAttribute( 'data-year' ),
                     pickupCol = pickupElem.getAttribute( 'data-colume' ),
-                    pickupRow = pickupElem.parentNode.getAttribute( 'data-row' );
-                
-                //如果取还车是同一行需要特殊处理
-                if ( returnRow == pickupRow ) {
+                    pickupRow = pickupElem.parentNode.getAttribute( 'data-row' ),
+                    pickupMonth = pickupElem.parentNode.parentNode.getAttribute( 'data-month' ),
+                    pickupYear = pickupElem.parentNode.parentNode.getAttribute( 'data-year' );
 
+                //如果取还车是同一行需要特殊处理
+                if ( returnRow == pickupRow && pickupYear == returnYear && returnMonth == pickupMonth) {
                     let diff = returnCol - pickupCol - 1,
                         currElem = pickupElem,
                         className = '';
-                    
-                    
+
+
                     for ( let k = 0; k < diff; k++ ) {
                         let nextElem = null;
                         if ( currElem.nextSibling.nodeName != 'LI' ) {
                             nextElem = currElem.nextSibling.nextSibling;
-                        } else { 
+                        } else {
                             nextElem = currElem.nextSibling;
                         }
 
@@ -342,28 +340,22 @@ export default class Time extends Component {
                     returnElem.parentNode.className = `e-row-${returnCol - 1}`;
 
                     //找到取还中间相隔多少行
-                    let currRow = parseInt( pickupRow ) + 1;
-                    while ( currRow < returnRow ) {
-                        document.querySelector( '.day-item ul[data-row="' + currRow + '"]' ).className = 'full';
-                        currRow++;
-                    }
-
                     let ulElem = document.querySelectorAll( '.day-item-content ul' ),
                         start = false;
-                    for ( let i = 0; i < ulElem.length; i++ ) { 
+                    for ( let i = 0; i < ulElem.length; i++ ) {
                         if ( ulElem[i] == pickupElem.parentNode ) {
                             start = true;
                         } else if ( ulElem[i] == returnElem.parentNode ) {
                             start = false;
                             break;
-                        } else { 
-                            if ( start ) { 
+                        } else {
+                            if ( start ) {
                                 ulElem[i].className = "full";
                             }
                         }
-                        
+
                     }
-                    
+
 
                 }
                 returnElem.className = 'end before';

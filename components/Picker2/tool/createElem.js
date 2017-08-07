@@ -12,14 +12,12 @@ export default function ( calendarList ) {
 
     for ( let i = 0; i < calendarList.length; i++ ) {
         let row = calendarList[i].dayList.length / 7,
-            height = row + 1 + ( ( row - 1 ) * .1 );
+            height = (row - 1) * 1.05 + .68;
+        
         elem += `<div class="day-item-box" style="height:${height}rem">
                     <div class="${setMonthShow( calendarList, i, isStartData )}">
-                        <div class="day-item-title">
-                            <span>${calendarList[i].year}年</span>
-                            <span>${calendarList[i].month}月</span>
-                        </div>
-                        <div class="day-item-content">
+                        <div class="month-bg">${calendarList[i].month}月</div>
+                        <div class="day-item-content" data-year=${calendarList[i].year} data-month=${calendarList[i].month}>
                             ${setCalendarDay( calendarList[i] )}
                         </div>
                     </div>
