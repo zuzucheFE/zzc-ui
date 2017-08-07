@@ -6,7 +6,7 @@ import Popup from './components/Popup/index.jsx';
 import DayListBox from './components/DayListBox/index.jsx';
 import './style.scss';
 import './reseatStyle/reset.scss';
-import debug from './tool/debug';
+import debug from './tool/debug.js';
 import setDayArray from './tool/setDayList';
 import { startArrayToDate, endArrayToDate } from './tool/arrayToDate';
 import formatTime from '../tool/format';
@@ -36,6 +36,7 @@ import createList from './tool/createElem.js';
  *      @param start     开始  默认为 0
  *      @param end       结束  默认为 24
  * **/
+
 export default class Picker extends Component {
 
     constructor( props ) {
@@ -67,7 +68,8 @@ export default class Picker extends Component {
             pickupID: pickupInfo ? `t-${pickupInfo.year}-${pickupInfo.month}-${pickupInfo.day}` : null,
             returnID: returnInfo ? `t-${returnInfo.year}-${returnInfo.month}-${returnInfo.day}` : null,
             dayCount: dayCount,
-            JSXElem: createList( JSON.parse( JSON.stringify( dayList ) ) )
+            JSXElem: createList( JSON.parse( JSON.stringify( dayList ) ) ),
+            isPropsWrong: false
         };
     }
 

@@ -1,13 +1,31 @@
 /**
  * Created by lamho on 2017/4/17.
  */
-export default function (opt) {
 
-    //验证取值范围和当前默认时间是不出错
-    if(!opt.pickupTime && opt.timeRange && parseInt(opt.timeRange.start) > opt.defaultTime.h){
-        console.error(`当前defaultTime为${opt.defaultTime.h}:${opt.defaultTime.m}`);
+import { setTime } from './dateTool';
+
+export default function ( opt ) {
+    
+    let dufaultPickerTime = setTime( opt.pickupTime, opt.defaultTime ),
+        defaultReturnTime = setTime( opt.returnTime, opt.defaultTime );
+    
+    //验证取值范围和当前默认时间是不出错(小时和分钟)
+    if(!opt.pickupTime && opt.timeRange && parseInt(opt.timeRange.start) > dufaultPickerTime.h){
+        console.error(`当前defaultTime为${dufaultPickerTime.h}:${dufaultPickerTime.m}`);
         console.error(`当前timeRange的范围为:${opt.timeRange.start}~${opt.timeRange.end}`);
         console.error('defaultTime的值不能少于timeRange.start的值');
+        return true;
+    }
+    if(!opt.returnTime && opt.timeRange && parseInt(opt.timeRange.end) < defaultReturnTime.h){
+        console.error(`当前defaultTime为${defaultReturnTime.h}:${defaultReturnTime.m}`);
+        console.error(`当前timeRange的范围为:${opt.timeRange.start}~${opt.timeRange.end}`);
+        console.error('defaultTime的值不能大于timeRange.end的值');
+        return true;
+    }
+    if ( !opt.returnTime && opt.timeRange && defaultReturnTime.m != 0 && parseInt( opt.timeRange.end ) == defaultReturnTime.h ) { 
+        console.error(`当前defaultTime为${defaultReturnTime.h}:${defaultReturnTime.m}`);
+        console.error(`当前timeRange的范围为:${opt.timeRange.start}~${opt.timeRange.end}`);
+        console.error('defaultTime的值不能大于timeRange.end的值');
         return true;
     }
 

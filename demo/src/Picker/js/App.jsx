@@ -106,6 +106,14 @@ export default class App extends Component {
                     returnTime={this.state.returnTime}
                     startTime={this.state.startTime}
                     endTime={this.state.endTime}
+                    timeRange={{
+                        start: 10,
+                        end: 22
+                    }}
+                    defaultTime={{
+                        h: 18,
+                        m: 30
+                    }}
                     confirmEvent={( opt ) => {
                         this.confirm( opt );
                     }}
