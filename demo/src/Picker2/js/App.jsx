@@ -3,7 +3,7 @@
  */
 import React, { Component } from "react";
 import './style.scss';
-import Picker2 from "../../../../components/Picker2";
+import {Picker2} from "zzc-ui";
 import formatTime from '../../../tool/format';
 
 export default class App extends Component {
