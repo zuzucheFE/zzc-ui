@@ -1099,20 +1099,6 @@ p {
   box-sizing: border-box;
 }
 
-.t-box .t-box-content .week-list ul:after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  display: block;
-  width: 100%;
-  border-bottom: 1px solid #D8D8D8;
-  -webkit-transform-origin: 0 0;
-  transform-origin: 0 0;
-  -webkit-transform: scaleY(0.5);
-  transform: scaleY(0.5);
-}
-
 .t-box .t-box-content .week-list ul li {
   padding: .1rem 0;
   color: #333;

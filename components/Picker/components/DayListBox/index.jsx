@@ -116,6 +116,9 @@ export default class Time extends Component {
 
     //日期点击事件
     clickDay( e ) {
+        if ( e.target.getAttribute('data-gone') == '1' ) { 
+            return false;
+        }
         let targetClassName = e.target.className;
         //点击日期元素
         if ( hasClass( e.target, 'J-day-info' ) ) {
