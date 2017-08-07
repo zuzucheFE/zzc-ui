@@ -64,19 +64,22 @@ function addPopupEvent() {
     let popupNode = document.querySelector( '.zzc-popup .popup-content' );
     //绑定事件
     Event.addEndEventListener( popupNode, function () {
-        
-        requestAnimationFrame(() => {
-            //显示剩余月份
-            let dayItems = document.querySelectorAll( '.day-item' );
-            for ( let i = 0; i < dayItems.length; i++ ) {
-                dayItems[i].className = "day-item";
-            }
-        } );
         //关闭后的操作
         if ( !hasClass( popupNode.className, 'slide-in' ) ) {
-            Event.removeEndEventListener( popupNode, () => {
-            } );
+            Event.removeEndEventListener( popupNode, () => { } );
+            document.body.style.height = '';
+            document.body.style.overflow = '';
             clear();
+        } else {
+            requestAnimationFrame(() => {
+                //显示剩余月份
+                let dayItems = document.querySelectorAll( '.day-item' );
+                for ( let i = 0; i < dayItems.length; i++ ) {
+                    dayItems[i].className = "day-item";
+                }
+                document.body.style.height = '100%';
+                document.body.style.overflow = 'hidden';
+            } );
         }
     } );
 
@@ -96,12 +99,12 @@ function closePopup() {
     let content = document.querySelector( '.zzc-popup .popup-content' ),
         mark = document.querySelector( '.zzc-popup .popup-mark' ),
         dayItems = document.querySelectorAll( '.day-item' );
-    
+
     //隐藏所日月份
     for ( let i = 0; i < dayItems.length; i++ ) {
         dayItems[i].className = "day-item hidden-item";
     }
-    
+
     if ( content && mark ) {
         let contentClassArr = content.className.split( ' ' ),
             markClassArr = mark.className.split( ' ' ),
