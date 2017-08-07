@@ -67,8 +67,11 @@ function addPopupEvent() {
         //关闭后的操作
         if ( !hasClass( popupNode.className, 'slide-in' ) ) {
             Event.removeEndEventListener( popupNode, () => { } );
+            let html = document.querySelector( 'html' );
             document.body.style.height = '';
             document.body.style.overflow = '';
+            html.style.height = '';
+                html.style.overflow = '';
             clear();
         } else {
             requestAnimationFrame(() => {
@@ -77,8 +80,11 @@ function addPopupEvent() {
                 for ( let i = 0; i < dayItems.length; i++ ) {
                     dayItems[i].className = "day-item";
                 }
+                let html = document.querySelector( 'html' );
                 document.body.style.height = '100%';
                 document.body.style.overflow = 'hidden';
+                html.style.height = '100%';
+                html.style.overflow = 'hidden';
             } );
         }
     } );
