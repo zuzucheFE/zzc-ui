@@ -3,6 +3,26 @@
 <head data-tj="/租租车WAP/v5.3.0+/首页/">
     <meta charset="UTF-8">
     <title>Popup</title>
+    <script>
+        var docEl = document.documentElement;
+        var designWidth = docEl.getAttribute( 'data-design-width' ) || 750;
+        var rem, width, preWidth, timer;
+
+        function setRem() {
+            // 判断<html />的宽度
+            width = docEl.getBoundingClientRect().width;
+            if ( width === preWidth ) return;
+            preWidth = width;
+
+            // 1rem = 1px
+            rem = width / designWidth;
+
+            // font-size必须大于12px，所以rem值必须大于12
+            rem *= 100;
+
+            docEl.style.fontSize = rem + 'px';
+        }
+    </script>
     <script src="../../../lib/rem.js"></script>
     <link rel="stylesheet" href="../../../dist/css/Picker.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -18,11 +38,12 @@
 
 <body>
 
-<div id="root"></div>
+    <div id="root"></div>
 
 </body>
 <script src="../../../lib/react.min.js"></script>
 <script src="../../../lib/jquery-1.7.2.min.js"></script>
 <script src="../../../lib/fastclick.script.js"></script>
 <script src="../../../dist/js/Picker.js"></script>
+
 </html>
