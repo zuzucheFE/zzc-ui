@@ -85,10 +85,17 @@ function addPopupEvent() {
                 document.body.style.overflow = 'hidden';
                 html.style.height = '100%';
                 html.style.overflow = 'hidden';
+
+                document.body.addEventListener('touchmove',checkTouchMove);
             } );
         }
     } );
 
+}
+
+//检查打开弹窗后的touchmove事件
+function checkTouchMove(e) { 
+    console.log(e.target);
 }
 
 //打开popup
