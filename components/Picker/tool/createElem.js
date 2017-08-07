@@ -68,7 +68,7 @@ function setCalendarDay( data ) {
     for ( let i = 0; i < row; i++ ) {
         let currRow = list.splice( 0, 7 );
         itemListJSXElement +=
-            `<ul data-row="${rowNo}" class=${setUlClass( currRow )}>
+            `<ul data-row="${rowNo}" class="${setUlClass( currRow )}">
                 ${setLiAttribute( data, currRow[0], rowNo, 1 )}
                 ${setLiAttribute( data, currRow[1], rowNo, 2 )}
                 ${setLiAttribute( data, currRow[2], rowNo, 3 )}

@@ -67,7 +67,7 @@ export default class Picker extends Component {
             pickupID: pickupInfo ? `t-${pickupInfo.year}-${pickupInfo.month}-${pickupInfo.day}` : null,
             returnID: returnInfo ? `t-${returnInfo.year}-${returnInfo.month}-${returnInfo.day}` : null,
             dayCount: dayCount,
-            JSXElem: createList(JSON.parse(JSON.stringify(dayList)))
+            JSXElem: createList( JSON.parse( JSON.stringify( dayList ) ) )
         };
     }
 
@@ -98,7 +98,6 @@ export default class Picker extends Component {
                 timeRange: nextProps.timeRange
             } );
             if ( oldPropsData != nextPropsData ) {
-
                 this.resetAllData( nextProps );
             }
             return true;
@@ -108,11 +107,11 @@ export default class Picker extends Component {
         //改变visibility代表需要更改显示
         if ( nextProps.visibility != this.props.visibility ) {
             this.startComponent( nextProps.visibility );
-
             // 在关闭时，获取到选择的时间，然后先计算对应的dayList的状态
             if ( !nextProps.visibility ) {
-                this.resetAllData( nextProps );
-
+                requestAnimationFrame(() => {
+                    this.resetAllData( nextProps );
+                } );
             }
             return true;
         }
@@ -147,7 +146,7 @@ export default class Picker extends Component {
                     startTime: initStartTime,
                     endTime: initEndTime,
                     dayList: dayList,
-                    JSXElem: createList(JSON.parse(JSON.stringify(dayList)))
+                    JSXElem: createList( JSON.parse( JSON.stringify( dayList ) ) )
                 } );
 
             }
@@ -165,34 +164,22 @@ export default class Picker extends Component {
             returnTime = setTime( nextProps.returnTime, nextProps.defaultTime ),
             returnDay = setDay( nextProps.returnTime ),
             dayList = setDayArray( this.state.startTime, this.state.endTime, pickupDay, returnDay );
-        //如果选择的时间和之前的不一样，在时间框关闭后则需要重新组装。
-        if ( !compareDay( newPickupTime, oldPickupTime ) || !compareDay( newReturnTime, oldReturnTime ) ) {
 
-            let pickupInfo = pickupDay ? formatTime( pickupDay ) : null,
-                returnInfo = returnDay ? formatTime( returnDay ) : null;
+        let pickupInfo = pickupDay ? formatTime( pickupDay ) : null,
+            returnInfo = returnDay ? formatTime( returnDay ) : null;
 
-            this.setState( {
-                dayList: dayList,
-                JSXElem: createList(JSON.parse(JSON.stringify(dayList))),
-                pickupTime: pickupTime,
-                returnTime: returnTime,
-                pickupDay: pickupDay,
-                returnDay: returnDay,
-                dayCount: pickupDay && returnDay ? setDayCount( pickupDay, returnDay ) : null,
-                pickupID: pickupInfo ? `t-${pickupInfo.year}-${pickupInfo.month}-${pickupInfo.day}` : null,
-                returnID: returnInfo ? `t-${returnInfo.year}-${returnInfo.month}-${returnInfo.day}` : null
-            } );
-
-        }
-
-        //日期没有变，时间可能会变
         this.setState( {
             dayList: dayList,
-            JSXElem: createList(JSON.parse(JSON.stringify(dayList))),
+            JSXElem: createList( JSON.parse( JSON.stringify( dayList ) ) ),
             pickupTime: pickupTime,
             returnTime: returnTime,
+            pickupDay: pickupDay,
+            returnDay: returnDay,
             dayCount: pickupDay && returnDay ? setDayCount( pickupDay, returnDay ) : null,
+            pickupID: pickupInfo ? `t-${pickupInfo.year}-${pickupInfo.month}-${pickupInfo.day}` : null,
+            returnID: returnInfo ? `t-${returnInfo.year}-${returnInfo.month}-${returnInfo.day}` : null
         } );
+
     }
 
     startComponent( isShow ) {

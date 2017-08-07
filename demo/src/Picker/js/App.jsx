@@ -68,8 +68,8 @@ export default class App extends Component {
         let _this = this;
         // setTimeout(() => {
         //     _this.setState({
-        //         startTime: ['2017','6','1'],
-        //         endTime: ['2017','9','1']
+        //         startTime: ['2017','9','1'],
+        //         endTime: ['2017','12','1']
         //     });
         // },5000);
     }
