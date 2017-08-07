@@ -632,7 +632,7 @@
   -webkit-transform: translateY(0);
 }
 .day-item .e-row-6 li[data-colume='7'] {
-  background: #fff;
+  background: transparent;
 }
 
 .day-item .e-row-6 li[data-colume='7'] span {
@@ -649,7 +649,7 @@
 
 .day-item .e-row-5 li[data-colume='7'],
 .day-item .e-row-5 li[data-colume='6'] {
-  background: #fff;
+  background: transparent;
 }
 
 .day-item .e-row-5 li[data-colume='7'] span,
@@ -668,7 +668,7 @@
 .day-item .e-row-4 li[data-colume='7'],
 .day-item .e-row-4 li[data-colume='6'],
 .day-item .e-row-4 li[data-colume='5'] {
-  background: #fff;
+  background: transparent;
 }
 
 .day-item .e-row-4 li[data-colume='7'] span,
@@ -698,7 +698,7 @@
 }
 
 .day-item .e-row-3 li {
-  background: #fff;
+  background: transparent;
 }
 
 .day-item .e-row-3 li span {
@@ -716,7 +716,7 @@
 }
 
 .day-item .e-row-2 li {
-  background: #fff;
+  background: transparent;
 }
 
 .day-item .e-row-2 li span {
@@ -732,7 +732,7 @@
 }
 
 .day-item .e-row-1 li {
-  background: #fff;
+  background: transparent;
 }
 
 .day-item .e-row-1 li span {
@@ -740,7 +740,7 @@
 }
 
 .day-item .s-row-6 li[data-colume='1'] {
-  background: #fff;
+  background: transparent;
 }
 
 .day-item .s-row-6 li[data-colume='1'] span {
@@ -757,7 +757,7 @@
 
 .day-item .s-row-5 li[data-colume='1'],
 .day-item .s-row-5 li[data-colume='2'] {
-  background: #fff;
+  background: transparent;
 }
 
 .day-item .s-row-5 li[data-colume='1'] span,
@@ -776,7 +776,7 @@
 .day-item .s-row-4 li[data-colume='1'],
 .day-item .s-row-4 li[data-colume='2'],
 .day-item .s-row-4 li[data-colume='3'] {
-  background: #fff;
+  background: transparent;
 }
 
 .day-item .s-row-4 li[data-colume='1'] span,
@@ -806,7 +806,7 @@
 }
 
 .day-item .s-row-3 li {
-  background: #fff;
+  background: transparent;
 }
 
 .day-item .s-row-3 li span {
@@ -824,7 +824,7 @@
 }
 
 .day-item .s-row-2 li {
-  background: #fff;
+  background: transparent;
 }
 
 .day-item .s-row-2 li span {
@@ -840,7 +840,7 @@
 }
 
 .day-item .s-row-1 li {
-  background: #fff;
+  background: transparent;
 }
 
 .day-item .s-row-1 li span {
