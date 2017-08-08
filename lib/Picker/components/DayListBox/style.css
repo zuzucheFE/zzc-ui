@@ -317,7 +317,8 @@
       list-style: none;
       position: relative;
       box-shadow: 0 .1rem .1rem #e8e8e8;
-      box-sizing: border-box; }
+      box-sizing: border-box;
+      z-index: 99; }
       .t-box .t-box-content .week-list ul li {
         padding: .1rem 0;
         color: #333;

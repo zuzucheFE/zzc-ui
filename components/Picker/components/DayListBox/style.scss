@@ -141,6 +141,7 @@
         position: relative;
         box-shadow: 0 .1rem .1rem #e8e8e8;
         box-sizing: border-box;
+        z-index: 99;
         li {
           padding: .1rem 0;
           color: #333;
@@ -172,7 +173,7 @@
             left: 50%;
             transform: translate3d(-50%, -50%, 0);
             -webkit-transform: translate3d(-50%, -50%, 0);
-            color:#F3F3F3;
+            color: #F3F3F3;
             font-size: 1.2rem;
           }
           &.hidden-item {
