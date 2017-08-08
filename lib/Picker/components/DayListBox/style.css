@@ -318,20 +318,6 @@
       position: relative;
       box-shadow: 0 .1rem .1rem #e8e8e8;
       box-sizing: border-box; }
-      .t-box .t-box-content .week-list ul:after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        display: block;
-        width: 100%;
-        border-bottom: 1px solid #D8D8D8;
-        -webkit-transform-origin: 0 0;
-        -ms-transform-origin: 0 0;
-        transform-origin: 0 0;
-        -webkit-transform: scaleY(0.5);
-        -ms-transform: scaleY(0.5);
-        transform: scaleY(0.5); }
       .t-box .t-box-content .week-list ul li {
         padding: .1rem 0;
         color: #333;
@@ -360,7 +346,6 @@
             left: 50%;
             transform: translate3d(-50%, -50%, 0);
             -webkit-transform: translate3d(-50%, -50%, 0);
-            z-index: 9;
             color: #F3F3F3;
             font-size: 1.2rem; }
           .t-box .t-box-content .day-list-box .day-item-box .day-item.hidden-item {

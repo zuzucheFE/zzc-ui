@@ -1,4 +1,3 @@
-
 .modal {
   &-mask {
     position: fixed;
@@ -12,8 +11,7 @@
     -webkit-opacity: 0;
     transition: all .1s;
     -webkit-transition: all .1s;
-
-    &.show{
+    &.show {
       opacity: 0.8;
       -webkit-opacity: 0.8;
     }
@@ -27,14 +25,13 @@
     z-index: 1001;
     transition: all .3s;
     -webkit-transition: all .3s;
-    width: 60%;
-    height:60%;
+    width: 3rem;
+    height: 2.1rem;
     margin: auto;
     opacity: 0;
-
-    &.show{
-      width: 100%;
-      height: 100%;
+    &.show {
+      height: 9rem;
+      width: 6.3rem;
       margin: auto;
       opacity: 1;
     }
@@ -48,58 +45,55 @@
   }
   &-content {
     position: absolute;
-    top: 1.2rem;
-    right: .32rem;
-    bottom: 2rem;
-    left: .32rem;
     background: #fff;
-    border-radius: 8px; /*no*/
+    border-radius: 8px;
+    /*no*/
     overflow: hidden;
+    height: 100%;
+    width: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    -webkit-transform: translate3d(-50%, -50%, 0);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-pack: end;
+    -webkit-box-align: end;
   }
-  &-content-box{
+  &-content-box {
     transition: all .3s;
     -webkit-transition: all .3s;
     opacity: 0;
     -webkit-opacity: 0;
-
-    &.show{
+    -webkit-box-flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+    &.show {
       opacity: 1;
       -webkit-opacity: 1;
     }
   }
   &-close {
-    position: absolute;
-    bottom: .8rem;
-    left: 50%;
-    transform: translateX(-50%);
-    -webkit-transform: translateX(-50%);
-    border: 2px solid rgba(255,255,255,0.5); /*no*/
-    width: .8rem;
-    height: .8rem;
-    background: transparent;
-    border-radius: 50%;
-    outline: 0;
-    padding: 0;
-
-    &:before,&:after{
-      content: '';
+    height: 1rem;
+    color: #4E7CDD;
+    font-size: .32rem;
+    display: -webkit-box;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+    position: relative;
+    width: 100%;
+    &::after {
+      content: "";
       position: absolute;
-      top: 50%;
-      left: 50%;
-      margin-top: -1px; /*no*/
+      left: 0;
+      top: 0;
       display: block;
-      width: .38rem;
-      height: 2px; /*no*/
-      background: #fff;
-    }
-    &:before{
-      transform: translateX(-50%) rotate(45deg);
-      -webkit-transform: translateX(-50%) rotate(45deg);
-    }
-    &:after{
-      transform: translateX(-50%) rotate(-45deg);
-      -webkit-transform: translateX(-50%) rotate(-45deg);
+      width: 100%;
+      border-bottom: 1px solid #e8e8e8;
+      -webkit-transform: scaleY(0.5);
+      -ms-transform: scaleY(0.5);
+      transform: scaleY(0.5);
     }
   }
 }
-

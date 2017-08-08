@@ -59,11 +59,11 @@ class Modal extends Component {
                                     className="modal-content-box"
                                     ref="modalContent"
                                 >
-                                    {this.props.content}    
+                                    {this.props.content}
                                 </div>
                         }
+                        <div className="modal-close" onClick={this.props.onCancel}>关闭</div>
                     </div>
-                    <div className="modal-close" onClick={this.props.onCancel}></div>
                 </div>
             </div>
         )
