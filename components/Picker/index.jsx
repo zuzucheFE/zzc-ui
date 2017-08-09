@@ -101,8 +101,11 @@ export default class Picker extends Component {
             } );
             if ( oldPropsData != nextPropsData ) {
                 this.resetAllData( nextProps );
+                return true;
+            } else { 
+                return false;
             }
-            return true;
+            
         }
 
 
