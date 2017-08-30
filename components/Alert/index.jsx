@@ -31,16 +31,19 @@ export default function ( ...args ) {
 
 
     let div = document.createElement( 'div' );
+    div.className = 'zzc-alert-box';
     parentElem == 'body' ? document.body.appendChild( div ) : document.querySelector( parentElem ).appendChild( div );
 
     function close( callback = () => { } ) {
-        box.className = 'zzc-alert-content'
-
+        box.className = 'zzc-alert-content';
         setTimeout(() => {
-            ReactDOM.unmountComponentAtNode( div );
-            div.parentNode.removeChild( div );
-
-            callback();
+            let alertBox = document.querySelector( '.zzc-alert-box' );
+            if ( alertBox ) {
+                let parentNode = alertBox.parentNode;
+                parentNode.removeChild( alertBox );
+                ReactDOM.unmountComponentAtNode( div );
+                callback();
+            }
         }, 100 );
 
     }
