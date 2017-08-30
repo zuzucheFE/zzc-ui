@@ -6,6 +6,8 @@ import ReactDOM from "react-dom";
 import Base from "../tool/base";
 import "./style.scss";
 
+let toastTimer = null;
+
 function info (...arg){
 
     if (document.querySelector('.toast-box')) {
@@ -26,9 +28,9 @@ function info (...arg){
         </div>,elem
     )
 
-
-    setTimeout(() => {
-        info.prototype.toastChange(elem,duration,onClose)
+    let toastTimer = setTimeout(() => {
+        info.prototype.toastChange( elem, duration, onClose );
+        toastTimer = null;
     },100);
 
 }
