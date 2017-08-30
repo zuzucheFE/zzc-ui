@@ -6,11 +6,17 @@ import ReactDOM from "react-dom";
 import Base from "../tool/base";
 import "./style.scss";
 
-let toastTimer = null;
-
-function info (...arg){
-
+function info( ...arg ) {
+    
     if (document.querySelector('.toast-box')) {
+        let currToastBox = document.querySelector( '.toast-box' );
+        clearTimeout( info.prototype.timer );
+        info.prototype.timer = null;
+        currToastBox.className = 'toast-box';
+        setTimeout(() => { 
+            currToastBox.parentNode.removeChild( currToastBox );
+            info( ...arg );
+        }, 200 );
         return false;
     }
 
@@ -28,9 +34,9 @@ function info (...arg){
         </div>,elem
     )
 
-    let toastTimer = setTimeout(() => {
+
+    setTimeout(() => {
         info.prototype.toastChange( elem, duration, onClose );
-        toastTimer = null;
     },100);
 
 }

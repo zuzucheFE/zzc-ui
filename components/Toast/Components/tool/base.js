@@ -6,8 +6,9 @@ function base(){
     this.duration = null;
     this.onClose = null;
     this.currState = 'hidden';
+    this.timer = null;
 
-    this.toastChange = function(elem,duration,onClose){
+    this.toastChange = function(elem,duration,onClose,id,queue){
 
         this.elem = elem;
         this.duration = duration;
@@ -15,7 +16,6 @@ function base(){
 
         // this.elem.addEventListener('webkitAnimationEnd',() => {this._elemTransitionend(this)});
         this.elem.addEventListener('webkitTransitionEnd',() => {this._elemTransitionend(this)});
-
         this.currState = 'show';
         this.elem.className = 'toast-box show';
     }
@@ -23,6 +23,8 @@ function base(){
     this._closeInfo = function(_this){
         _this.elem.className = 'toast-box';
         _this.currState = 'hidden';
+        clearTimeout( _this.timer );
+        _this.timer = null;
     }
 
     this._removeInfo = function (_this){
@@ -35,7 +37,7 @@ function base(){
 
 
         if(_this.currState == 'show'){
-            setTimeout(() => {_this._closeInfo(_this)},_this.duration);
+            this.timer = setTimeout(() => {_this._closeInfo(_this)},_this.duration);
         }else{
             _this._removeInfo(_this);
         }
