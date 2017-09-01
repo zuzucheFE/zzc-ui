@@ -15,8 +15,9 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import "./style.scss";
 
+let queue = [];
 
-export default function ( ...args ) {
+function alert ( ...args ) {
     const title = args[0] || '';
     const content = args[1];
     const actions = args[2] || [{ text: '确定' }];
@@ -29,6 +30,12 @@ export default function ( ...args ) {
         return;
     }
 
+    if ( document.querySelector( '.zzc-alert-box' ) ) {
+        queue.push(() => {
+            alert( ...args );
+        } );
+        return false;
+    }
 
     let div = document.createElement( 'div' );
     div.className = 'zzc-alert-box';
@@ -43,6 +50,13 @@ export default function ( ...args ) {
                 parentNode.removeChild( alertBox );
                 ReactDOM.unmountComponentAtNode( div );
                 callback();
+                
+                if ( queue.length != 0 ) { 
+                    requestAnimationFrame(() => { 
+                        queue[0]();
+                        queue.shift();
+                    })
+                }
             }
         }, 100 );
 
@@ -119,4 +133,6 @@ export default function ( ...args ) {
     return {
         close: close
     };
-}
+ }
+
+ export default alert; 

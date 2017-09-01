@@ -600,7 +600,7 @@
 }
 .zzc-animation-fade {
   transition: opacity .3s;
-  -webkkit-transition: opacity .3s;
+  -webkit-transition: opacity .3s;
   opacity: 0;
 }
 
@@ -609,20 +609,18 @@
 }
 
 .zzc-animation-slide {
-  transition: -webkit-transform .2s;
-  transition: transform .2s;
-  transition: transform .2s, -webkit-transform .2s;
-  -webkkit-transition: transform .2s;
+  transition: all .2s;
+  -webkit-transition: all .2s;
 }
 
 .zzc-animation-slide.slide-bottom {
   transform: translateY(100%);
-  -webkit-transform: translateY(100%);
+  -webkit-transform: -webkit-translateY(100%);
 }
 
 .zzc-animation-slide.slide-bottom.slide-in {
   transform: translateY(0);
-  -webkit-transform: translateY(0);
+  -webkit-transform: -webkit-translateY(0);
 }
 .day-item .e-row-6 li[data-colume='7'] {
   background: transparent;
@@ -981,6 +979,9 @@
 .t-box .t-box-content .t-header .t-pickup-time .t-animate-box .t-time-box .t-time-info,
 .t-box .t-box-content .t-header .t-return-time .t-animate-box .t-time-box .t-time-info {
   width: 2.7rem;
+  height: 100%;
+  display: -webkit-box;
+  -webkit-box-align: center;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1009,6 +1010,7 @@
 .t-box .t-box-content .t-header .t-return-time .t-animate-box .t-time-box .t-time-info div .t-time {
   font-size: .36rem;
   font-weight: 400;
+  line-height: 1;
 }
 
 .t-box .t-box-content .t-header .t-pickup-time .t-animate-box .t-time-box .t-time-info div .t-title,
@@ -1017,6 +1019,7 @@
 .t-box .t-box-content .t-header .t-return-time .t-animate-box .t-time-box .t-time-info div .t-week {
   font-weight: 200;
   font-size: .24rem;
+  line-height: 1;
 }
 
 .t-box .t-box-content .t-header .t-pickup-time .t-animate-box .t-time-box .t-placeholder,
@@ -1098,7 +1101,7 @@
   -webkit-overflow-scrolling: touch;
   transform: translate3d(0, 0, 0);
   -webkit-transform: translate3d(0, 0, 0);
-  padding-bottom: .2rem;
+  padding-bottom: .5rem;
   box-sizing: border-box;
 }
 
@@ -1108,19 +1111,22 @@
 
 .t-box .t-box-content .day-list-box .day-item-box .day-item {
   position: relative;
+  height: 100%;
+  width: 100%;
 }
 
 .t-box .t-box-content .day-list-box .day-item-box .day-item .month-bg {
   display: -webkit-box;
   -webkit-box-pack: center;
   -webkit-box-align: center;
-  position: absolute;
+  position: relative;
   top: 50%;
-  left: 50%;
-  transform: translate3d(-50%, -50%, 0);
-  -webkit-transform: translate3d(-50%, -50%, 0);
+  left: 0;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
   color: #F3F3F3;
   font-size: 1.2rem;
+  z-index: 50;
 }
 
 .t-box .t-box-content .day-list-box .day-item-box .day-item.hidden-item {
@@ -1132,7 +1138,10 @@
 }
 
 .t-box .t-box-content .day-list-box .day-item-box .day-item .day-item-content {
-  position: relative;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
   z-index: 100;
 }
 
@@ -1144,6 +1153,8 @@
   color: #333;
   font-weight: 400;
   height: .68rem;
+  position: relative;
+  z-index: 100;
 }
 
 .t-box .t-box-content .day-list-box .day-item-box .day-item .day-item-content ul:not(:first-child) {

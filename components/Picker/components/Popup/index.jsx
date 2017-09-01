@@ -62,6 +62,7 @@ function create( content, opt ) {
 //绑定popup-content事件
 function addPopupEvent() {
     let popupNode = document.querySelector( '.zzc-popup .popup-content' );
+    
     //绑定事件
     Event.addEndEventListener( popupNode, function () {
         //关闭后的操作

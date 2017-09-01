@@ -3,17 +3,17 @@
  */
 import React, { Component } from 'react';
 import './style.scss';
-import DateList from './component/DateList.jsx';
 import SelectedTime from './component/SelectedTime.jsx';
 import WeekList from './component/WeekList.jsx';
 import Range from './component/Range.jsx';
-import WarnSlideTip from '../WarnSlideTip';
-import TextToast from '../../../TextToast';
+import WarnSlideTip from '../WarnSlideTip/index.jsx';
+import TextToast from '../../../TextToast/index.jsx';
 
 import formatTime from '../../../tool/format';
 import { setDayCount } from '../../tool/dateTool';
 import { hasClass } from '../../tool/class.js';
 
+import info from '../warnInfo/info.config.js';
 
 let timeType = 'pickup',
     warnTimer = null,
@@ -66,6 +66,14 @@ function initGlobalData( pickupDay, returnDay ) {
     timeType = 'pickup';
 }
 
+function searchParentNodeOffsetTop( node, targetParentNodeClassName ) {
+    if ( node.parentNode.className != targetParentNodeClassName ) {
+        return searchParentNodeOffsetTop( node.parentNode, targetParentNodeClassName );
+    } else {
+        return node.parentNode.offsetTop;
+    }
+}
+
 export default class Time extends Component {
 
     constructor( props ) {
@@ -106,17 +114,17 @@ export default class Time extends Component {
         bottomHeight = parseFloat( window.getComputedStyle( _this.refs.bottom ).height );
         dayListBox = _this.refs.dayListBox;
         dayListBox.style.height = ( contentHeight - ( tHeaderHeight + weekListHeight + dialogTitleHeight + bottomHeight ) ) + 'px';
-
         //如果有选中的日期，就将选中日期置顶
         let startElem = document.querySelector( '.day-list-box .start' );
         if ( startElem ) {
-            document.querySelector( '.day-list-box' ).scrollTop = startElem.offsetTop;
+            let offsetTop = searchParentNodeOffsetTop( startElem, 'day-item' );
+            document.querySelector( '.day-list-box' ).scrollTop = offsetTop;
         }
     }
 
     //日期点击事件
     clickDay( e ) {
-        if ( e.target.getAttribute('data-gone') == '1' ) { 
+        if ( e.target.getAttribute( 'data-gone' ) == '1' ) {
             return false;
         }
         let targetClassName = e.target.className;
@@ -142,12 +150,17 @@ export default class Time extends Component {
 
         //没有还车或者取车日期的时候，只设置时间
         if ( type == 'pickup' ) {
+
+            let pickupDay = this.state.pickupDay ? this.combinationOfTime( 'pickup', this.state.pickupDay, { h: timeInfo[0], m: timeInfo[1] } ) : null,
+                dayCount = pickupDay && this.state.returnDay ? setDayCount( pickupDay, this.state.returnDay ) : null;
+
             this.setState( {
                 pickupTime: {
                     h: timeInfo[0],
                     m: timeInfo[1]
                 },
-                pickupDay: this.state.pickupDay ? this.combinationOfTime( 'pickup', this.state.pickupDay, { h: timeInfo[0], m: timeInfo[1] } ) : null
+                pickupDay: pickupDay,
+                dayCount: dayCount
             }, () => {
                 this.setWarnInfo( type );
             } );
@@ -319,7 +332,7 @@ export default class Time extends Component {
                     pickupYear = pickupElem.parentNode.parentNode.getAttribute( 'data-year' );
 
                 //如果取还车是同一行需要特殊处理
-                if ( returnRow == pickupRow && pickupYear == returnYear && returnMonth == pickupMonth) {
+                if ( returnRow == pickupRow && pickupYear == returnYear && returnMonth == pickupMonth ) {
                     let diff = returnCol - pickupCol - 1,
                         currElem = pickupElem,
                         className = '';
@@ -396,12 +409,12 @@ export default class Time extends Component {
     verifyDate( pickupDay, returnDay ) {
 
         if ( !pickupDay ) {
-            this.showTextToast( '请选择取车时间' );
+            this.showTextToast( info.toast1 );
             return false;
         }
 
         if ( !returnDay ) {
-            this.showTextToast( '请选择还车时间' );
+            this.showTextToast( info.toast2 );
             return false;
         }
 
@@ -414,7 +427,7 @@ export default class Time extends Component {
         if ( pickupInfo.year == returnInfo.year && pickupInfo.month == returnInfo.month && pickupInfo.day == returnInfo.day ) {
             //同一时间取还车
             if ( pTime == rTime || rTime < pTime ) {
-                this.showTextToast( '当日取还，还车时间需晚于取车时间' );
+                this.showTextToast( info.toast3 );
                 return false;
             } else {
                 return true;
@@ -472,21 +485,21 @@ export default class Time extends Component {
                 this.hideWarn();
             }
             warnID = 1;
-            this.showWarn( '当日取还，还车时间需晚于取车时间' );
+            this.showWarn( info.warn1 );
             return false;
         }
 
-        //还车时间小于取车时间，例如：10：00取车  还车是9：00
-        if ( pickupTime > returnTime ) {
+        //超出1小时也会按1天算
+        if ( !hasTodayPickupAndReturn && pickupDay.time.getTime() < returnDay.time.getTime() && returnTime > pickupTime ) {
             if ( warnID != 2 ) {
                 this.hideWarn();
             }
             warnID = 2;
-            this.showWarn( '不满24小时按1天算' );
+            this.showWarn( info.warn2 );
             return false;
         }
 
-        //以上条件不满足代表通过验证，则马上手气警告框
+        //以上条件不满足代表通过验证，则马上取消警告框
         this.hideWarn();
 
     }

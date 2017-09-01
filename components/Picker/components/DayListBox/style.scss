@@ -56,6 +56,9 @@
             width: 2.7rem;
             .t-time-info {
               width: 2.7rem;
+              height: 100%;
+              display: -webkit-box;
+              -webkit-box-align: center;
               position: absolute;
               top: 50%;
               left: 50%;
@@ -75,11 +78,13 @@
                 .t-time {
                   font-size: .36rem;
                   font-weight: 400;
+                  line-height: 1;
                 }
                 .t-title,
                 .t-week {
                   font-weight: 200;
                   font-size: .24rem;
+                  line-height: 1;
                 }
               }
             }
@@ -158,23 +163,26 @@
       -webkit-overflow-scrolling: touch;
       transform: translate3d(0, 0, 0);
       -webkit-transform: translate3d(0, 0, 0);
-      padding-bottom: .2rem;
+      padding-bottom: .5rem;
       box-sizing: border-box;
       .day-item-box {
         margin-top: .6rem;
         .day-item {
           position: relative;
+          height: 100%;
+          width: 100%;
           .month-bg {
             display: -webkit-box;
             -webkit-box-pack: center;
             -webkit-box-align: center;
-            position: absolute;
+            position: relative;
             top: 50%;
-            left: 50%;
-            transform: translate3d(-50%, -50%, 0);
-            -webkit-transform: translate3d(-50%, -50%, 0);
+            left: 0;
+            transform: translateY(-50%);
+            -webkit-transform: translateY(-50%);
             color: #F3F3F3;
             font-size: 1.2rem;
+            z-index: 50;
           }
           &.hidden-item {
             display: none;
@@ -183,7 +191,10 @@
             }
           }
           .day-item-content {
-            position: relative;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
             z-index: 100;
             ul {
               list-style: none;
@@ -193,6 +204,8 @@
               color: #333;
               font-weight: 400;
               height: .68rem;
+              position: relative;
+              z-index: 100;
               &:not(:first-child) {
                 margin-top: .37rem;
               }
