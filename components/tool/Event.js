@@ -65,7 +65,7 @@ function detectEvents() {
 })();
 
 
-function addEventListener(node, eventName, eventListener, _this) {
+function addEventListener( node, eventName, eventListener, _this ) {
     if(_this){
         node.addEventListener(eventName, eventListener.bind(_this), false);
     }else{
@@ -74,7 +74,7 @@ function addEventListener(node, eventName, eventListener, _this) {
 }
 
 function removeEventListener(node, eventName, eventListener, _this) {
-    if(_this){
+    if ( _this ) {
         node.removeEventListener(eventName, eventListener.bind(_this), false);
     }else{
         node.removeEventListener(eventName, eventListener, false);
