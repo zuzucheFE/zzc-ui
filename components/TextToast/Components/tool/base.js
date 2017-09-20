@@ -1,5 +1,4 @@
 import ReactDOM from "react-dom";
-import Event from '../../../tool/Event';
 
 function base(){
 
@@ -7,43 +6,40 @@ function base(){
     this.duration = null;
     this.onClose = null;
     this.currState = 'hidden';
-    this.targetParent = null;
-    this.transactionEndFn = null;
+    this.timer = null;
 
-    this.toastChange = function(elem,duration,onClose,targetParent){
+    this.toastChange = function(elem,duration,onClose,id,queue){
 
         this.elem = elem;
         this.duration = duration;
         this.onClose = onClose;
-        this.targetParent = targetParent ? targetParent : null;
-        this.transactionEndFn = this._elemTransitionend.bind(this);
 
-        Event.addEndEventListener(this.elem,this.transactionEndFn);
-
+        // this.elem.addEventListener('webkitAnimationEnd',() => {this._elemTransitionend(this)});
+        this.elem.addEventListener('webkitTransitionEnd',() => {this._elemTransitionend(this)});
         this.currState = 'show';
         this.elem.className = 'textToast-box show';
     }
 
-    //关闭
     this._closeInfo = function(_this){
         _this.elem.className = 'textToast-box';
         _this.currState = 'hidden';
+        clearTimeout( _this.timer );
+        _this.timer = null;
     }
 
-    //删除
     this._removeInfo = function (_this){
         ReactDOM.unmountComponentAtNode(_this.elem);
-        _this.targetParent.removeChild(_this.elem);
+        document.body.removeChild(_this.elem);
         _this.onClose();
     }
 
-    this._elemTransitionend = function(){
+    this._elemTransitionend = function(_this){
 
-        if(this.currState == 'show'){
-            setTimeout(() => {this._closeInfo(this)},this.duration);
+
+        if(_this.currState == 'show'){
+            this.timer = setTimeout(() => {_this._closeInfo(_this)},_this.duration);
         }else{
-            Event.removeEndEventListener(this.elem,this.transactionEndFn);
-            this._removeInfo(this);
+            _this._removeInfo(_this);
         }
     }
 
