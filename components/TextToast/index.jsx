@@ -12,14 +12,14 @@ import "./style.scss";
 import Info from "./Components/Info/index.jsx";
 
 
-class Toast extends Component{
+class TextToast extends Component{
 
     constructor(props) {
         super(props);
     }
 
-    static show = Info;
+    static info = Info;
 
 }
 
-export default Toast;
+export default TextToast;

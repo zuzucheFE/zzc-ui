@@ -21,12 +21,12 @@ function base(){
         Event.addEndEventListener(this.elem,this.transactionEndFn);
 
         this.currState = 'show';
-        this.elem.className = 'toast-box show';
+        this.elem.className = 'textToast-box show';
     }
 
     //关闭
     this._closeInfo = function(_this){
-        _this.elem.className = 'toast-box';
+        _this.elem.className = 'textToast-box';
         _this.currState = 'hidden';
     }
 

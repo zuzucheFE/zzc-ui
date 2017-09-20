@@ -210,7 +210,7 @@
   font-size: .28rem;
   color: #fff;
 }
-.toast-box {
+.textToast-box {
   position: fixed;
   top: 0;
   left: 0;
@@ -225,11 +225,11 @@
   opacity: 0;
 }
 
-.toast-box.show {
+.textToast-box.show {
   opacity: 1;
 }
 
-.toast-box .toast-content {
+.textToast-box .textToast-content {
   background: rgba(0, 0, 0, 0.6);
   text-align: center;
   padding: .24rem .24rem;
@@ -238,7 +238,7 @@
   width: 5.92rem;
 }
 
-.toast-box .toast-content p {
+.textToast-box .textToast-content p {
   font-size: .28rem;
   color: #fff;
   background: transparent;

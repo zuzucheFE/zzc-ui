@@ -6,32 +6,37 @@ import ReactDOM from "react-dom";
 import Base from "../tool/base";
 import "./style.scss";
 
-function info (opt){
-
-    if (document.querySelector('.toast-box')) {
+function info( ...arg ) {
+    
+    if (document.querySelector('.textToast-box')) {
+        let currToastBox = document.querySelector( '.textToast-box' );
+        clearTimeout( info.prototype.timer );
+        info.prototype.timer = null;
+        currToastBox.className = 'textToast-box';
+        setTimeout(() => { 
+            currToastBox.parentNode.removeChild( currToastBox );
+            info( ...arg );
+        }, 200 );
         return false;
     }
 
-    let content = opt.content,
-        duration = opt.duration || 3000,
-        onClose = opt.callBack && opt.callBack instanceof Function ? opt.callBack : function(){},
-        targetParent = opt.targetParent || document.body,
-        elem = document.createElement('div'),
-        zIndex = opt.zIndex || 999;
+    let content = arg[0],
+        duration = parseInt(arg[1] || 3000),
+        onClose = arg[2] && arg[2] instanceof Function ? arg[2] : function(){},
+        elem = document.createElement('div');
 
-    elem.className = 'toast-box';
-    elem.style.zIndex = zIndex;
-    targetParent.appendChild(elem);
+    elem.className = 'textToast-box';
+    document.body.appendChild(elem);
 
     ReactDOM.render(
-        <div className='toast-content'>
+        <div className='textToast-content'>
             <p dangerouslySetInnerHTML={{__html: content}} />
         </div>,elem
     )
 
 
     setTimeout(() => {
-        info.prototype.toastChange(elem,duration,onClose,targetParent);
+        info.prototype.toastChange( elem, duration, onClose );
     },100);
 
 }
