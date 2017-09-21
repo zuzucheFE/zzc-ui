@@ -17,7 +17,9 @@ class ImageViewerContainer extends Component {
     componentDidMount() {
         new Swiper('.swiper-container-modal', {
             loop: true,
-            initialSlide: this.props.data.showIndex - 1
+            initialSlide: this.props.data.showIndex - 1,
+            lazyLoading : true,
+            lazyLoadingOnTransitionStart : true,
         });
     }
 
@@ -36,7 +38,7 @@ class ImageViewerContainer extends Component {
                                 photos.map((item,i)=>{
                                     return (
                                         <li className="swiper-slide">
-                                            <img src={item.url} />
+                                            <img className="swiper-lazy" data-src={item.url} />
                                         </li>
                                     )
                                 })
