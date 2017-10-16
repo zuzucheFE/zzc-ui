@@ -12,8 +12,8 @@
   .switch-box.switch-disabled {
     opacity: .3; }
   .switch-box.open {
-    background: #254FCB;
-    border: 1px solid #254FCB;
+    background: #4E7CDD;
+    border: 1px solid #4E7CDD;
     /*no*/ }
     .switch-box.open .round {
       transform: translate3d(0.39rem, 0, 0);
