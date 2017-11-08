@@ -16,11 +16,11 @@ class Modal extends Component {
 
         if ( this.props.visible ) {
             this.refs.modalBox.style.display = 'block';
-            setTimeout(() => {
+            setTimeout( () => {
                 this.refs.modalMask.className = 'modal-mask show';
-                setTimeout(() => {
+                setTimeout( () => {
                     this.refs.modalWrap.className = 'modal-wrap show';
-                    setTimeout(() => {
+                    setTimeout( () => {
                         this.refs.modalContent.className = 'modal-content-box show';
                     }, 350 );
                 }, 100 );
@@ -28,15 +28,31 @@ class Modal extends Component {
         } else {
             this.refs.modalBox.className = 'hide-modal';
             this.refs.modalWrap.className = 'modal-wrap';
-            setTimeout(() => {
+            setTimeout( () => {
                 this.refs.modalMask.className = 'modal-mask';
-                setTimeout(() => {
+                setTimeout( () => {
                     this.refs.modalContent.className = 'modal-content-box';
                     this.refs.modalBox.style.display = 'none';
                 }, 100 );
             }, 300 );
         }
 
+    }
+
+    setBtn( data ) {
+        return (
+            <div className="modal-btn-group">
+                {
+                    data.map( ( item, key ) => {
+                        return ( <div key={`modal-btn-${key}-${new Date().getTime()}`} style={item.style ? item.style : {}} className="modal-close" onClick={() => {
+                            item.click instanceof Function && item.click();
+                            this.props.onCancel();
+                        }}>{item.btnText}</div> )
+                    } )
+                }
+            </div>
+
+        )
     }
 
     render() {
@@ -62,7 +78,12 @@ class Modal extends Component {
                                     {this.props.content}
                                 </div>
                         }
-                        <div className="modal-close" onClick={this.props.onCancel}>关闭</div>
+                        {
+                            this.props.btn ?
+                                this.setBtn( this.props.btn ) :
+                                <div className="modal-close" onClick={this.props.onCancel}>关闭</div>
+
+                        }
                     </div>
                 </div>
             </div>

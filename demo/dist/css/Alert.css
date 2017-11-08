@@ -336,6 +336,22 @@ p {
   -webkit-opacity: 1;
 }
 
+.modal-btn-group {
+  display: -webkit-box;
+  -webkit-box-align: center;
+  -webkit-box-pack: justify;
+  width: 100%;
+}
+
+.modal-btn-group .modal-close {
+  -webkit-box-flex: 1;
+  width: 100%;
+}
+
+.modal-btn-group .modal-close:not(:last-child) {
+  border-right: 1px solid #e8e8e8;
+}
+
 .modal-close {
   height: 1rem;
   color: #4E7CDD;
