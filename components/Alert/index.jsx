@@ -108,7 +108,7 @@ function alert ( ...args ) {
     ReactDOM.render(
         <div className="zzc-alert">
             <div className="zzc-alert-mark"></div>
-            <div className="zzc-alert-box" onClick={() => { close(); }}>
+            <div className="zzc-alert-box">
                 <div className="zzc-alert-content">
                     {
                         title == '' ? '' : <h2 className="zzc-alert-header">{title}</h2>
