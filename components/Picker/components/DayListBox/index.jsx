@@ -111,7 +111,7 @@ export default class Time extends Component {
         tHeaderHeight = parseFloat( window.getComputedStyle( _this.refs.tHeader ).height );
         weekListHeight = parseFloat( window.getComputedStyle( _this.refs.weekList ).height );
         dialogTitleHeight = parseFloat( window.getComputedStyle( document.querySelector( '.zzc-dialog-title-box' ) ).height );
-        bottomHeight = parseFloat( window.getComputedStyle( _this.refs.bottom ).height );
+        bottomHeight = _this.refs.bottom ? parseFloat( window.getComputedStyle( _this.refs.bottom ).height ) : 0;
         dayListBox = _this.refs.dayListBox;
         dayListBox.style.height = ( contentHeight - ( tHeaderHeight + weekListHeight + dialogTitleHeight + bottomHeight ) ) + 'px';
         //如果有选中的日期，就将选中日期置顶
@@ -124,7 +124,7 @@ export default class Time extends Component {
 
     //日期点击事件
     clickDay( e ) {
-        if ( e.target.getAttribute( 'data-gone' ) == '1' ) {
+        if ( !this.props.isClickGoneDate && e.target.getAttribute( 'data-gone' ) == '1' ) {
             return false;
         }
         let targetClassName = e.target.className;
@@ -133,15 +133,23 @@ export default class Time extends Component {
             let year = e.target.getAttribute( 'data-year' ),
                 month = e.target.getAttribute( 'data-month' ) - 1,
                 date = e.target.getAttribute( 'data-date' );
-            this.selectDay( new Date( year, month, date ) );
+            this.selectDay( new Date( year, month, date ), this.changeDate.bind(this) );
         } else {
             return false;
         }
     }
 
+    //更改日期事件
+    changeDate( type ) { 
+        this.props.onChangeDate( {
+            pickup: this.state.pickupDay ? this.state.pickupDay : null,
+            return: this.state.returnDay ? this.state.returnDay : null
+        });
+    }
+
     //获取点击的时间
-    selectDay( selectDay ) {
-        this.inspectDay( timeType, selectDay );
+    selectDay( selectDay, callback ) {
+        this.inspectDay( timeType, selectDay, callback );
     }
 
     //获取选择的时间段
@@ -204,7 +212,7 @@ export default class Time extends Component {
     }
 
     //检测选择时间时候符合逻辑
-    inspectDay( type, selectDay ) {
+    inspectDay( type, selectDay, callback ) {
 
         let selectDayInfo = formatTime( selectDay ),
             id = `t-${selectDayInfo.year}-${selectDayInfo.month}-${selectDayInfo.day}`;
@@ -233,6 +241,7 @@ export default class Time extends Component {
                     pickupID: id,
                     returnID: null
                 }, () => {
+                    callback && callback()
                     this.setWarnInfo( timeType );
                 } );
                 //正常设置还车时间
@@ -246,6 +255,7 @@ export default class Time extends Component {
                     dayCount: this.setDayCount( returnTime, this.state.pickupDay ),
                     returnID: id
                 }, () => {
+                    callback && callback()
                     this.setWarnInfo( timeType );
                 } );
             }
@@ -263,6 +273,7 @@ export default class Time extends Component {
                 pickupID: id,
                 returnID: null
             }, () => {
+                callback && callback()
                 this.setWarnInfo( timeType );
             } );
         }
@@ -271,7 +282,6 @@ export default class Time extends Component {
 
     //更改列表日期的显示状态
     changeListDayState( currType, id ) {
-
         //当前选择的是pickup
         if ( currType == 'pickup' ) {
 
@@ -296,16 +306,26 @@ export default class Time extends Component {
 
                 //清除取还车日期选中的class
                 if ( pickupElem ) {
+                    //如果当前是支持点击之前日期，需要判断如果当前日期是过期日期，将要保留gone的class
+                    if ( this.props.isClickGoneDate && pickupElem.children[0].getAttribute( 'data-gone' ) == '1' ) {
+                        if ( pickupElem.children[0].getAttribute( 'data-gone' ) == '1' ) {
+                            pickupElem.className = "gone";
+                        }
+                    } else {
+                        pickupElem.className = '';
+                    }
                     pickupElem.parentNode.className = "";
-                    pickupElem.className = '';
                 }
 
                 if ( returnElem ) {
+                    //如果当前是支持点击之前日期，需要判断如果当前日期是过期日期，将要保留gone的class
+                    if ( this.props.isClickGoneDate && returnElem.children[0].getAttribute( 'data-gone' ) == '1' ) {
+                        returnElem.className = "gone";
+                    } else {
+                        returnElem.className = '';
+                    }
                     returnElem.parentNode.className = "";
-                    returnElem.className = '';
                 }
-
-
             }
 
             let elem = document.querySelector( '#' + id + '' );
@@ -453,8 +473,8 @@ export default class Time extends Component {
 
         if ( this.verifyDate( this.state.pickupDay, this.state.returnDay ) ) {
 
-            let pickupInfo = this.state.pickupDay ? formatTime( this.state.pickupDay ) : null,
-                returnInfo = this.state.returnDay ? formatTime( this.state.returnDay ) : null,
+            let pickupInfo = this.state.pickupDay ? formatTime( this.state.pickupDay, this.state.isOpenTimePicker ) : null,
+                returnInfo = this.state.returnDay ? formatTime( this.state.returnDay, this.state.isOpenTimePicker ) : null,
                 { confirmEvent, closeEvent } = this.props;
 
             confirmEvent instanceof Function && confirmEvent( {
@@ -469,6 +489,10 @@ export default class Time extends Component {
 
     //设置警告信息
     setWarnInfo( type ) {
+
+        if ( !this.state.isOpenTimePicker ) {
+            return false;
+        }
 
         //如果取还车时间没有不作处理
         if ( !this.state.pickupDay || !this.state.returnDay ) {
@@ -510,7 +534,7 @@ export default class Time extends Component {
         if ( warnTimer != null ) {
             this.warnShowedEvent();
         } else {
-            timer2 = setTimeout(() => {
+            timer2 = setTimeout( () => {
                 this.setState( {
                     isShowWarn: true,
                     warnText: text
@@ -536,7 +560,7 @@ export default class Time extends Component {
     warnShowedEvent() {
         //如果当前没有进入倒计时收起，就正常倒计时
         if ( warnTimer == null ) {
-            warnTimer = setTimeout(() => {
+            warnTimer = setTimeout( () => {
                 this.setState( {
                     isShowWarn: false,
                 } );
@@ -545,7 +569,7 @@ export default class Time extends Component {
             //如果正在倒计时的时候再次触发弹出warn，则清除之前的倒计时重新计时
         } else {
             clearTimeout( warnTimer );
-            warnTimer = setTimeout(() => {
+            warnTimer = setTimeout( () => {
                 this.setState( {
                     isShowWarn: false,
                 } );
@@ -554,8 +578,72 @@ export default class Time extends Component {
         }
     }
 
+    //有时间选择的底部控件
+    haveTimeBottomController() {
+        return (
+            <div className="bottom-controller-box">
+                <Range
+                    ref="pickupRange"
+                    synchronizationReturnTimeStart={( data ) => {
+                        this.synchronizationReturnTimeStart( data );
+                    }}
+                    synchronizationReturnTimeMove={( data, nextX ) => {
+                        this.synchronizationReturnTimeMove( data, nextX );
+                    }}
+                    synchronizationReturnTimeEnd={( data ) => {
+                        this.synchronizationReturnTimeEnd( data );
+                    }}
+                    isSynchronization={this.state.isSynchronization}
+                    title="取车时间"
+                    rangeType="取车"
+                    type="pickup"
+                    timeRange={this.props.timeRange}
+                    time={this.state.pickupTime}
+                    day={this.state.pickupDay}
+                    selectTime={( time, type ) => {
+                        this.selectTime( time, type );
+                    }}
+                />
+                <Range
+                    ref="returnRange"
+                    title="还车时间"
+                    rangeType="还车"
+                    type="return"
+                    timeRange={this.props.timeRange}
+                    isSynchronization={this.state.isSynchronization}
+                    time={this.state.returnTime}
+                    day={this.state.returnDay}
+                    selectTime={( time, type ) => {
+                        this.selectTime( time, type );
+                    }}
+                    changeSynchronization={( isSynchronization ) => {
+                        this.changeSynchronization( isSynchronization );
+                    }}
+                />
+                <div className="confirm-box">
+                    <span onClick={() => {
+                        this.confirm();
+                    }}>确认</span>
+                </div>
+            </div>
+        );
+    }
+
+    //没有时间选择的底部控件
+    noTimeBottomController() {
+        return (
+            <div className="bottom-controller-box">
+                <div className="confirm-box">
+                    <span onClick={() => {
+                        this.confirm();
+                    }}>确认</span>
+                </div>
+            </div>
+        );
+    }
+
     render() {
-        let { startTime, endTime, timeRange, dayList, JSXElem } = this.props;
+        let { hideController, isOpenTimePicker, startTime, endTime, timeRange, dayList, JSXElem, pickupPlaceholder, returnPlaceholder } = this.props;
         return (
             <div className="t-box">
                 <div className="t-box-content">
@@ -563,9 +651,10 @@ export default class Time extends Component {
                         <SelectedTime
                             class="t-pickup-time"
                             title="取车时间"
+                            isOpenTimePicker={isOpenTimePicker}
                             day={this.state.pickupDay}
-                            time={this.state.pickupTime}
-                            placeholder="选择取车时间"
+                            time={isOpenTimePicker ? this.state.pickupTime : null}
+                            placeholder={pickupPlaceholder}
                         />
                         {
                             this.state.dayCount ?
@@ -579,9 +668,10 @@ export default class Time extends Component {
                         <SelectedTime
                             class="t-return-time"
                             title="还车时间"
+                            isOpenTimePicker={isOpenTimePicker}
                             day={this.state.returnDay}
-                            time={this.state.returnTime}
-                            placeholder="选择还车时间"
+                            time={isOpenTimePicker ? this.state.returnTime : null}
+                            placeholder={returnPlaceholder}
                         />
                     </div>
 
@@ -597,52 +687,8 @@ export default class Time extends Component {
                     />
 
                 </div>
-                <div ref="bottom" className="bottom-controller">
-                    <div className="bottom-controller-box">
-                        <Range
-                            ref="pickupRange"
-                            synchronizationReturnTimeStart={( data ) => {
-                                this.synchronizationReturnTimeStart( data );
-                            }}
-                            synchronizationReturnTimeMove={( data, nextX ) => {
-                                this.synchronizationReturnTimeMove( data, nextX );
-                            }}
-                            synchronizationReturnTimeEnd={( data ) => {
-                                this.synchronizationReturnTimeEnd( data );
-                            }}
-                            isSynchronization={this.state.isSynchronization}
-                            title="取车时间"
-                            rangeType="取车"
-                            type="pickup"
-                            timeRange={timeRange}
-                            time={this.state.pickupTime}
-                            day={this.state.pickupDay}
-                            selectTime={( time, type ) => {
-                                this.selectTime( time, type );
-                            }}
-                        />
-                        <Range
-                            ref="returnRange"
-                            title="还车时间"
-                            rangeType="还车"
-                            type="return"
-                            timeRange={timeRange}
-                            isSynchronization={this.state.isSynchronization}
-                            time={this.state.returnTime}
-                            day={this.state.returnDay}
-                            selectTime={( time, type ) => {
-                                this.selectTime( time, type );
-                            }}
-                            changeSynchronization={( isSynchronization ) => {
-                                this.changeSynchronization( isSynchronization );
-                            }}
-                        />
-                        <div className="confirm-box">
-                            <span onClick={() => {
-                                this.confirm();
-                            }}>确认</span>
-                        </div>
-                    </div>
+                {!hideController && <div ref="bottom" className={isOpenTimePicker ? "bottom-controller" : "bottom-controller no-time"}>
+                    {isOpenTimePicker ? this.haveTimeBottomController() : this.noTimeBottomController()}
                     <WarnSlideTip
                         text={this.state.warnText}
                         isShow={this.state.isShowWarn}
@@ -650,7 +696,7 @@ export default class Time extends Component {
                             this.warnShowedEvent();
                         }}
                     />
-                </div>
+                </div>}
             </div>
         );
     }

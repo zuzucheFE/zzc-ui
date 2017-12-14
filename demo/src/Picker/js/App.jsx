@@ -66,18 +66,19 @@ export default class App extends Component {
 
     componentDidMount() {
         let _this = this;
-        // setTimeout(() => {
-        //     _this.setState({
-        //         startTime: ['2017','9','1'],
-        //         endTime: ['2017','12','1']
-        //     });
-        // },5000);
+        setTimeout( () => {
+            console.log('更改时间')
+            _this.setState({
+                pickupTime: new Date( new Date().setMonth( new Date().getMonth() + 2 ) ),
+                returnTime: new Date( new Date().setMonth( new Date().getMonth() + 3 ) ),
+            });
+        },5000);
     }
 
     confirm( opt ) {
         this.setState( {
-            returnTime: opt.returnTime.time,
-            pickupTime: opt.pickupTime.time,
+            returnTime: opt.returnTime.time?opt.returnTime.time:'',
+            pickupTime: opt.pickupTime.time?opt.pickupTime.time:'',
             pickupInfo: opt.pickupTime,
             returnInfo: opt.returnTime,
             dayCount: opt.dayCount,
@@ -101,6 +102,11 @@ export default class App extends Component {
             <div>
                 <h3>未选择时间</h3>
                 <Picker
+                    title={'自定义标题'}
+                    pickupPlaceholder={'自定义取车文案'}
+                    returnPlaceholder={'自定义取车文案'}
+                    isClickGoneDate={true}
+                    hideController={true}
                     visibility={this.state.showPOP}
                     pickupTime={this.state.pickupTime}
                     returnTime={this.state.returnTime}
@@ -120,17 +126,20 @@ export default class App extends Component {
                     closeEvent={() => {
                         this.hide();
                     }}
+                    onChangeDate={(opt) => {
+                        console.log(opt)
+                    }}
                 >
                     <p onClick={this.show.bind( this )}>打开时间框</p>
                 </Picker>
 
                 <div>
                     <p>取车时间：{this.state.pickupInfo ?
-                        `${this.state.pickupInfo.year}年${this.state.pickupInfo.month}月${this.state.pickupInfo.day}日-${this.state.pickupInfo.hours}:${this.state.pickupInfo.minutes}`
+                        `${this.state.pickupInfo.year}年${this.state.pickupInfo.month}月${this.state.pickupInfo.day}日`
                         : '请选择'}
                     </p>
                     <p>取车时间：{this.state.returnInfo ?
-                        `${this.state.returnInfo.year}年${this.state.returnInfo.month}月${this.state.returnInfo.day}日-${this.state.returnInfo.hours}:${this.state.returnInfo.minutes}`
+                        `${this.state.returnInfo.year}年${this.state.returnInfo.month}月${this.state.returnInfo.day}日`
                         : '请选择'}
                     </p>
                     <p>共：{this.state.dayCount}</p>

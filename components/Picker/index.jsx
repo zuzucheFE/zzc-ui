@@ -21,6 +21,7 @@ import createList from './tool/createElem.js';
  * 事件
  * @param closeEvent     传入时间框的关闭事件  必须传
  * @param confirmEvent   传入时间框的确认事件  必须传
+ * @param onChngeDate    传入每一次更改日期的事件
  *
  * 日期参数
  * @param startTime       日历初始化开始时间    格式：[2017,1,1]  默认今天到明年今日
@@ -35,6 +36,20 @@ import createList from './tool/createElem.js';
  * @param timeRange      时间滑动的范围
  *      @param start     开始  默认为 0
  *      @param end       结束  默认为 24
+ * 
+ * 显示参数
+ * @param pickupPlaceholder 取车时间显示文案  默认： 选择取车时间
+ * @param returnPlaceholder 还车时间显示文案  默认： 选择还车时间
+ * @param title title的显示文案 默认: 选择当地取还车时间
+ * 
+ * 是否可以点击过去日期
+ * @param isClickGoneDate 是否可以选择过去的日期 默认为false
+ * 
+ * 是否需要使用时间
+ * @param isOpenTimePicker 是否开启时间选择，默认是true
+ * 
+ * 是否显示控制器
+ * @param hideController 默认为false
  * **/
 
 export default class Picker extends Component {
@@ -44,7 +59,9 @@ export default class Picker extends Component {
         let { startTime, endTime } = this.props;
 
         //如果没有传开始和结束日期，默认是今天到明年今天
-        let initStartTime = startArrayToDate( startTime ),
+        let isOpenTimePicker = props.isOpenTimePicker == undefined ? true : isOpenTimePicker,
+            hideController = props.hideController == undefined ? false : props.hideController,
+            initStartTime = startArrayToDate( startTime ),
             initEndTime = endArrayToDate( endTime, initStartTime ),
             pickupTime = setTime( props.pickupTime, this.props.defaultTime ),
             pickupDay = setDay( props.pickupTime ),
@@ -58,6 +75,11 @@ export default class Picker extends Component {
         //在初始化不渲染的时候，就将dayList数组做出来，存在picker里面，之后的dayList用的都是这个初始化出来的数组。
         //当开始和结束日期改变的时候，会触发setState去更改这个数组，不用在显示选择框的时候再去做这个dayList数组
         this.state = {
+            isOpenTimePicker: hideController ? false : isOpenTimePicker,
+            hideController: hideController,
+            pickupPlaceholder: props.pickupPlaceholder ? props.pickupPlaceholder : '选择取车时间',
+            returnPlaceholder: props.returnPlaceholder ? props.returnPlaceholder : '选择还车时间',
+            isClickGoneDate: props.isClickGoneDate == undefined ? false : props.isClickGoneDate,
             dayList: dayList,
             startTime: initStartTime,
             endTime: initEndTime,
@@ -80,7 +102,7 @@ export default class Picker extends Component {
     }
 
     shouldComponentUpdate( nextProps, nextState ) {
-
+        
         //在不切换显示的时候更改了日期，需要记录到state中
         if ( nextProps.visibility == this.props.visibility ) {
             let oldPropsData = JSON.stringify( {
@@ -102,10 +124,10 @@ export default class Picker extends Component {
             if ( oldPropsData != nextPropsData ) {
                 this.resetAllData( nextProps );
                 return true;
-            } else { 
+            } else {
                 return false;
             }
-            
+
         }
 
 
@@ -114,7 +136,7 @@ export default class Picker extends Component {
             this.startComponent( nextProps.visibility );
             // 在关闭时，获取到选择的时间，然后先计算对应的dayList的状态
             if ( !nextProps.visibility ) {
-                requestAnimationFrame(() => {
+                requestAnimationFrame( () => {
                     this.resetAllData( nextProps );
                 } );
             }
@@ -196,9 +218,14 @@ export default class Picker extends Component {
     }
 
     show() {
-        let { confirmEvent, closeEvent, defaultTime, timeRange } = this.props;
+        let { confirmEvent, closeEvent, onChangeDate = () => { }, defaultTime, timeRange } = this.props;
 
         Popup.show( <DayListBox
+            isOpenTimePicker={this.state.isOpenTimePicker}
+            hideController={this.state.hideController}
+            pickupPlaceholder={this.state.pickupPlaceholder}
+            returnPlaceholder={this.state.returnPlaceholder}
+            isClickGoneDate={this.state.isClickGoneDate}
             startTime={this.state.startTime}
             endTime={this.state.endTime}
             dayList={this.state.dayList}
@@ -212,6 +239,9 @@ export default class Picker extends Component {
             pickupID={this.state.pickupID}
             returnID={this.state.returnID}
             JSXElem={this.state.JSXElem}
+            onChangeDate={(opt) => { 
+                onChangeDate(opt)
+            }}
             confirmEvent={( opt ) => {
                 confirmEvent( opt );
             }}
@@ -220,7 +250,7 @@ export default class Picker extends Component {
             }}
         />, {
                 direction: 'bottom',
-                title: '选择当地取还车时间',
+                title: this.props.title ? this.props.title : '选择当地取还车时间',
                 titleBtn: {
                     right: {
                         isShow: false,

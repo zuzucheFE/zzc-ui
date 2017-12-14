@@ -187,4 +187,8 @@ export default class Popup extends Component {
         closePopup();
     }
 
+    static update() { 
+
+    }
+
 }

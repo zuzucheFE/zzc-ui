@@ -219,6 +219,9 @@
         height: .9rem;
         width: 2.7rem;
         box-sizing: border-box; }
+        .t-box .t-box-content .t-header .t-pickup-time.no-time .t-animate-box .t-time-box .t-time-info div,
+        .t-box .t-box-content .t-header .t-return-time.no-time .t-animate-box .t-time-box .t-time-info div {
+          -webkit-box-pack: center; }
         .t-box .t-box-content .t-header .t-pickup-time .t-animate-box,
         .t-box .t-box-content .t-header .t-return-time .t-animate-box {
           height: 3.2rem;
@@ -447,6 +450,10 @@
     display: block;
     box-shadow: 0 -.1rem .1rem #e8e8e8;
     box-sizing: border-box; }
+    .t-box .bottom-controller.no-time {
+      height: 1.5rem; }
+      .t-box .bottom-controller.no-time .bottom-controller-box .confirm-box {
+        margin-top: 0; }
     .t-box .bottom-controller .bottom-controller-box {
       position: absolute;
       top: 0;

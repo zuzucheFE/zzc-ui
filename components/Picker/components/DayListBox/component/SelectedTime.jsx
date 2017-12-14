@@ -34,10 +34,18 @@ export default class SelectedTime extends Component {
     componentWillReceiveProps(nextProps) {
 
         //需要重新去计算最新的时间和日期的时间对象，否则会出现bug
-        this.setState({
-            nextDay: nextProps.day ? new Date(new Date(new Date(nextProps.day).setHours(nextProps.time.h)).setMinutes(nextProps.time.m)) : null,
-            nextTime: nextProps.time,
-        });
+        if ( this.props.isOpenTimePicker ) {
+            this.setState( {
+                nextDay: nextProps.day ? new Date( new Date( new Date( nextProps.day ).setHours( nextProps.time.h ) ).setMinutes( nextProps.time.m ) ) : null,
+                nextTime: nextProps.time,
+            } );
+        } else { 
+            this.setState({
+                nextDay: nextProps.day ? new Date(new Date(new Date(nextProps.day).setHours(0)).setMinutes(0)) : null,
+                nextTime: nextProps.time,
+            });
+        }
+        
     }
 
     componentDidMount() {
@@ -102,7 +110,7 @@ export default class SelectedTime extends Component {
                         <div className="t-time-info">
                             <div>
                                 <span className="t-day">{currMonth}月{currDate}日</span>
-                                <span className="t-time">{`${this.state.currTime.h}:${this.state.currTime.m}`}</span>
+                                {this.props.isOpenTimePicker && <span className="t-time">{`${this.state.currTime.h}:${this.state.currTime.m}`}</span>}
                             </div>
                         </div> :
                         <div className="t-time-box">
@@ -117,7 +125,7 @@ export default class SelectedTime extends Component {
                         <div className="t-time-info">
                             <div>
                                 <span className="t-day">{nextMonth}月{nextDate}日</span>
-                                <span className="t-time">{`${this.state.nextTime.h}:${this.state.nextTime.m}`}</span>
+                                {this.props.isOpenTimePicker && <span className="t-time">{`${this.state.nextTime.h}:${this.state.nextTime.m}`}</span>}
                             </div>
                         </div> :
                         <div className="t-time-box">
@@ -135,10 +143,10 @@ export default class SelectedTime extends Component {
     render() {
 
         let boxClassName = this.props.class,
-            {title, placeholder, time} = this.props;
+            {isOpenTimePicker, title, placeholder, time} = this.props;
 
         return (
-            <div className={boxClassName}>
+            <div className={isOpenTimePicker ? boxClassName : `no-time ${boxClassName}`}>
                 {this.setTimeInfoContent(title, placeholder,time)}
             </div>
         );

@@ -37,6 +37,20 @@
         height: .9rem;
         width: 2.7rem;
         box-sizing: border-box;
+
+        &.no-time{
+          .t-animate-box{
+            .t-time-box{
+              .t-time-info {
+                div{
+                  -webkit-box-pack: center;
+                }
+              }
+            }
+          }
+        }
+
+
         .t-animate-box {
           height: 3.2rem;
           width: 100%;
@@ -301,6 +315,16 @@
     display: block;
     box-shadow: 0 -.1rem .1rem #e8e8e8;
     box-sizing: border-box;
+
+    &.no-time{
+      height: 1.5rem;
+      .bottom-controller-box{
+        .confirm-box{
+          margin-top:0;
+        }
+      }
+    }
+
     .bottom-controller-box {
       position: absolute;
       top: 0;
