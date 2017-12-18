@@ -35,7 +35,10 @@ function info( ...arg ) {
     )
 
 
-    setTimeout(() => {
+    setTimeout( () => {
+        document.querySelector( '.textToast-box' ).addEventListener( 'click', function () { 
+            info.prototype._closeInfo(info.prototype);
+        } );
         info.prototype.toastChange( elem, duration, onClose );
     },100);
 
