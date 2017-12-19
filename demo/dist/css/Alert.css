@@ -245,7 +245,7 @@ p {
   padding: .24rem .24rem;
   box-sizing: border-box;
   border-radius: .1rem;
-  width: 5.92rem;
+  max-width: 80%;
 }
 
 .textToast-box .textToast-content p {
