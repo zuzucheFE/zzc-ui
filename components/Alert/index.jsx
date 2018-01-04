@@ -80,7 +80,7 @@ function alert ( ...args ) {
             elemArr.push( <button
                 className='singles'
                 style={button.style ? button.style : {}}
-                onClick={() => {
+                onClick={(e) => {
                     e.stopPropagation();
                     close();
                     orginPress();
