@@ -81,6 +81,7 @@ function alert ( ...args ) {
                 className='singles'
                 style={button.style ? button.style : {}}
                 onClick={() => {
+                    e.stopPropagation();
                     close();
                     orginPress();
                 }}
@@ -93,7 +94,8 @@ function alert ( ...args ) {
                 return ( <button
                     key={`${i}-${new Date().getTime()}`}
                     style={button.style ? button.style : {}}
-                    onClick={() => {
+                    onClick={( e ) => {
+                        e.stopPropagation();
                         close();
                         orginPress();
                     }}
