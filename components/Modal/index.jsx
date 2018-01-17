@@ -13,7 +13,9 @@ class Modal extends Component {
     }
 
     componentDidUpdate() {
-
+        if ( !this.refs.modalBox ) { 
+            return false;
+        }
         if ( this.props.visible ) {
             this.refs.modalBox.style.display = 'block';
             setTimeout( () => {
