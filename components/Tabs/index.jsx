@@ -15,6 +15,12 @@ class Tab extends Component {
         }
     }
 
+    componentWillUpdate(nextProps) { 
+        this.setState( {
+            currentIndex: nextProps.defaultIndex
+        } );
+    }
+
     changeCurrentIndex(index) {
         this.setState({currentIndex : index});
         this.props.onChange && this.props.onChange(index);

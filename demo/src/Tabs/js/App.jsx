@@ -19,7 +19,7 @@ export default class App extends Component {
         return (
             <div>
                 <Tabs
-                    defaultIndex={this.props.tabIndex}
+                    defaultIndex={this.state.tabIndex}
                     defaultColor='blue'
                     onChange={( index ) => {
                         this.setState( {
