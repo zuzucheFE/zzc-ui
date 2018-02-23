@@ -2,11 +2,11 @@
  * Created by samciu on 16/12/22.
  */
 
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 
 import './index.scss'
 
-class Tab extends Component {
+class Tab extends PureComponent {
 
     constructor(props) {
         super(props);
