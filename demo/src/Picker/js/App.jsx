@@ -11,7 +11,9 @@ export default class App extends Component {
     constructor( props ) {
 
         let pickup2 = new Date( new Date().setMonth( new Date().getMonth() + 2 ) ),
-            return2 = new Date( new Date().setMonth( new Date().getMonth() + 3 ) );
+            return2 = new Date( new Date().setMonth( new Date().getMonth() + 3 ) ),
+            pickup3 = new Date( new Date().setMonth( new Date().getMonth() + 2 ) ),
+            return3 = new Date( new Date().setMonth( new Date().getMonth() + 3 ) );
 
         super( props );
         this.state = {
@@ -36,7 +38,15 @@ export default class App extends Component {
 
                 return Math.ceil( diff / 1000 / 60 / 60 / 24 );
             } )( pickup2, return2 ),
-            endTime2: null
+            endTime2: null,
+
+            showPOP3: false,
+            returnTime3: null,
+            pickupTime3: null,
+            pickupInfo3: null,
+            returnInfo3: null,
+            dayCount3: null,
+            endTime3: null
         };
     }
 
@@ -61,6 +71,18 @@ export default class App extends Component {
     hide2() {
         this.setState( {
             showPOP2: false
+        } );
+    }
+
+    show3() {
+        this.setState( {
+            showPOP3: true
+        } );
+    }
+
+    hide3() {
+        this.setState( {
+            showPOP3: false
         } );
     }
 
@@ -97,14 +119,25 @@ export default class App extends Component {
         } );
     }
 
+    confirm3( opt ) {
+        this.setState( {
+            returnTime3: opt.returnTime.time,
+            pickupTime3: opt.pickupTime.time,
+            pickupInfo3: opt.pickupTime,
+            returnInfo3: opt.returnTime,
+            dayCount3: opt.dayCount,
+            showPOP3: false
+        } );
+    }
+
     render() {
         return (
             <div>
                 <h3>未选择时间</h3>
                 <Picker
-                    title={'自定义标题'}
-                    pickupPlaceholder={'自定义取车文案'}
-                    returnPlaceholder={'自定义取车文案'}
+                    title={'選擇當地取還車時間'}
+                    pickupPlaceholder={'請選擇取車日期'}
+                    returnPlaceholder={'請選擇還車日期'}
                     isClickGoneDate={true}
                     hideController={true}
                     visibility={this.state.showPOP}
@@ -156,6 +189,7 @@ export default class App extends Component {
                     startTime={this.state.startTime2}
                     endTime={this.state.endTime2}
                     confirmEvent={( opt ) => {
+                        console.log( opt );
                         this.confirm2( opt );
                     }}
                     closeEvent={() => {
@@ -175,6 +209,43 @@ export default class App extends Component {
                         : '请选择'}
                     </p>
                     <p>共：{this.state.dayCount2}</p>
+                </div>
+
+                <hr />
+                <br />
+                <br />
+                <h3>繁体：已选择时间</h3>
+                <Picker
+                    title={'選擇當地取還車時間'}
+                    pickupPlaceholder={'請選擇取車日期'}
+                    returnPlaceholder={'請選擇還車日期'}    
+                    visibility={this.state.showPOP3}
+                    pickupTime={this.state.pickupTime3}
+                    returnTime={this.state.returnTime3}
+                    startTime={this.state.startTime3}
+                    endTime={this.state.endTime3}
+                    lang="hk"
+                    confirmEvent={( opt ) => {
+                        console.log( opt );
+                        this.confirm3( opt );
+                    }}
+                    closeEvent={() => {
+                        this.hide3();
+                    }}
+                >
+                    <p onClick={this.show3.bind( this )}>打开时间框</p>
+                </Picker>
+
+                <div>
+                    <p>取车时间：{this.state.pickupInfo3 ?
+                        `${this.state.pickupInfo3.year}年${this.state.pickupInfo3.month}月${this.state.pickupInfo3.day}日-${this.state.pickupInfo3.hours}:${this.state.pickupInfo3.minutes}`
+                        : '请选择'}
+                    </p>
+                    <p>取车时间：{this.state.returnInfo3 ?
+                        `${this.state.returnInfo3.year}年${this.state.returnInfo3.month}月${this.state.returnInfo3.day}日-${this.state.returnInfo3.hours}:${this.state.returnInfo3.minutes}`
+                        : '请选择'}
+                    </p>
+                    <p>共：{this.state.dayCount3}</p>
                 </div>
             </div>
         );

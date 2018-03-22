@@ -13,6 +13,9 @@ import formatTime from '../../../tool/format';
 import { setDayCount } from '../../tool/dateTool';
 import { hasClass } from '../../tool/class.js';
 
+import cn from '../../cn.js';
+import hk from '../../hk.js';
+
 import info from '../warnInfo/info.config.js';
 
 let timeType = 'pickup',
@@ -133,18 +136,18 @@ export default class Time extends Component {
             let year = e.target.getAttribute( 'data-year' ),
                 month = e.target.getAttribute( 'data-month' ) - 1,
                 date = e.target.getAttribute( 'data-date' );
-            this.selectDay( new Date( year, month, date ), this.changeDate.bind(this) );
+            this.selectDay( new Date( year, month, date ), this.changeDate.bind( this ) );
         } else {
             return false;
         }
     }
 
     //更改日期事件
-    changeDate( type ) { 
+    changeDate( type ) {
         this.props.onChangeDate( {
             pickup: this.state.pickupDay ? this.state.pickupDay : null,
             return: this.state.returnDay ? this.state.returnDay : null
-        });
+        } );
     }
 
     //获取点击的时间
@@ -429,17 +432,17 @@ export default class Time extends Component {
     verifyDate( pickupDay, returnDay ) {
 
         if ( !pickupDay ) {
-            this.showTextToast( info.toast1 );
+            this.showTextToast(this.props.lang == 'hk' ? hk.toast1 : cn.toast1 );
             return false;
         }
 
         if ( !returnDay ) {
-            this.showTextToast( info.toast2 );
+            this.showTextToast( this.props.lang == 'hk' ? hk.toast2 : cn.toast2 );
             return false;
         }
 
-        let pickupInfo = formatTime( pickupDay ),
-            returnInfo = formatTime( returnDay ),
+        let pickupInfo = formatTime( pickupDay, this.props.isOpenTimePicker ),
+            returnInfo = formatTime( returnDay, this.props.isOpenTimePicker ),
             pTime = parseFloat( `${pickupInfo.hours}${pickupInfo.minutes == '30' ? '.5' : ''}` ),
             rTime = parseFloat( `${returnInfo.hours}${returnInfo.minutes == '30' ? '.5' : ''}` );
 
@@ -447,7 +450,7 @@ export default class Time extends Component {
         if ( pickupInfo.year == returnInfo.year && pickupInfo.month == returnInfo.month && pickupInfo.day == returnInfo.day ) {
             //同一时间取还车
             if ( pTime == rTime || rTime < pTime ) {
-                this.showTextToast( info.toast3 );
+                this.showTextToast( this.props.lang == 'hk' ? hk.toast3 : cn.toast3 );
                 return false;
             } else {
                 return true;
@@ -459,13 +462,11 @@ export default class Time extends Component {
 
     //显示TextToast弹窗
     showTextToast( content, callback ) {
-        TextToast.show( {
-            content: content,
-            duration: 2000,
-            callBack: callback instanceof Function ? callback : null,
-            zIndex: 9999,
-            targetParent: document.querySelector( '.zzc-popup' )
-        } );
+        TextToast.info(
+            content, 2000,
+            callback instanceof Function ? callback : null,
+            document.querySelector( '.zzc-popup' )
+        );
     }
 
     //确认时间
@@ -473,8 +474,8 @@ export default class Time extends Component {
 
         if ( this.verifyDate( this.state.pickupDay, this.state.returnDay ) ) {
 
-            let pickupInfo = this.state.pickupDay ? formatTime( this.state.pickupDay, this.state.isOpenTimePicker ) : null,
-                returnInfo = this.state.returnDay ? formatTime( this.state.returnDay, this.state.isOpenTimePicker ) : null,
+            let pickupInfo = this.state.pickupDay ? formatTime( this.state.pickupDay, this.props.isOpenTimePicker ) : null,
+                returnInfo = this.state.returnDay ? formatTime( this.state.returnDay, this.props.isOpenTimePicker ) : null,
                 { confirmEvent, closeEvent } = this.props;
 
             confirmEvent instanceof Function && confirmEvent( {
@@ -489,8 +490,8 @@ export default class Time extends Component {
 
     //设置警告信息
     setWarnInfo( type ) {
-
-        if ( !this.state.isOpenTimePicker ) {
+        
+        if ( !this.props.isOpenTimePicker ) {
             return false;
         }
 
@@ -499,8 +500,8 @@ export default class Time extends Component {
             return false;
         }
 
-        let pickupDay = formatTime( this.state.pickupDay ),
-            returnDay = formatTime( this.state.returnDay ),
+        let pickupDay = formatTime( this.state.pickupDay, this.props.isOpenTimePicker ),
+            returnDay = formatTime( this.state.returnDay, this.props.isOpenTimePicker ),
             pickupTime = parseFloat( `${pickupDay.hours}${pickupDay.minutes == '30' ? '.5' : ''}` ),
             returnTime = parseFloat( `${returnDay.hours}${returnDay.minutes == '30' ? '.5' : ''}` );
 
@@ -509,7 +510,7 @@ export default class Time extends Component {
                 this.hideWarn();
             }
             warnID = 1;
-            this.showWarn( info.warn1 );
+            this.showWarn( this.props.lang == 'hk' ? hk.warn1 : cn.warn1 );
             return false;
         }
 
@@ -519,7 +520,7 @@ export default class Time extends Component {
                 this.hideWarn();
             }
             warnID = 2;
-            this.showWarn( info.warn2 );
+            this.showWarn( this.props.lang == 'hk' ? hk.warn2 : cn.warn2 );
             return false;
         }
 
@@ -594,8 +595,8 @@ export default class Time extends Component {
                         this.synchronizationReturnTimeEnd( data );
                     }}
                     isSynchronization={this.state.isSynchronization}
-                    title="取车时间"
-                    rangeType="取车"
+                    title={this.props.lang == 'hk' ? hk.pickupTime : cn.pickupTime}
+                    rangeType={this.props.lang == 'hk' ? hk.pickup : cn.pickup}
                     type="pickup"
                     timeRange={this.props.timeRange}
                     time={this.state.pickupTime}
@@ -606,8 +607,8 @@ export default class Time extends Component {
                 />
                 <Range
                     ref="returnRange"
-                    title="还车时间"
-                    rangeType="还车"
+                    title={this.props.lang == 'hk' ? hk.returnTime : cn.returnTime}
+                    rangeType={this.props.lang == 'hk' ? hk.return : cn.return}
                     type="return"
                     timeRange={this.props.timeRange}
                     isSynchronization={this.state.isSynchronization}
@@ -623,7 +624,7 @@ export default class Time extends Component {
                 <div className="confirm-box">
                     <span onClick={() => {
                         this.confirm();
-                    }}>确认</span>
+                    }}>{this.props.lang == 'hk' ? hk.confirm : cn.confirm}</span>
                 </div>
             </div>
         );
@@ -636,14 +637,14 @@ export default class Time extends Component {
                 <div className="confirm-box">
                     <span onClick={() => {
                         this.confirm();
-                    }}>确认</span>
+                    }}>{this.props.lang == 'hk' ? hk.confirm : cn.confirm}</span>
                 </div>
             </div>
         );
     }
 
     render() {
-        let { hideController, isOpenTimePicker, startTime, endTime, timeRange, dayList, JSXElem, pickupPlaceholder, returnPlaceholder } = this.props;
+        let { hideController, isOpenTimePicker, startTime, endTime, timeRange, dayList, JSXElem, pickupPlaceholder, returnPlaceholder, lang } = this.props;
         return (
             <div className="t-box">
                 <div className="t-box-content">

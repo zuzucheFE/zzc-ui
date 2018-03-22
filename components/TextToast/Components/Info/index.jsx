@@ -26,7 +26,11 @@ function info( ...arg ) {
         elem = document.createElement('div');
 
     elem.className = 'textToast-box';
-    document.body.appendChild(elem);
+    if ( arg[3] ) {
+        arg[3].appendChild(elem);
+    } else { 
+        document.body.appendChild(elem);
+    }
 
     ReactDOM.render(
         <div className='textToast-content'>
@@ -38,7 +42,7 @@ function info( ...arg ) {
         document.querySelector( '.textToast-box' ) && document.querySelector( '.textToast-box' ).addEventListener( 'click', function () { 
             info.prototype._closeInfo(info.prototype);
         } );
-        info.prototype.toastChange( elem, duration, onClose );
+        info.prototype.toastChange( elem, duration, onClose, arg[3] );
     },100);
 
 }

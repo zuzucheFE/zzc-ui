@@ -218,9 +218,10 @@ export default class Picker extends Component {
     }
 
     show() {
-        let { confirmEvent, closeEvent, onChangeDate = () => { }, defaultTime, timeRange } = this.props;
+        let { confirmEvent, closeEvent, onChangeDate = () => { }, defaultTime, timeRange, lang = 'cn' } = this.props;
 
         Popup.show( <DayListBox
+            lang={lang}
             isOpenTimePicker={this.state.isOpenTimePicker}
             hideController={this.state.hideController}
             pickupPlaceholder={this.state.pickupPlaceholder}

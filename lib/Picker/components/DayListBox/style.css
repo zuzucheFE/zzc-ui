@@ -542,3 +542,6 @@
         width: 100%;
         height: .025rem;
         background: #D7D7D7; }
+
+.zzc-popup .textToast-box {
+  z-index: 9999; }
