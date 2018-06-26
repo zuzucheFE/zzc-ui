@@ -54,8 +54,17 @@ function create( content, opt ) {
         </div>,
         parentDiv
     );
-    addPopupEvent();
-    openPopup();
+
+    if(document.querySelector( '.zzc-popup .popup-content' )) {
+        addPopupEvent();
+        openPopup();
+    } else {
+        requestAnimationFrame(() => {
+            addPopupEvent();
+            openPopup();
+        }); 
+    }
+
     return component;
 }
 
