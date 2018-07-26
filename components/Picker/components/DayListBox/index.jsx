@@ -16,8 +16,6 @@ import { hasClass } from '../../tool/class.js';
 import cn from '../../cn.js';
 import hk from '../../hk.js';
 
-import info from '../warnInfo/info.config.js';
-
 let timeType = 'pickup',
     warnTimer = null,
     warnID = null,

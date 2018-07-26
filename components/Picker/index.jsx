@@ -15,6 +15,9 @@ import { setTime, setDay, setDayCount } from './tool/dateTool';
 import createList from './tool/createElem.js';
 
 /**
+ * 是否可以选昨天
+ * @param yesterdayClick true/false，是否可以选择昨天的事件
+ * 
  * 控制显示
  * @param visibility     控制是否显示时间框    必须传
  *
@@ -67,7 +70,7 @@ export default class Picker extends Component {
             pickupDay = setDay( props.pickupTime ),
             returnTime = setTime( props.returnTime, this.props.defaultTime ),
             returnDay = setDay( props.returnTime ),
-            dayList = setDayArray( initStartTime, initEndTime, pickupDay, returnDay ),
+            dayList = setDayArray( initStartTime, initEndTime, pickupDay, returnDay, props.yesterdayClick ),
             pickupInfo = setDay( props.pickupTime ) ? formatTime( props.pickupTime ) : null,
             returnInfo = setDay( props.returnTime ) ? formatTime( props.returnTime ) : null,
             dayCount = pickupDay && returnDay ? setDayCount( pickupDay, returnDay ) : null;
@@ -75,6 +78,7 @@ export default class Picker extends Component {
         //在初始化不渲染的时候，就将dayList数组做出来，存在picker里面，之后的dayList用的都是这个初始化出来的数组。
         //当开始和结束日期改变的时候，会触发setState去更改这个数组，不用在显示选择框的时候再去做这个dayList数组
         this.state = {
+            yesterdayClick: props.yesterdayClick,
             isOpenTimePicker: hideController ? false : isOpenTimePicker,
             hideController: hideController,
             pickupPlaceholder: props.pickupPlaceholder ? props.pickupPlaceholder : '选择取车时间',
@@ -160,7 +164,7 @@ export default class Picker extends Component {
             if ( newStart != oldStart || newEnd != oldEnd ) {
                 let initStartTime = startArrayToDate( nextProps.startTime ),
                     initEndTime = endArrayToDate( nextProps.endTime, nextProps.startTime ),
-                    dayList = setDayArray( initStartTime, initEndTime, null, null );
+                    dayList = setDayArray( initStartTime, initEndTime, null, null, nextProps.yesterdayClick );
 
                 this.setState( {
                     pickupTime: setTime( null, this.props.defaultTime ),
@@ -190,7 +194,7 @@ export default class Picker extends Component {
             pickupDay = setDay( nextProps.pickupTime ),
             returnTime = setTime( nextProps.returnTime, nextProps.defaultTime ),
             returnDay = setDay( nextProps.returnTime ),
-            dayList = setDayArray( this.state.startTime, this.state.endTime, pickupDay, returnDay );
+            dayList = setDayArray( this.state.startTime, this.state.endTime, pickupDay, returnDay, nextProps.yesterdayClick );
 
         let pickupInfo = pickupDay ? formatTime( pickupDay ) : null,
             returnInfo = returnDay ? formatTime( returnDay ) : null;

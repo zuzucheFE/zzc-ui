@@ -3,7 +3,7 @@
  */
 import React, { Component } from "react";
 import './style.scss';
-import {Picker} from "zzc-ui";
+import { Picker } from "zzc-ui";
 import formatTime from '../../../tool/format';
 
 export default class App extends Component {
@@ -50,57 +50,57 @@ export default class App extends Component {
         };
     }
 
-    show() {
+    show () {
         this.setState( {
             showPOP: true
         } );
     }
 
-    hide() {
+    hide () {
         this.setState( {
             showPOP: false
         } );
     }
 
-    show2() {
+    show2 () {
         this.setState( {
             showPOP2: true
         } );
     }
 
-    hide2() {
+    hide2 () {
         this.setState( {
             showPOP2: false
         } );
     }
 
-    show3() {
+    show3 () {
         this.setState( {
             showPOP3: true
         } );
     }
 
-    hide3() {
+    hide3 () {
         this.setState( {
             showPOP3: false
         } );
     }
 
-    componentDidMount() {
+    componentDidMount () {
         let _this = this;
         setTimeout( () => {
-            console.log('更改时间')
-            _this.setState({
+            console.log( '更改时间' )
+            _this.setState( {
                 pickupTime: new Date( new Date().setMonth( new Date().getMonth() + 2 ) ),
                 returnTime: new Date( new Date().setMonth( new Date().getMonth() + 3 ) ),
-            });
-        },5000);
+            } );
+        }, 5000 );
     }
 
-    confirm( opt ) {
+    confirm ( opt ) {
         this.setState( {
-            returnTime: opt.returnTime.time?opt.returnTime.time:'',
-            pickupTime: opt.pickupTime.time?opt.pickupTime.time:'',
+            returnTime: opt.returnTime.time ? opt.returnTime.time : '',
+            pickupTime: opt.pickupTime.time ? opt.pickupTime.time : '',
             pickupInfo: opt.pickupTime,
             returnInfo: opt.returnTime,
             dayCount: opt.dayCount,
@@ -108,7 +108,7 @@ export default class App extends Component {
         } );
     }
 
-    confirm2( opt ) {
+    confirm2 ( opt ) {
         this.setState( {
             returnTime2: opt.returnTime.time,
             pickupTime2: opt.pickupTime.time,
@@ -119,7 +119,7 @@ export default class App extends Component {
         } );
     }
 
-    confirm3( opt ) {
+    confirm3 ( opt ) {
         this.setState( {
             returnTime3: opt.returnTime.time,
             pickupTime3: opt.pickupTime.time,
@@ -130,7 +130,7 @@ export default class App extends Component {
         } );
     }
 
-    render() {
+    render () {
         return (
             <div>
                 <h3>未选择时间</h3>
@@ -159,8 +159,8 @@ export default class App extends Component {
                     closeEvent={() => {
                         this.hide();
                     }}
-                    onChangeDate={(opt) => {
-                        console.log(opt)
+                    onChangeDate={( opt ) => {
+                        console.log( opt )
                     }}
                 >
                     <p onClick={this.show.bind( this )}>打开时间框</p>
@@ -183,6 +183,7 @@ export default class App extends Component {
                 <br />
                 <h3>已选择时间</h3>
                 <Picker
+                    yesterdayClick
                     visibility={this.state.showPOP2}
                     pickupTime={this.state.pickupTime2}
                     returnTime={this.state.returnTime2}
@@ -218,7 +219,7 @@ export default class App extends Component {
                 <Picker
                     title={'選擇當地取還車時間'}
                     pickupPlaceholder={'請選擇取車日期'}
-                    returnPlaceholder={'請選擇還車日期'}    
+                    returnPlaceholder={'請選擇還車日期'}
                     visibility={this.state.showPOP3}
                     pickupTime={this.state.pickupTime3}
                     returnTime={this.state.returnTime3}
