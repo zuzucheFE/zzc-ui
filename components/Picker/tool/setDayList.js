@@ -190,6 +190,32 @@ function createDayArr( starTime, endTime, pickupDay, returnDay, yesterdayClick )
 
     }
 
+    // 如果当前需要提供可以选择昨天，但是当前日期是本月的1号，那么就需要特殊创建上一个月份
+    if(yesterdayClick) {
+        if (starMonth != 0) {
+            const currDate = new Date( starYear, starMonth - 1, 1 );
+            const currDayCount = getMonthTotalDay( currDate );
+            const dayList = getMonthDayArray( currDate, currDayCount, pickupDay, returnDay, yesterdayClick );
+            dateArray.unshift( {
+                year: currDate.getFullYear().toString(),
+                month: ( currDate.getMonth() + 1 ).toString(),
+                dayList: dayList,
+                isShow: _isShowMonth( dayList ) //在渲染时时候显示出来，
+            } );
+        // 今年的第一个月
+        } else {
+            const currDate = new Date( starYear - 1, 11, 1 );
+            const currDayCount = getMonthTotalDay( currDate );
+            const dayList = getMonthDayArray( currDate, currDayCount, pickupDay, returnDay, yesterdayClick );
+            dateArray.unshift( {
+                year: currDate.getFullYear().toString(),
+                month: ( currDate.getMonth() + 1 ).toString(),
+                dayList: dayList,
+                isShow: _isShowMonth( dayList ) //在渲染时时候显示出来，
+            } );
+        } 
+    }
+    console.log(dateArray);
     return dateArray;
 
 }

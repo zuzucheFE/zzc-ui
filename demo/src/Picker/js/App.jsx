@@ -135,6 +135,7 @@ export default class App extends Component {
             <div>
                 <h3>未选择时间</h3>
                 <Picker
+                    yesterdayClick
                     title={'選擇當地取還車時間'}
                     pickupPlaceholder={'請選擇取車日期'}
                     returnPlaceholder={'請選擇還車日期'}
