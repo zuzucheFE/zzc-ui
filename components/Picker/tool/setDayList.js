@@ -215,7 +215,6 @@ function createDayArr( starTime, endTime, pickupDay, returnDay, yesterdayClick )
             } );
         } 
     }
-    console.log(dateArray);
     return dateArray;
 
 }

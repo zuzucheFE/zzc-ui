@@ -54,7 +54,8 @@ p {
   background: #fff;
   width: 5.4rem;
   border-radius: .16rem;
-  transform: scale(0.2, 0.2);
+  -ms-transform: scale(0.2, 0.2);
+      transform: scale(0.2, 0.2);
   -webkit-transform: scale(0.2, 0.2);
   transition: all .1s;
   -webkit-transition: all .1s;
@@ -65,7 +66,8 @@ p {
 }
 
 .zzc-alert .zzc-alert-box .zzc-alert-content.show {
-  transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+      transform: scale(1, 1);
   -webkit-transform: scale(1, 1);
   opacity: 1;
   -webkit-opacity: 1;
@@ -172,7 +174,8 @@ p {
   left: 0;
   margin: auto;
   -webkit-transform: translateY(-50%);
-  transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
 }
 
 .loading-container .loading-box img {
@@ -372,6 +375,7 @@ p {
   width: 100%;
   border-bottom: 1px solid #e8e8e8;
   -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
   transform: scaleY(0.5);
 }
 .zzc-section {
@@ -400,7 +404,8 @@ p {
   width: 100%;
   border-bottom: 1px solid #D8D8D8;
   -webkit-transform: scaleY(0.5);
-  transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+      transform: scaleY(0.5);
 }
 
 .zzc-section-title > div {
@@ -465,8 +470,10 @@ p {
   border-bottom: 1px solid #D8D8D8;
   /*no*/
   -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
   transform-origin: 0 0;
   -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
   transform: scaleY(0.5);
 }
 
@@ -516,8 +523,10 @@ p {
   /*no*/
   z-index: 1;
   -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
   transform-origin: 0 0;
   -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
   transform: scaleY(0.5);
 }
 
@@ -565,8 +574,10 @@ p {
   width: 100%;
   border-bottom: 1px solid #D8D8D8;
   -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
   transform-origin: 0 0;
   -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
   transform: scaleY(0.5);
 }
 
@@ -640,12 +651,14 @@ p {
 }
 
 .zzc-animation-slide.slide-bottom {
-  transform: translateY(100%);
+  -ms-transform: translateY(100%);
+      transform: translateY(100%);
   -webkit-transform: -webkit-translateY(100%);
 }
 
 .zzc-animation-slide.slide-bottom.slide-in {
-  transform: translateY(0);
+  -ms-transform: translateY(0);
+      transform: translateY(0);
   -webkit-transform: -webkit-translateY(0);
 }
 .day-item .e-row-6 li[data-colume='7'] {
@@ -935,7 +948,8 @@ p {
 }
 
 .t-box .t-box-content {
-  transform: translateY(1rem);
+  -ms-transform: translateY(1rem);
+      transform: translateY(1rem);
   -webkit-transform: translateY(1rem);
 }
 
@@ -960,8 +974,10 @@ p {
   width: 100%;
   border-bottom: 1px solid #DDE0E6;
   -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
   transform-origin: 0 0;
   -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
   transform: scaleY(0.5);
 }
 
@@ -986,8 +1002,10 @@ p {
 
 .t-box .t-box-content .t-header .t-pickup-time .t-animate-box.zzc-animation-up-slide,
 .t-box .t-box-content .t-header .t-return-time .t-animate-box.zzc-animation-up-slide {
-  transform: translateY(0%);
+  -ms-transform: translateY(0%);
+      transform: translateY(0%);
   -webkit-transform: translateY(0%);
+  -webkit-transition: -webkit-transform .5s;
   transition: -webkit-transform .5s;
   transition: transform .5s;
   transition: transform .5s, -webkit-transform .5s;
@@ -996,7 +1014,8 @@ p {
 
 .t-box .t-box-content .t-header .t-pickup-time .t-animate-box.zzc-animation-up-slide.in,
 .t-box .t-box-content .t-header .t-return-time .t-animate-box.zzc-animation-up-slide.in {
-  transform: translateY(-0.9rem);
+  -ms-transform: translateY(-0.9rem);
+      transform: translateY(-0.9rem);
   -webkit-transform: translateY(-0.9rem);
 }
 
@@ -1153,7 +1172,8 @@ p {
   position: relative;
   top: 50%;
   left: 0;
-  transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
   color: #F3F3F3;
   font-size: 1.2rem;
@@ -1263,7 +1283,8 @@ p {
   display: block;
   font-size: .26rem;
   color: #333;
-  transform: translateY(-100%);
+  -ms-transform: translateY(-100%);
+      transform: translateY(-100%);
   -webkit-transform: translateY(100%);
   line-height: .3rem;
 }
@@ -1413,7 +1434,8 @@ p {
   font-size: .24rem;
   left: 50%;
   top: -.61rem;
-  transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+      transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
   border-radius: .1rem;
 }
@@ -1444,8 +1466,10 @@ p {
   transform: translate3d(-50%, 50%, 0);
   -webkit-transform: translate3d(-50%, 50%, 0);
   -webkit-transform-origin: 0 0;
-  transform-origin: 0 0;
-  transform: rotate(45deg);
+  -ms-transform-origin: 0 0;
+      transform-origin: 0 0;
+  -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
 }
 .warn-slide-tip-box {
@@ -1454,7 +1478,8 @@ p {
   left: 0;
   right: 0;
   display: block;
-  transform: translateY(0%);
+  -ms-transform: translateY(0%);
+      transform: translateY(0%);
   -webkit-transform: translateY(0%);
   z-index: 90;
   transition: all .2s;
@@ -1462,7 +1487,8 @@ p {
 }
 
 .warn-slide-tip-box.show {
-  transform: translateY(-100%);
+  -ms-transform: translateY(-100%);
+      transform: translateY(-100%);
   -webkit-transform: translateY(-100%);
 }
 
@@ -1643,6 +1669,7 @@ button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-transition-property: -webkit-transform;
   transition-property: -webkit-transform;
   transition-property: transform;
   transition-property: transform, -webkit-transform;
@@ -1651,6 +1678,7 @@ button {
 .swiper-container-android .swiper-slide,
 .swiper-wrapper {
   -webkit-transform: translate3d(0px, 0, 0);
+  -ms-transform: translate3d(0px, 0, 0);
   transform: translate3d(0px, 0, 0);
 }
 .swiper-container-multirow > .swiper-wrapper {
@@ -1660,6 +1688,7 @@ button {
   flex-wrap: wrap;
 }
 .swiper-container-free-mode > .swiper-wrapper {
+  -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
   margin: 0 auto;
 }
@@ -1681,6 +1710,8 @@ button {
   -webkit-box-align: start;
   -ms-flex-align: start;
   align-items: flex-start;
+  -webkit-transition-property: -webkit-transform, height;
+  -webkit-transition-property: height, -webkit-transform;
   transition-property: height, -webkit-transform;
   transition-property: transform, height;
   transition-property: transform, height, -webkit-transform;
@@ -1755,8 +1786,10 @@ button {
 .swiper-pagination {
   position: absolute;
   text-align: center;
+  -webkit-transition: 300ms;
   transition: 300ms;
   -webkit-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   z-index: 10;
 }
@@ -1810,6 +1843,7 @@ button.swiper-pagination-bullet {
   right: 10px;
   top: 50%;
   -webkit-transform: translate3d(0px, -50%, 0);
+  -ms-transform: translate3d(0px, -50%, 0);
   transform: translate3d(0px, -50%, 0);
 }
 .swiper-container-vertical > .swiper-pagination-bullets .swiper-pagination-bullet {
@@ -1832,12 +1866,15 @@ button.swiper-pagination-bullet {
   width: 100%;
   height: 100%;
   -webkit-transform: scale(0);
+  -ms-transform: scale(0);
   transform: scale(0);
   -webkit-transform-origin: left top;
+  -ms-transform-origin: left top;
   transform-origin: left top;
 }
 .swiper-container-rtl .swiper-pagination-progress .swiper-pagination-progressbar {
   -webkit-transform-origin: right top;
+  -ms-transform-origin: right top;
   transform-origin: right top;
 }
 .swiper-container-horizontal > .swiper-pagination-progress {
@@ -1890,7 +1927,9 @@ button.swiper-pagination-bullet {
   z-index: 10;
 }
 .swiper-container-3d .swiper-slide-shadow-left {
+  background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0)));
   /* Safari 4+, Chrome */
+  background-image: -webkit-linear-gradient(right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
   /* Chrome 10+, Safari 5.1+, iOS 5+ */
   /* Firefox 3.6-15 */
   /* Opera 11.10-12.00 */
@@ -1898,7 +1937,9 @@ button.swiper-pagination-bullet {
   /* Firefox 16+, IE10, Opera 12.50+ */
 }
 .swiper-container-3d .swiper-slide-shadow-right {
+  background-image: -webkit-gradient(linear, right top, left top, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0)));
   /* Safari 4+, Chrome */
+  background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
   /* Chrome 10+, Safari 5.1+, iOS 5+ */
   /* Firefox 3.6-15 */
   /* Opera 11.10-12.00 */
@@ -1906,7 +1947,9 @@ button.swiper-pagination-bullet {
   /* Firefox 16+, IE10, Opera 12.50+ */
 }
 .swiper-container-3d .swiper-slide-shadow-top {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0)));
   /* Safari 4+, Chrome */
+  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
   /* Chrome 10+, Safari 5.1+, iOS 5+ */
   /* Firefox 3.6-15 */
   /* Opera 11.10-12.00 */
@@ -1914,7 +1957,9 @@ button.swiper-pagination-bullet {
   /* Firefox 16+, IE10, Opera 12.50+ */
 }
 .swiper-container-3d .swiper-slide-shadow-bottom {
+  background-image: -webkit-gradient(linear, left bottom, left top, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0)));
   /* Safari 4+, Chrome */
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
   /* Chrome 10+, Safari 5.1+, iOS 5+ */
   /* Firefox 3.6-15 */
   /* Opera 11.10-12.00 */
@@ -1965,12 +2010,14 @@ button.swiper-pagination-bullet {
 .swiper-container-cube .swiper-slide {
   visibility: hidden;
   -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
   transform-origin: 0 0;
   width: 100%;
   height: 100%;
 }
 .swiper-container-cube.swiper-container-rtl .swiper-slide {
   -webkit-transform-origin: 100% 0;
+  -ms-transform-origin: 100% 0;
   transform-origin: 100% 0;
 }
 .swiper-container-cube .swiper-slide-active,
@@ -1994,10 +2041,12 @@ button.swiper-pagination-bullet {
 }
 /* Fade */
 .swiper-container-fade.swiper-container-free-mode .swiper-slide {
+  -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
 }
 .swiper-container-fade .swiper-slide {
   pointer-events: none;
+  -webkit-transition-property: opacity;
   transition-property: opacity;
 }
 .swiper-container-fade .swiper-slide .swiper-slide {
@@ -2026,8 +2075,7 @@ button.swiper-pagination-bullet {
 .swiper-zoom-container > canvas {
   max-width: 100%;
   max-height: 100%;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 /* Scrollbar */
 .swiper-scrollbar {
@@ -2075,7 +2123,8 @@ button.swiper-pagination-bullet {
   margin-top: -21px;
   z-index: 10;
   -webkit-transform-origin: 50%;
-  transform-origin: 50%;
+  -ms-transform-origin: 50%;
+      transform-origin: 50%;
   -webkit-animation: swiper-preloader-spin 1s steps(12, end) infinite;
   animation: swiper-preloader-spin 1s steps(12, end) infinite;
 }

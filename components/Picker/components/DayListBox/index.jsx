@@ -80,7 +80,7 @@ export default class Time extends Component {
     constructor( props ) {
         super( props );
 
-        //日期和时间必须分开
+        // 日期和时间必须分开
         this.state = {
             pickupDay: props.pickupDay,
             returnDay: props.returnDay,
@@ -90,12 +90,19 @@ export default class Time extends Component {
             warnText: '',
             dayCount: props.dayCount,
             isSynchronization: isOpenSynchronization( props.pickupTime, props.returnTime ),
-            //开始日期和结束日期的id
-            pickupID: this.props.pickupID,
-            returnID: this.props.returnID
+            // 开始日期和结束日期的id
+            pickupID: props.pickupID,
+            returnID: props.returnID,
+            // Range
+            timeRange: props.timeRange || { start: 0, end: 24 },
+            yesterdayRange: props.yesterdayRange
         };
         initGlobalData( this.state.pickupDay, this.state.returnDay );
+
+        this.isYesterday = this.isYesterday.bind( this );
+        this.synchTimeData = this.synchTimeData.bind( this );
     }
+
 
     componentDidMount() {
 
@@ -125,7 +132,9 @@ export default class Time extends Component {
 
     //日期点击事件
     clickDay( e ) {
-        if ( !this.props.isClickGoneDate && e.target.getAttribute( 'data-gone' ) == '1' ) {
+        const { isClickGoneDate } = this.props;
+
+        if ( !isClickGoneDate && e.target.getAttribute( 'data-gone' ) == '1' ) {
             return false;
         }
         let targetClassName = e.target.className;
@@ -134,10 +143,22 @@ export default class Time extends Component {
             let year = e.target.getAttribute( 'data-year' ),
                 month = e.target.getAttribute( 'data-month' ) - 1,
                 date = e.target.getAttribute( 'data-date' );
+
             this.selectDay( new Date( year, month, date ), this.changeDate.bind( this ) );
         } else {
             return false;
         }
+    }
+    // 点击的是否昨天
+    isYesterday( year, month, date ) {
+        const { currentTime } = this.props;
+        const currDate = new Date( `${currentTime.y}-${currentTime.month}-${currentTime.d}` );
+        const paramDate = new Date( `${year}-${month}-${date}` );
+
+        if ( currDate - paramDate == 86400000 ) {
+            return true;
+        }
+        return false;
     }
 
     //更改日期事件
@@ -242,7 +263,7 @@ export default class Time extends Component {
                     pickupID: id,
                     returnID: null
                 }, () => {
-                    callback && callback()
+                    callback && callback();
                     this.setWarnInfo( timeType );
                 } );
                 //正常设置还车时间
@@ -256,7 +277,7 @@ export default class Time extends Component {
                     dayCount: this.setDayCount( returnTime, this.state.pickupDay ),
                     returnID: id
                 }, () => {
-                    callback && callback()
+                    callback && callback();
                     this.setWarnInfo( timeType );
                 } );
             }
@@ -274,7 +295,7 @@ export default class Time extends Component {
                 pickupID: id,
                 returnID: null
             }, () => {
-                callback && callback()
+                callback && callback();
                 this.setWarnInfo( timeType );
             } );
         }
@@ -430,7 +451,7 @@ export default class Time extends Component {
     verifyDate( pickupDay, returnDay ) {
 
         if ( !pickupDay ) {
-            this.showTextToast(this.props.lang == 'hk' ? hk.toast1 : cn.toast1 );
+            this.showTextToast( this.props.lang == 'hk' ? hk.toast1 : cn.toast1 );
             return false;
         }
 
@@ -488,7 +509,7 @@ export default class Time extends Component {
 
     //设置警告信息
     setWarnInfo( type ) {
-        
+
         if ( !this.props.isOpenTimePicker ) {
             return false;
         }
@@ -579,6 +600,8 @@ export default class Time extends Component {
 
     //有时间选择的底部控件
     haveTimeBottomController() {
+        const { lang, yesterdayTimeRange, currentTime } = this.props;
+        const { timeRange } = this.state;
         return (
             <div className="bottom-controller-box">
                 <Range
@@ -592,26 +615,35 @@ export default class Time extends Component {
                     synchronizationReturnTimeEnd={( data ) => {
                         this.synchronizationReturnTimeEnd( data );
                     }}
+                    synchTimeData={this.synchTimeData}
                     isSynchronization={this.state.isSynchronization}
-                    title={this.props.lang == 'hk' ? hk.pickupTime : cn.pickupTime}
-                    rangeType={this.props.lang == 'hk' ? hk.pickup : cn.pickup}
+                    title={lang == 'hk' ? hk.pickupTime : cn.pickupTime}
+                    rangeType={lang == 'hk' ? hk.pickup : cn.pickup}
                     type="pickup"
-                    timeRange={this.props.timeRange}
+                    timeRange={timeRange}
+                    yesterdayTimeRange={yesterdayTimeRange}
                     time={this.state.pickupTime}
                     day={this.state.pickupDay}
+                    currentTime={currentTime}
+                    isYesterday={this.isYesterday}
                     selectTime={( time, type ) => {
                         this.selectTime( time, type );
                     }}
                 />
                 <Range
                     ref="returnRange"
-                    title={this.props.lang == 'hk' ? hk.returnTime : cn.returnTime}
-                    rangeType={this.props.lang == 'hk' ? hk.return : cn.return}
+                    title={lang == 'hk' ? hk.returnTime : cn.returnTime}
+                    rangeType={lang == 'hk' ? hk.return : cn.return}
                     type="return"
-                    timeRange={this.props.timeRange}
+                    timeRange={timeRange}
+                    yesterdayTimeRange={yesterdayTimeRange}
                     isSynchronization={this.state.isSynchronization}
                     time={this.state.returnTime}
                     day={this.state.returnDay}
+                    pickupDay={this.state.pickupDay}
+                    currentTime={currentTime}
+                    isYesterday={this.isYesterday}
+                    synchTimeData={this.synchTimeData}
                     selectTime={( time, type ) => {
                         this.selectTime( time, type );
                     }}
@@ -622,7 +654,7 @@ export default class Time extends Component {
                 <div className="confirm-box">
                     <span onClick={() => {
                         this.confirm();
-                    }}>{this.props.lang == 'hk' ? hk.confirm : cn.confirm}</span>
+                    }}>{lang == 'hk' ? hk.confirm : cn.confirm}</span>
                 </div>
             </div>
         );
@@ -639,6 +671,18 @@ export default class Time extends Component {
                 </div>
             </div>
         );
+    }
+    synchTimeData( timeData, type ) {
+        if ( type == 'pickupTime' ) {
+            this.setState( {
+                pickupTime: timeData,
+                pickupDay: this.state.pickupDay ? this.combinationOfTime( 'pickup', this.state.pickupDay, { h: timeData.h, m: timeData.m } ) : null,
+            } );
+        } else {
+            this.setState( {
+                returnTime: timeData
+            } );
+        }
     }
 
     render() {
@@ -682,7 +726,9 @@ export default class Time extends Component {
                         dangerouslySetInnerHTML={{ __html: JSXElem }}
                         className="day-list-box"
                         ref="dayListBox"
-                        onClick={( e ) => { this.clickDay( e ) }}
+                        onClick={( e ) => {
+                            this.clickDay( e );
+                        }}
                     />
 
                 </div>
