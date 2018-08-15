@@ -50,46 +50,46 @@ export default class App extends Component {
         };
     }
 
-    show () {
+    show() {
         this.setState( {
             showPOP: true
         } );
     }
 
-    hide () {
+    hide() {
         this.setState( {
             showPOP: false
         } );
     }
 
-    show2 () {
+    show2() {
         this.setState( {
             showPOP2: true
         } );
     }
 
-    hide2 () {
+    hide2() {
         this.setState( {
             showPOP2: false
         } );
     }
 
-    show3 () {
+    show3() {
         this.setState( {
             showPOP3: true
         } );
     }
 
-    hide3 () {
+    hide3() {
         this.setState( {
             showPOP3: false
         } );
     }
 
-    componentDidMount () {
+    componentDidMount() {
         let _this = this;
         setTimeout( () => {
-            console.log( '更改时间' )
+            console.log( '更改时间' );
             _this.setState( {
                 pickupTime: new Date( new Date().setMonth( new Date().getMonth() + 2 ) ),
                 returnTime: new Date( new Date().setMonth( new Date().getMonth() + 3 ) ),
@@ -97,7 +97,7 @@ export default class App extends Component {
         }, 5000 );
     }
 
-    confirm ( opt ) {
+    confirm( opt ) {
         this.setState( {
             returnTime: opt.returnTime.time ? opt.returnTime.time : '',
             pickupTime: opt.pickupTime.time ? opt.pickupTime.time : '',
@@ -108,7 +108,7 @@ export default class App extends Component {
         } );
     }
 
-    confirm2 ( opt ) {
+    confirm2( opt ) {
         this.setState( {
             returnTime2: opt.returnTime.time,
             pickupTime2: opt.pickupTime.time,
@@ -119,7 +119,7 @@ export default class App extends Component {
         } );
     }
 
-    confirm3 ( opt ) {
+    confirm3( opt ) {
         this.setState( {
             returnTime3: opt.returnTime.time,
             pickupTime3: opt.pickupTime.time,
@@ -130,7 +130,7 @@ export default class App extends Component {
         } );
     }
 
-    render () {
+    render() {
         return (
             <div>
                 <h3>未选择时间</h3>
@@ -161,7 +161,7 @@ export default class App extends Component {
                         this.hide();
                     }}
                     onChangeDate={( opt ) => {
-                        console.log( opt )
+                        console.log( opt );
                     }}
                 >
                     <p onClick={this.show.bind( this )}>打开时间框</p>
@@ -185,6 +185,7 @@ export default class App extends Component {
                 <h3>已选择时间</h3>
                 <Picker
                     yesterdayClick
+                    yesterdayTimeRange={{ start: '10:20', end: '23:30' }}
                     visibility={this.state.showPOP2}
                     pickupTime={this.state.pickupTime2}
                     returnTime={this.state.returnTime2}

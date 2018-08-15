@@ -18,6 +18,9 @@ import createList from './tool/createElem.js';
  * 是否可以选昨天
  * @param yesterdayClick true/false，是否可以选择昨天的事件
  * 
+ * 昨天的时间范围限制
+ * @param yesterdayTimeRange true/false
+ * 
  * 控制显示
  * @param visibility     控制是否显示时间框    必须传
  *
@@ -60,6 +63,7 @@ export default class Picker extends Component {
     constructor( props ) {
         super( props );
         let { startTime, endTime } = this.props;
+        const nowDate = new Date();
 
         //如果没有传开始和结束日期，默认是今天到明年今天
         let isOpenTimePicker = props.isOpenTimePicker == undefined ? true : isOpenTimePicker,
@@ -75,10 +79,19 @@ export default class Picker extends Component {
             returnInfo = setDay( props.returnTime ) ? formatTime( props.returnTime ) : null,
             dayCount = pickupDay && returnDay ? setDayCount( pickupDay, returnDay ) : null;
 
+        const currentTime = {
+            h: nowDate.getHours(),
+            m: nowDate.getMinutes(),
+            d: nowDate.getDate(),
+            y: nowDate.getFullYear(),
+            month: nowDate.getMonth() + 1,
+        };
+
         //在初始化不渲染的时候，就将dayList数组做出来，存在picker里面，之后的dayList用的都是这个初始化出来的数组。
         //当开始和结束日期改变的时候，会触发setState去更改这个数组，不用在显示选择框的时候再去做这个dayList数组
         this.state = {
             yesterdayClick: props.yesterdayClick,
+            yesterdayTimeRange: props.yesterdayTimeRange,
             isOpenTimePicker: hideController ? false : isOpenTimePicker,
             hideController: hideController,
             pickupPlaceholder: props.pickupPlaceholder ? props.pickupPlaceholder : '选择取车时间',
@@ -95,8 +108,11 @@ export default class Picker extends Component {
             returnID: returnInfo ? `t-${returnInfo.year}-${returnInfo.month}-${returnInfo.day}` : null,
             dayCount: dayCount,
             JSXElem: createList( JSON.parse( JSON.stringify( dayList ) ) ),
-            isPropsWrong: false
+            isPropsWrong: false,
+
+            currentTime: currentTime
         };
+
     }
 
     componentDidMount() {
@@ -106,7 +122,7 @@ export default class Picker extends Component {
     }
 
     shouldComponentUpdate( nextProps, nextState ) {
-        
+
         //在不切换显示的时候更改了日期，需要记录到state中
         if ( nextProps.visibility == this.props.visibility ) {
             let oldPropsData = JSON.stringify( {
@@ -222,10 +238,14 @@ export default class Picker extends Component {
     }
 
     show() {
-        let { confirmEvent, closeEvent, onChangeDate = () => { }, defaultTime, timeRange, lang = 'cn' } = this.props;
+        let { confirmEvent, closeEvent, onChangeDate = () => { }, defaultTime, timeRange, lang = 'cn', yesterdayClick, yesterdayTimeRange } = this.props;
 
         Popup.show( <DayListBox
             lang={lang}
+            yesterdayClick={yesterdayClick}
+            yesterdayTimeRange={yesterdayTimeRange}
+            currentTime={this.state.currentTime}
+
             isOpenTimePicker={this.state.isOpenTimePicker}
             hideController={this.state.hideController}
             pickupPlaceholder={this.state.pickupPlaceholder}
@@ -244,8 +264,8 @@ export default class Picker extends Component {
             pickupID={this.state.pickupID}
             returnID={this.state.returnID}
             JSXElem={this.state.JSXElem}
-            onChangeDate={(opt) => { 
-                onChangeDate(opt)
+            onChangeDate={( opt ) => {
+                onChangeDate( opt );
             }}
             confirmEvent={( opt ) => {
                 confirmEvent( opt );
