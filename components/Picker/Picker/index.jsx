@@ -19,7 +19,7 @@ import createList from './tool/createElem.js';
  * @param yesterdayClick true/false，是否可以选择昨天的事件
  * 
  * 昨天的时间范围限制
- * @param yesterdayTimeRange
+ * @param yesterdayTimeRange true/false
  * 
  * 控制显示
  * @param visibility     控制是否显示时间框    必须传
@@ -91,6 +91,7 @@ export default class Picker extends Component {
         //当开始和结束日期改变的时候，会触发setState去更改这个数组，不用在显示选择框的时候再去做这个dayList数组
         this.state = {
             yesterdayClick: props.yesterdayClick,
+            yesterdayTimeRange: props.yesterdayTimeRange,
             isOpenTimePicker: hideController ? false : isOpenTimePicker,
             hideController: hideController,
             pickupPlaceholder: props.pickupPlaceholder ? props.pickupPlaceholder : '选择取车时间',
@@ -112,6 +113,7 @@ export default class Picker extends Component {
             currentTime: currentTime
         };
 
+
     }
 
     componentDidMount() {
@@ -121,7 +123,6 @@ export default class Picker extends Component {
     }
 
     shouldComponentUpdate( nextProps, nextState ) {
-
         //在不切换显示的时候更改了日期，需要记录到state中
         if ( nextProps.visibility == this.props.visibility ) {
             let oldPropsData = JSON.stringify( {
@@ -130,7 +131,7 @@ export default class Picker extends Component {
                 startTime: this.props.startTime,
                 endTime: this.props.endTime,
                 defaultTime: this.props.defaultTime,
-                timeRange: this.props.timeRange
+                timeRange: this.props.timeRange,
             } );
             let nextPropsData = JSON.stringify( {
                 pickupTime: nextProps.pickupTime,
@@ -138,8 +139,9 @@ export default class Picker extends Component {
                 startTime: nextProps.startTime,
                 endTime: nextProps.endTime,
                 defaultTime: nextProps.defaultTime,
-                timeRange: nextProps.timeRange
+                timeRange: nextProps.timeRange,
             } );
+
             if ( oldPropsData != nextPropsData ) {
                 this.resetAllData( nextProps );
                 return true;
@@ -168,7 +170,6 @@ export default class Picker extends Component {
     }
 
     componentWillReceiveProps( nextProps ) {
-
         //改变日历范围
         if ( nextProps.startTime && nextProps.endTime ) {
             let newStart = startArrayToDate( nextProps.startTime ).getTime(),
@@ -239,7 +240,6 @@ export default class Picker extends Component {
 
     show( yesterdayTimeRange ) {
         let { confirmEvent, closeEvent, onChangeDate = () => { }, defaultTime, timeRange, lang = 'cn', yesterdayClick } = this.props;
-
         Popup.show( <DayListBox
             lang={lang}
             yesterdayClick={yesterdayClick}

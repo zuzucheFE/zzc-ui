@@ -1,0 +1,22 @@
+.zzc-dialog-btn{
+  display: -webkit-box;
+  -webkit-box-align: center;
+
+  i{
+    height: 100%;
+    width: .28rem;
+    display: block;
+
+    &.iconfont-goback {
+      background-image: url('./icons/goback.png');
+      background-repeat: no-repeat;
+      background-position: 50%;
+      background-size: 100%;
+    }
+  }
+
+}
+
+.zzc-popup{
+  font-family: -apple-system, Helvetica, 'Hiragino Sans GB W3', arial, sans-serif;
+}
