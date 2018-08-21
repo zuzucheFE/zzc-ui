@@ -19,7 +19,7 @@ import createList from './tool/createElem.js';
  * @param yesterdayClick true/false，是否可以选择昨天的事件
  * 
  * 昨天的时间范围限制
- * @param yesterdayTimeRange true/false
+ * @param yesterdayTimeRange
  * 
  * 控制显示
  * @param visibility     控制是否显示时间框    必须传
@@ -91,7 +91,6 @@ export default class Picker extends Component {
         //当开始和结束日期改变的时候，会触发setState去更改这个数组，不用在显示选择框的时候再去做这个dayList数组
         this.state = {
             yesterdayClick: props.yesterdayClick,
-            yesterdayTimeRange: props.yesterdayTimeRange,
             isOpenTimePicker: hideController ? false : isOpenTimePicker,
             hideController: hideController,
             pickupPlaceholder: props.pickupPlaceholder ? props.pickupPlaceholder : '选择取车时间',
@@ -153,7 +152,8 @@ export default class Picker extends Component {
 
         //改变visibility代表需要更改显示
         if ( nextProps.visibility != this.props.visibility ) {
-            this.startComponent( nextProps.visibility );
+            // 展示的时候需要获取昨日的时间范围
+            this.startComponent( nextProps.visibility, nextProps.yesterdayTimeRange );
             // 在关闭时，获取到选择的时间，然后先计算对应的dayList的状态
             if ( !nextProps.visibility ) {
                 requestAnimationFrame( () => {
@@ -229,16 +229,16 @@ export default class Picker extends Component {
 
     }
 
-    startComponent( isShow ) {
+    startComponent( isShow, yesterdayTimeRange ) {
         if ( isShow ) {
-            this.show();
+            this.show( yesterdayTimeRange );
         } else {
             this.hide();
         }
     }
 
-    show() {
-        let { confirmEvent, closeEvent, onChangeDate = () => { }, defaultTime, timeRange, lang = 'cn', yesterdayClick, yesterdayTimeRange } = this.props;
+    show( yesterdayTimeRange ) {
+        let { confirmEvent, closeEvent, onChangeDate = () => { }, defaultTime, timeRange, lang = 'cn', yesterdayClick } = this.props;
 
         Popup.show( <DayListBox
             lang={lang}

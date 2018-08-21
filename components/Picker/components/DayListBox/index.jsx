@@ -95,7 +95,6 @@ export default class Time extends Component {
             returnID: props.returnID,
             // Range
             timeRange: props.timeRange || { start: 0, end: 24 },
-            yesterdayRange: props.yesterdayRange
         };
         initGlobalData( this.state.pickupDay, this.state.returnDay );
 
