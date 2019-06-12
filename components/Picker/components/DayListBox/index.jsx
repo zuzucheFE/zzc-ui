@@ -273,7 +273,7 @@ export default class Time extends Component {
                 timeType = 'pickup';
                 this.setState( {
                     returnDay: this.combinationOfTime( 'return', selectDay ),
-                    dayCount: this.setDayCount( returnTime, this.state.pickupDay ),
+                    dayCount: this.setDayCount( this.state.pickupDay, returnTime ),
                     returnID: id
                 }, () => {
                     callback && callback();

@@ -33,5 +33,9 @@ export function setDayCount(pickupDay,returnDay) {
     let returnTime = returnDay.getTime(),
         pickupTime = pickupDay.getTime(),
         diff = returnTime - pickupTime;
+    // 当diff少于1，同一天取还，都当1处理
+    if (diff < 1) {
+        return 1;
+    }
     return Math.ceil(diff/1000/60/60/24);
 }
