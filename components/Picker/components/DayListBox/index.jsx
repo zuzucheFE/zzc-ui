@@ -181,7 +181,7 @@ export default class Time extends Component {
         if ( type == 'pickup' ) {
 
             let pickupDay = this.state.pickupDay ? this.combinationOfTime( 'pickup', this.state.pickupDay, { h: timeInfo[0], m: timeInfo[1] } ) : null,
-                dayCount = pickupDay && this.state.returnDay ? setDayCount( pickupDay, this.state.returnDay ) : null;
+                dayCount = pickupDay && this.state.returnDay ? this.setDayCount( pickupDay, this.state.returnDay ) : null;
 
             this.setState( {
                 pickupTime: {
@@ -196,7 +196,7 @@ export default class Time extends Component {
         } else {
 
             let returnDay = this.state.returnDay ? this.combinationOfTime( 'return', this.state.returnDay, { h: timeInfo[0], m: timeInfo[1] } ) : null,
-                dayCount = this.state.pickupDay && returnDay ? setDayCount( this.state.pickupDay, returnDay ) : null;
+                dayCount = this.state.pickupDay && returnDay ? this.setDayCount( this.state.pickupDay, returnDay ) : null;
 
             this.setState( {
                 returnTime: {
@@ -438,12 +438,13 @@ export default class Time extends Component {
     }
 
     //计算天数
-    setDayCount( returnDay, pickupDay ) {
-        let returnTime = returnDay.getTime(),
-            pickupTime = pickupDay.getTime(),
-            diff = returnTime - pickupTime;
-
-        return Math.ceil( diff / 1000 / 60 / 60 / 24 );
+    setDayCount() {
+        const { resetDayCount } = this.props;
+        if ( resetDayCount ) {
+            return resetDayCount(...arguments);
+        } else {
+            return setDayCount(...arguments);
+        }
     }
 
     //验证时间选择

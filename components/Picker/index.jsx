@@ -56,6 +56,10 @@ import createList from './tool/createElem.js';
  * 
  * 是否显示控制器
  * @param hideController 默认为false
+ * 
+ * @param resetDayCount 重新计算天数 24小时算和按天算
+ *      @param pickupDay     取车时间
+ *      @param returnDay     还车时间
  * **/
 
 export default class Picker extends Component {
@@ -77,7 +81,7 @@ export default class Picker extends Component {
             dayList = setDayArray( initStartTime, initEndTime, pickupDay, returnDay, props.yesterdayClick ),
             pickupInfo = setDay( props.pickupTime ) ? formatTime( props.pickupTime ) : null,
             returnInfo = setDay( props.returnTime ) ? formatTime( props.returnTime ) : null,
-            dayCount = pickupDay && returnDay ? setDayCount( pickupDay, returnDay ) : null;
+            dayCount = pickupDay && returnDay ? this.setDayCount( pickupDay, returnDay ) : null;
 
         const currentTime = {
             h: nowDate.getHours(),
@@ -200,6 +204,15 @@ export default class Picker extends Component {
         }
     }
 
+    setDayCount() {
+        const { resetDayCount } = this.props;
+        if ( resetDayCount ) {
+            return resetDayCount(...arguments);
+        } else {
+            return setDayCount(...arguments);
+        }
+    }
+
     //重新计算所有参数
     resetAllData( nextProps ) {
         let newPickupTime = nextProps.pickupTime ? formatTime( nextProps.pickupTime ) : null,
@@ -222,7 +235,7 @@ export default class Picker extends Component {
             returnTime: returnTime,
             pickupDay: pickupDay,
             returnDay: returnDay,
-            dayCount: pickupDay && returnDay ? setDayCount( pickupDay, returnDay ) : null,
+            dayCount: pickupDay && returnDay ? this.setDayCount( pickupDay, returnDay ) : null,
             pickupID: pickupInfo ? `t-${pickupInfo.year}-${pickupInfo.month}-${pickupInfo.day}` : null,
             returnID: returnInfo ? `t-${returnInfo.year}-${returnInfo.month}-${returnInfo.day}` : null
         } );
@@ -238,9 +251,10 @@ export default class Picker extends Component {
     }
 
     show( yesterdayTimeRange ) {
-        let { confirmEvent, closeEvent, onChangeDate = () => { }, defaultTime, timeRange, lang = 'cn', yesterdayClick } = this.props;
+        let { confirmEvent, closeEvent, onChangeDate = () => { }, defaultTime, timeRange, lang = 'cn', yesterdayClick, resetDayCount } = this.props;
 
         Popup.show( <DayListBox
+            resetDayCount={resetDayCount}
             lang={lang}
             yesterdayClick={yesterdayClick}
             yesterdayTimeRange={yesterdayTimeRange}

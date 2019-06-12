@@ -33,6 +33,5 @@ export function setDayCount(pickupDay,returnDay) {
     let returnTime = returnDay.getTime(),
         pickupTime = pickupDay.getTime(),
         diff = returnTime - pickupTime;
-
     return Math.ceil(diff/1000/60/60/24);
 }
